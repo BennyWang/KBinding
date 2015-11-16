@@ -26,10 +26,10 @@ public abstract class RecyclerPagingAdapter<T> extends RecyclerView.Adapter<Recy
     }
 
     private boolean hasNextPage = true;
-    Action1<T> listener;
+    AdapterPagingListener listener;
 
 
-    public RecyclerPagingAdapter(Action1<T> listener) {
+    public RecyclerPagingAdapter(AdapterPagingListener listener) {
         this.listener = listener;
     }
 
@@ -39,7 +39,7 @@ public abstract class RecyclerPagingAdapter<T> extends RecyclerView.Adapter<Recy
         ((ViewHolder)holder).notifyPropertyChange(getItem(position), position);
 
         if(position == getItemCount() - 1 && hasNextPage) {
-            listener.call(getItem(position - 1));
+            listener.onLoadPage(getItem(position - 1), position);
         }
     }
 

@@ -5,10 +5,10 @@ import java.util.List;
 /**
  * Created by benny on 9/18/15.
  */
-public class SampleAdapterItemAccessor<T> implements AdapterItemAccessor<T> {
+public class SimpleAdapterItemAccessor<T> implements AdapterItemAccessor<T> {
     private List<T> list;
 
-    public SampleAdapterItemAccessor(List<T> list) {
+    public SimpleAdapterItemAccessor(List<T> list) {
         this.list = list;
     }
 

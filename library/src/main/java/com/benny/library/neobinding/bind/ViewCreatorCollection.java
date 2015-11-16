@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.functions.Func1;
+import rx.functions.Func2;
 
 /**
  * Created by benny on 9/16/15.
@@ -24,9 +25,9 @@ public abstract class ViewCreatorCollection<T> {
     public ViewCreatorCollection() {
     }
 
-    public ViewTypeFilter<T> filter(T data) {
+    public ViewTypeFilter<T> filter(T data, int position) {
         for (ViewTypeFilter<T> viewTypeFilter : viewTypeFilters) {
-            if(viewTypeFilter.canProcess(data)) return viewTypeFilter;
+            if(viewTypeFilter.canProcess(data, position)) return viewTypeFilter;
         }
         return null;
     }
@@ -36,15 +37,15 @@ public abstract class ViewCreatorCollection<T> {
         return viewTypeFilters.get(index).view(container);
     }
 
-    public int viewTypeFor(T data) {
-        return lastViewType = filter(data).getViewType();
+    public int viewTypeFor(T data, int position) {
+        return lastViewType = filter(data, position).getViewType();
     }
 
     public int typeCount() {
         return viewTypeFilters.size();
     }
 
-    public final ViewCreatorCollection append(Func1<T, Boolean> filter, ViewCreator<?> viewCreator) {
+    public final ViewCreatorCollection append(Func2<T, Integer, Boolean> filter, ViewCreator<?> viewCreator) {
         viewTypeFilters.add(new ViewTypeFilter<>(filter, viewCreator).setViewType(viewTypeBegin++));
         return this;
     }
@@ -52,9 +53,9 @@ public abstract class ViewCreatorCollection<T> {
     private static class ViewTypeFilter<T> {
         int viewType;
         ViewCreator<?> creator;
-        Func1<T, Boolean> filter;
+        Func2<T, Integer, Boolean> filter;
 
-        public ViewTypeFilter(Func1<T, Boolean> filter, ViewCreator<?> creator) {
+        public ViewTypeFilter(Func2<T, Integer, Boolean> filter, ViewCreator<?> creator) {
             this.creator = creator;
             this.filter = filter;
         }
@@ -68,8 +69,8 @@ public abstract class ViewCreatorCollection<T> {
             return viewType;
         }
 
-        public boolean canProcess(T data) {
-            return filter.call(data);
+        public boolean canProcess(T data, int position) {
+            return filter.call(data, position);
         }
 
         public View view(ViewGroup container) {

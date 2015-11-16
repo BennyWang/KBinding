@@ -42,12 +42,12 @@ public class TwoWayPropertyBinding<T, R> {
     public void bindTo(BindingContext<?> bindingContext, Subject<R, R> subject) {
         CircleBreaker breaker = new CircleBreaker();
 
-        observable.doOnNext(o -> Log.d("TwoWayPropertyBinding", "view->model:" + o.toString())).filter(breaker).map(((TwoWayPropertyConverter<T, R>) converter)::convertBack).compose(bindingContext.applyLifecycle())
+        observable.doOnNext(o -> Log.d("TwoWayPropertyBinding", "view->model:" + o.toString())).filter(breaker).map(((TwoWayPropertyConverter<T, R>) converter)::convert).compose(bindingContext.applyLifecycle())
                 .doOnSubscribe(() -> ViewModelBinder.LogBinding(property + " view->model"))
                 .doOnTerminate(() -> ViewModelBinder.LogUnbinding(property + " view->model"))
-                .doOnError(e->Log.d("Binding", "view->model error:" + e))
+                .doOnError(e -> Log.d("Binding", "view->model error:" + e))
                 .subscribe(subject);
-        subject.map(converter::convert).doOnNext(o -> Log.d("TwoWayPropertyBinding", "model->view:" + o.toString())).filter(breaker).compose(bindingContext.applyLifecycle())
+        subject.map(converter::convertBack).doOnNext(o -> Log.d("TwoWayPropertyBinding", "model->view:" + o.toString())).filter(breaker).compose(bindingContext.applyLifecycle())
                 .doOnSubscribe(() -> ViewModelBinder.LogBinding(property + " model->view"))
                 .doOnTerminate(() -> ViewModelBinder.LogUnbinding(property + " model->view"))
                 .doOnError(e->Log.d("Binding", "model->view error:" + e))

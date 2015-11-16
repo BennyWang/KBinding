@@ -12,9 +12,9 @@ import rx.functions.Action1;
 
 public abstract class PagingAdapter<T> extends BaseAdapter {
     private boolean hasNextPage = true;
-    Action1<T> listener;
+    AdapterPagingListener listener;
 
-    public PagingAdapter(Action1<T> listener) {
+    public PagingAdapter(AdapterPagingListener listener) {
         this.listener = listener;
     }
 
@@ -33,7 +33,7 @@ public abstract class PagingAdapter<T> extends BaseAdapter {
         convertView = getViewBase(position, convertView, parent);
 
         if(position == getCount() - 1 && hasNextPage) {
-            listener.call(getItem(position - 1));
+            listener.onLoadPage(getItem(position - 1), position);
         }
         return convertView;
     }

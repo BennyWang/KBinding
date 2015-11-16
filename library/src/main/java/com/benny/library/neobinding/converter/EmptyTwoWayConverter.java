@@ -4,12 +4,12 @@ package com.benny.library.neobinding.converter;
  * Created by benny on 11/6/15.
  */
 public class EmptyTwoWayConverter<T, R> implements TwoWayPropertyConverter<T, R> {
-    public T convert(Object source) {
-        return (T)source;
+    public R convert(Object source) {
+        return (R)source;
     }
 
     @Override
-    public R convertBack(Object source) {
-        return (R)source;
+    public T convertBack(Object source) {
+        return (T)source;
     }
 }

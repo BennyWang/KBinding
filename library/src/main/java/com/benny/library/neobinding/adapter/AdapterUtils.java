@@ -10,7 +10,6 @@ import com.benny.library.neobinding.bind.BindableModel;
 import com.benny.library.neobinding.bind.ViewCreator;
 import com.benny.library.neobinding.bind.ViewCreatorCollection;
 
-import rx.functions.Action1;
 import rx.functions.Func1;
 
 public class AdapterUtils {
@@ -80,7 +79,7 @@ public class AdapterUtils {
 
             @Override
             public int getItemViewType(int position) {
-                return collection.viewTypeFor(getItem(position));
+                return collection.viewTypeFor(getItem(position), position);
             }
         };
     }
@@ -116,7 +115,7 @@ public class AdapterUtils {
         };
     }
 
-    public static <T> Func1<AdapterItemAccessor<T>, PagingAdapter<T>> toPagingAdapter(ViewCreatorCollection<T> collection, Action1<T> listener)  {
+    public static <T> Func1<AdapterItemAccessor<T>, PagingAdapter<T>> toPagingAdapter(ViewCreatorCollection<T> collection, AdapterPagingListener listener)  {
         return items -> new PagingAdapter<T>(listener) {
             int viewType = -1;
 
@@ -150,14 +149,14 @@ public class AdapterUtils {
 
             @Override
             public int getItemViewType(int position) {
-                viewType = collection.viewTypeFor(getItem(position));
+                viewType = collection.viewTypeFor(getItem(position), position);
                 //Log.d("PagingAdapter", "getViewType--- position:" + position + " view type :" + viewType);
                 return viewType;
             }
         };
     }
 
-    public static <T> Func1<AdapterItemAccessor<T>, PagingAdapter<T>> toPagingAdapter(ViewCreator<T> viewCreator, Action1<T> listener)  {
+    public static <T> Func1<AdapterItemAccessor<T>, PagingAdapter<T>> toPagingAdapter(ViewCreator<T> viewCreator, AdapterPagingListener listener)  {
         return items -> new PagingAdapter<T>(listener) {
             @Override
             public View getViewBase(int position, View convertView, ViewGroup parent) {
@@ -240,7 +239,7 @@ public class AdapterUtils {
 
             @Override
             public int getItemViewType(int position) {
-                return collection.viewTypeFor(items.get(position));
+                return collection.viewTypeFor(items.get(position), position);
             }
 
             @Override
@@ -250,7 +249,7 @@ public class AdapterUtils {
         };
     }
 
-    public static  <T> Func1<AdapterItemAccessor<T>, RecyclerPagingAdapter<T> > toRecyclerPagingAdapter(ViewCreator<T> viewCreator, Action1<T> listener) {
+    public static  <T> Func1<AdapterItemAccessor<T>, RecyclerPagingAdapter<T> > toRecyclerPagingAdapter(ViewCreator<T> viewCreator, AdapterPagingListener listener) {
         return items -> new RecyclerPagingAdapter<T>(listener) {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -270,7 +269,7 @@ public class AdapterUtils {
         };
     }
 
-    public static  <T> Func1<AdapterItemAccessor<T>, RecyclerPagingAdapter<T> > toRecyclerPagingAdapter(ViewCreatorCollection<T> collection, Action1<T> listener) {
+    public static  <T> Func1<AdapterItemAccessor<T>, RecyclerPagingAdapter<T> > toRecyclerPagingAdapter(ViewCreatorCollection<T> collection, AdapterPagingListener listener) {
         return items -> new RecyclerPagingAdapter<T>(listener) {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -280,7 +279,7 @@ public class AdapterUtils {
 
             @Override
             public int getItemViewType(int position) {
-                return collection.viewTypeFor(getItem(position));
+                return collection.viewTypeFor(getItem(position), position);
             }
 
             @Override

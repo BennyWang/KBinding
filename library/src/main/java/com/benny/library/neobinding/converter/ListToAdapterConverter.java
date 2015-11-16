@@ -3,7 +3,7 @@ package com.benny.library.neobinding.converter;
 import android.widget.BaseAdapter;
 
 import com.benny.library.neobinding.adapter.AdapterUtils;
-import com.benny.library.neobinding.adapter.SampleAdapterItemAccessor;
+import com.benny.library.neobinding.adapter.SimpleAdapterItemAccessor;
 import com.benny.library.neobinding.bind.ViewCreatorCollection;
 import com.benny.library.neobinding.bind.ViewCreator;
 
@@ -26,7 +26,7 @@ public class ListToAdapterConverter<T> implements OneWayPropertyConverter<BaseAd
 
     @Override
     public BaseAdapter convert(Object var) {
-        return viewCreator != null ? AdapterUtils.toAdapter(viewCreator).call(new SampleAdapterItemAccessor<>((List<T>)var)) :
-                AdapterUtils.toAdapter(viewCreatorCollection).call(new SampleAdapterItemAccessor<>((List<T>)var));
+        return viewCreator != null ? AdapterUtils.toAdapter(viewCreator).call(new SimpleAdapterItemAccessor<>((List<T>)var)) :
+                AdapterUtils.toAdapter(viewCreatorCollection).call(new SimpleAdapterItemAccessor<>((List<T>)var));
     }
 }
