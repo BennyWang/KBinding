@@ -10,6 +10,7 @@ abstract public class BindableModel<T> {
     private val commands : MutableMap<String, Command<*>> = HashMap()
 
     init {
+        initProperty()
         initCommand()
     }
 
@@ -58,9 +59,7 @@ abstract public class BindableModel<T> {
         observable.bindTo(bindingContext, command<Any>(observable.key))
     }
 
-    public fun notifyPropertyChange(t: T?, position: Int) {
-        notifyPropertyChange(t)
-    }
+
 
     public abstract fun notifyPropertyChange(t: T?)
 

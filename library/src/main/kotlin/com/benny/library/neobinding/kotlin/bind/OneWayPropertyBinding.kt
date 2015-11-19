@@ -12,7 +12,7 @@ import rx.functions.Action1
  * Created by benny on 11/17/15.
  */
 
-public class OneWayPropertyBinding<T, R> private constructor(public val key: String, val bindingContext: BindingContext<*>) {
+public class OneWayPropertyBinding<T, R> private constructor(public val key: String) {
     public var keys: List<String>? = null
         private set
 
@@ -21,19 +21,19 @@ public class OneWayPropertyBinding<T, R> private constructor(public val key: Str
     var multipleConverter: MultipleConverter<T>? = null
 
     var observable: Observable<T>? = null
-    var observer: Action1<T>? = null
+    var observer: Action1<in T>? = null
 
-    constructor(key: String, bindingContext: BindingContext<*>, observable: Observable<T>, converter: OneWayConverter<R> = EmptyOneWayConverter<R>()) : this(key, bindingContext) {
+    constructor(key: String, observable: Observable<T>, converter: OneWayConverter<R> = EmptyOneWayConverter<R>()) : this(key) {
         this.observable = observable
         this.converter = converter
     }
 
-    constructor(key: String, bindingContext: BindingContext<*>, observer: Action1<T>, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : this(key, bindingContext) {
+    constructor(key: String, observer: Action1<T>, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : this(key) {
         this.observer = observer
         this.backConverter = backConverter
     }
 
-    constructor(keys: List<String>, bindingContext: BindingContext<*>, observer: Action1<T>, multipleConverter: MultipleConverter<T> ) : this(keys.first(), bindingContext) {
+    constructor(keys: List<String>, observer: Action1<in T>, multipleConverter: MultipleConverter<T> ) : this(keys.first()) {
         this.keys = keys
         this.observer = observer
         this.multipleConverter = multipleConverter
@@ -57,7 +57,7 @@ public class OneWayPropertyBinding<T, R> private constructor(public val key: Str
         }
     }
 
-    public fun bindTo(bindingContext: BindingContext<*>, properties: List<Property<*>>) {
+    public fun bindTo(bindingContext: BindingContext<*>, properties: List<Property<R>>) {
         Observable.combineLatest(properties.map { property -> property.observable }, { (multipleConverter as MultipleConverter<T>).convert(it) })
                 .compose(bindingContext.applyLifecycle<T>())
                 .doOnSubscribe { ViewModelBinder.LogBinding(keys?.joinToString(",") + " multiple") }

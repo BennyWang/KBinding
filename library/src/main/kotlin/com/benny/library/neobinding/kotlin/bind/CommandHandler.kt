@@ -6,13 +6,12 @@ import rx.functions.Action1
  * Created by benny on 9/13/15.
  */
 
-class CommandHandler<T1, T2>(val onError: Action1<T1>, val onSuccess: Action1<T2>) {
-
+class CommandHandler<T1, T2>(val onErrorCall: (it:T1) -> Unit, val onSuccessCall: (it:T2) -> Unit) {
     fun onError(error: T1) {
-        onError.call(error)
+        onErrorCall(error)
     }
 
     fun onSuccess(data: T2) {
-        onSuccess.call(data)
+        onSuccessCall(data)
     }
 }

@@ -3,14 +3,14 @@ package com.benny.library.neobinding.kotlin.adapter
 /**
  * Created by benny on 9/18/15.
  */
-class SimpleAdapterItemAccessor(private val list: List<*>) : AdapterItemAccessor {
+class SimpleAdapterItemAccessor<T> (private val list: List<T>) : AdapterItemAccessor<T> {
 
     override fun size(): Int {
         return list.size
     }
 
-    override fun get(position: Int): Any {
-        return list[position] as Any
+    override fun get(position: Int): T? {
+        return list.getOrNull(position)
     }
 
     override fun isEmpty(): Boolean {

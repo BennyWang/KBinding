@@ -2,21 +2,26 @@ package com.benny.library.neobinding.kotlin.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.benny.library.neobinding.kotlin.bind.BindableItemModel
 import com.benny.library.neobinding.kotlin.bind.BindableModel
 
 /**
  * Created by benny on 9/17/15.
  */
 
-abstract class RecyclerPagingAdapter(internal var listener: AdapterPagingListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class RecyclerPagingAdapter<T> (internal var listener: AdapterPagingListener<T>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var hasNextPage = true
 
     protected inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun notifyPropertyChange(data: Any?, position: Int) {
+        fun notifyPropertyChange(data: T?, position: Int) {
             if (itemView.tag != null && itemView.tag is BindableModel<*>) {
-                ((itemView.tag) as BindableModel<in Any?>).notifyPropertyChange(data, position)
+                ((itemView.tag) as BindableItemModel<T?>).notifyPropertyChange(data, position)
             }
         }
+    }
+
+    protected fun createViewHolder(itemView: View) : ViewHolder {
+        return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -36,6 +41,6 @@ abstract class RecyclerPagingAdapter(internal var listener: AdapterPagingListene
         notifyDataSetChanged()
     }
 
-    abstract fun getItem(position: Int): Any?
+    abstract fun getItem(position: Int): T?
     abstract fun countBase(): Int
 }

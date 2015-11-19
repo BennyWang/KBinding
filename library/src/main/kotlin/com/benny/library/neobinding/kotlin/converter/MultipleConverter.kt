@@ -1,16 +1,20 @@
 package com.benny.library.neobinding.kotlin.converter
 
+import android.util.Log
+
 /**
  * Created by benny on 11/18/15.
  */
 
 public interface MultipleConverter<T> {
-    fun convert(vararg `var`: Any): T
+    fun convert(params: Array<Any>): T
 }
 
-class ArrayToBoolenConverter : MultipleConverter<Boolean> {
-    override fun convert(vararg `var`: Any): Boolean {
-        `var`.forEach { source -> if (source.toString().isEmpty()) return false }
+class ArrayToBooleanConverter : MultipleConverter<Boolean> {
+    override fun convert(params: Array<Any>): Boolean {
+        params.forEach {
+            if(it.toString().isEmpty()) return false
+        }
         return true
     }
 }

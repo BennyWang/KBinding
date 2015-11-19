@@ -7,11 +7,11 @@ import com.benny.library.neobinding.kotlin.factory.Factory
  * Created by benny on 11/18/15.
  */
 
-public class ViewModelBinder<T> (val bindingContext: BindingContext<*>, val bindableModelFactory: Factory<BindableModel<T>> , val bindableViewFactory: Factory<BindableView> ) {
+public class ViewModelBinder<T> (val bindingContext: BindingContext<*>, val bindableModelFactory: () -> BindableModel<T> , val bindableViewFactory: () -> BindableView ) {
 
     fun bind(view: View): BindableModel<T> {
-        val bindableModel = bindableModelFactory.create()
-        val bindableView = bindableViewFactory.create()
+        val bindableModel = bindableModelFactory()
+        val bindableView = bindableViewFactory()
 
         bindableView.inject(bindingContext, view)
 

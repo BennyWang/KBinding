@@ -11,7 +11,7 @@ import rx.subjects.BehaviorSubject
 public class Property<T>(defaultValue:T? = null) {
     private val property: BehaviorSubject<T>
 
-    public var value: T
+    public var value: T?
         get() = property.value
         set(value) = property.onNext(value)
 
