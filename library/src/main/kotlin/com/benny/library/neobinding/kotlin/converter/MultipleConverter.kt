@@ -10,9 +10,7 @@ public interface MultipleConverter<T> {
 
 class ArrayToBoolenConverter : MultipleConverter<Boolean> {
     override fun convert(vararg `var`: Any): Boolean {
-        for (source in `var`) {
-            if (source.toString().isEmpty()) return false
-        }
+        `var`.forEach { source -> if (source.toString().isEmpty()) return false }
         return true
     }
 }

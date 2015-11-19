@@ -58,11 +58,11 @@ abstract public class BindableModel<T> {
         observable.bindTo(bindingContext, command<Any>(observable.key))
     }
 
-    fun notifyPropertyChange(t: T, position: Int) {
+    public fun notifyPropertyChange(t: T?, position: Int) {
         notifyPropertyChange(t)
     }
 
-    abstract fun notifyPropertyChange(t: T)
+    public abstract fun notifyPropertyChange(t: T?)
 
     abstract protected fun initProperty()
     abstract protected fun initCommand()

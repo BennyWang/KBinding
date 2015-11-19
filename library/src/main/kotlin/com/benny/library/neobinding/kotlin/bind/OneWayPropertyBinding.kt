@@ -48,11 +48,11 @@ public class OneWayPropertyBinding<T, R> private constructor(public val key: Str
                     .doOnTerminate { ViewModelBinder.LogUnbinding(property.value.toString() + " view->model") }
                     .subscribe(property.observer)
         } else {
-            (property.observable)
+            property.observable
                     .compose(bindingContext.applyLifecycle<R>())
-                    .map({ (backConverter as OneWayConverter<T>).convert(it as Any) })
-                    .doOnSubscribe({ ViewModelBinder.LogBinding(property.value.toString() + " model->view") })
-                    .doOnTerminate({ ViewModelBinder.LogUnbinding(property.value.toString() + " model->view") })
+                    .map { (backConverter as OneWayConverter<T>).convert(it as Any) }
+                    .doOnSubscribe { ViewModelBinder.LogBinding(property.value.toString() + " model->view") }
+                    .doOnTerminate { ViewModelBinder.LogUnbinding(property.value.toString() + " model->view") }
                     .subscribe(observer)
         }
     }

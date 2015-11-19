@@ -249,7 +249,7 @@ public class AdapterUtils {
         };
     }
 
-    public static  <T> Func1<AdapterItemAccessor<T>, RecyclerPagingAdapter<T> > toRecyclerPagingAdapter(ViewCreator<T> viewCreator, AdapterPagingListener listener) {
+    public static  <T> Func1<AdapterItemAccessor<T>, RecyclerPagingAdapter<T>> toRecyclerPagingAdapter(ViewCreator<T> viewCreator, AdapterPagingListener listener) {
         return items -> new RecyclerPagingAdapter<T>(listener) {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -269,7 +269,7 @@ public class AdapterUtils {
         };
     }
 
-    public static  <T> Func1<AdapterItemAccessor<T>, RecyclerPagingAdapter<T> > toRecyclerPagingAdapter(ViewCreatorCollection<T> collection, AdapterPagingListener listener) {
+    public static  <T> Func1<AdapterItemAccessor<T>, RecyclerPagingAdapter<T>> toRecyclerPagingAdapter(ViewCreatorCollection<T> collection, AdapterPagingListener listener) {
         return items -> new RecyclerPagingAdapter<T>(listener) {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
