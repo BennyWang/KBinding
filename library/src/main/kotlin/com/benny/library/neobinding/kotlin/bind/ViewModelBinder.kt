@@ -1,7 +1,6 @@
 package com.benny.library.neobinding.kotlin.bind
 
 import android.view.View
-import com.benny.library.neobinding.kotlin.factory.Factory
 
 /**
  * Created by benny on 11/18/15.

@@ -14,8 +14,9 @@ abstract class RecyclerPagingAdapter<T> (internal var listener: AdapterPagingLis
 
     protected inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun notifyPropertyChange(data: T?, position: Int) {
-            if (itemView.tag != null && itemView.tag is BindableModel<*>) {
-                ((itemView.tag) as BindableItemModel<T?>).notifyPropertyChange(data, position)
+            var tag = itemView.tag
+            if (tag != null && tag is BindableItemModel<*>) {
+                (tag as BindableItemModel<T>).notifyPropertyChange(data, position)
             }
         }
     }

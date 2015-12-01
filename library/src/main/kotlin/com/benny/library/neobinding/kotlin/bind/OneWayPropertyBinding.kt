@@ -41,8 +41,7 @@ public class OneWayPropertyBinding<T, R> private constructor(public val key: Str
 
     public fun bindTo(bindingContext: BindingContext<*>, property: Property<R>) {
         if (observable != null) {
-            (observable as Observable<T>)
-                    .compose(bindingContext.applyLifecycle<T>())
+            observable!!.compose(bindingContext.applyLifecycle<T>())
                     .map { (converter as OneWayConverter<R>).convert(it as Any) }
                     .doOnSubscribe { ViewModelBinder.LogBinding(property.value.toString() + " view->model") }
                     .doOnTerminate { ViewModelBinder.LogUnbinding(property.value.toString() + " view->model") }
@@ -50,7 +49,7 @@ public class OneWayPropertyBinding<T, R> private constructor(public val key: Str
         } else {
             property.observable
                     .compose(bindingContext.applyLifecycle<R>())
-                    .map { (backConverter as OneWayConverter<T>).convert(it as Any) }
+                    .map { backConverter!!.convert(it as Any) }
                     .doOnSubscribe { ViewModelBinder.LogBinding(property.value.toString() + " model->view") }
                     .doOnTerminate { ViewModelBinder.LogUnbinding(property.value.toString() + " model->view") }
                     .subscribe(observer)
@@ -58,7 +57,7 @@ public class OneWayPropertyBinding<T, R> private constructor(public val key: Str
     }
 
     public fun bindTo(bindingContext: BindingContext<*>, properties: List<Property<R>>) {
-        Observable.combineLatest(properties.map { property -> property.observable }, { (multipleConverter as MultipleConverter<T>).convert(it) })
+        Observable.combineLatest(properties.map { property -> property.observable }, { multipleConverter!!.convert(it) })
                 .compose(bindingContext.applyLifecycle<T>())
                 .doOnSubscribe { ViewModelBinder.LogBinding(keys?.joinToString(",") + " multiple") }
                 .doOnTerminate { ViewModelBinder.LogUnbinding(keys?.joinToString(",") + " multiple") }

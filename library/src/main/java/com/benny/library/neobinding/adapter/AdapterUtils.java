@@ -107,6 +107,7 @@ public class AdapterUtils {
                 if(convertView == null) {
                     convertView = viewCreator.view(parent);
                 }
+
                 if(convertView.getTag() != null) {
                     ((BindableModel<T>)convertView.getTag()).notifyPropertyChange(data, (position != 0 && position == getCount() - 1) ? -1 : position);
                 }
