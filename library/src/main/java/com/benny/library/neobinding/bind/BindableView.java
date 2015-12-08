@@ -35,7 +35,7 @@ public abstract class BindableView {
         oneWayPropertyBindings.add(oneWayPropertyBinding);
     }
 
-    protected void addTwoWayProprty(TwoWayPropertyBinding<?, ?> twoWayPropertyBinding) {
+    protected void addTwoWayProperty(TwoWayPropertyBinding<?, ?> twoWayPropertyBinding) {
         twoWayPropertyBindings.add(twoWayPropertyBinding);
     }
 

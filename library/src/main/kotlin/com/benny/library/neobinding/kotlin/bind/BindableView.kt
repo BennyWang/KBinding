@@ -33,7 +33,7 @@ public abstract class BindableView {
         oneWayPropertyBindings.add(oneWayPropertyBinding)
     }
 
-    protected fun addTwoWayProprtyBinding(twoWayPropertyBinding: TwoWayPropertyBinding<*, *>) {
+    protected fun addTwoWayPropertyBinding(twoWayPropertyBinding: TwoWayPropertyBinding<*, *>) {
         twoWayPropertyBindings.add(twoWayPropertyBinding)
     }
 
