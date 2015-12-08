@@ -5,12 +5,12 @@ Android View Model binding implement, base on RxJava
 
 LoginActivity
 
-val viewCreator = ViewCreator(ViewModelBinder(bindingContext, { LoginViewModel() }, { LoginBindableView(CommandHandler({ e -> loginFailed(e) }, { user -> loginSuccess(user) })) }), R.layout.activity_login)
-setContentView(viewCreator.view(this, null))
+    val viewCreator = ViewCreator(ViewModelBinder(bindingContext, { LoginViewModel() }, { LoginBindableView(CommandHandler({ e -> loginFailed(e) }, { user -> loginSuccess(user) })) }), R.layout.activity_login)
+    setContentView(viewCreator.view(this, null))
 
 LoginBindableView
 
-class LoginBindableView(val loginHandler: CommandHandler<Throwable, User>) : BindableView() {
+    class LoginBindableView(val loginHandler: CommandHandler<Throwable, User>) : BindableView() {
 
     override fun inject(bindingContext: BindingContext<*>, view: View) {
         val etLogin = view.findViewById(R.id.et_login) as EditText
@@ -22,11 +22,11 @@ class LoginBindableView(val loginHandler: CommandHandler<Throwable, User>) : Bin
         addMultiplePropertyBinding(OneWayPropertyBinding<Boolean, String>(listOf(LoginViewModel.PROPERTY_NAME, LoginViewModel.Companion.PROPERTY_PASSWORD), btnLogin.enabled(), ArrayToBooleanConverter()))
         addCommandBinding(CommandBinding(LoginViewModel.COMMAND_LOGIN, btnLogin.clicks(), loginHandler, btnLogin.enabled()))
     }
-}
+    }
     
 LoginViewModel
 
-class LoginViewModel : BindableModel<User>() {
+    class LoginViewModel : BindableModel<User>() {
     companion object {
         public val PROPERTY_NAME = "property_login_name"
         public val PROPERTY_PASSWORD = "property_login_password"
@@ -56,6 +56,6 @@ class LoginViewModel : BindableModel<User>() {
         ensureInputValid()
         return CaishuoService.getInstance().login(property<String>(PROPERTY_NAME).value, property<String>(PROPERTY_PASSWORD).value)
     }
-}
+    }
     
     
