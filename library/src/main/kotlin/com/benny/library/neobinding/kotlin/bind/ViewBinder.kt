@@ -6,9 +6,9 @@ import android.view.View
  * Created by benny on 11/18/15.
  */
 
-public class ViewModelBinder<T> (val bindingContext: BindingContext<*>, val bindableModelFactory: () -> BindableModel<T> , val bindableViewFactory: () -> BindableView ) {
+public class ViewBinder<T : BindableModel<*> > (val bindingContext: BindingContext<*>, val bindableModelFactory: () -> T , val bindableViewFactory: () -> BindableView ) {
 
-    fun bind(view: View): BindableModel<T> {
+    fun bind(view: View): T {
         val bindableModel = bindableModelFactory()
         val bindableView = bindableViewFactory()
 

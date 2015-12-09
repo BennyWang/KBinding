@@ -3,7 +3,6 @@ package com.benny.library.neobinding.kotlin.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.benny.library.neobinding.kotlin.bind.BindableItemModel
-import com.benny.library.neobinding.kotlin.bind.BindableModel
 
 /**
  * Created by benny on 9/17/15.
@@ -12,21 +11,21 @@ import com.benny.library.neobinding.kotlin.bind.BindableModel
 abstract class RecyclerPagingAdapter<T> (internal var listener: AdapterPagingListener<T>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var hasNextPage = true
 
-    protected inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    protected class ViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun notifyPropertyChange(data: T?, position: Int) {
             var tag = itemView.tag
             if (tag != null && tag is BindableItemModel<*>) {
-                (tag as BindableItemModel<T>).notifyPropertyChange(data, position)
+                (tag as? BindableItemModel<T>)?.notifyPropertyChange(data, position)
             }
         }
     }
 
-    protected fun createViewHolder(itemView: View) : ViewHolder {
-        return ViewHolder(itemView)
+    protected fun createViewHolder(itemView: View) : RecyclerView.ViewHolder {
+        return ViewHolder<T>(itemView)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ViewHolder).notifyPropertyChange(getItem(position), position)
+        (holder as? ViewHolder<T>)?.notifyPropertyChange(getItem(position), position)
 
         if (position == itemCount - 1 && hasNextPage) {
             listener.onLoadPage(getItem(position - 1), position)

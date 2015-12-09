@@ -4,23 +4,24 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.benny.library.neobinding.kotlin.view.ViewComponent
 
 /**
  * Created by benny on 11/18/15.
  */
 
 public open class ViewCreator<T> : IViewCreator<T> {
-    val layoutId:Int
-    val viewModelBinder: ViewModelBinder<T>
+    val viewComponent: ViewComponent
+    val viewBinder: ViewBinder<BindableModel<in T> >
 
-    constructor(viewModelBinder: ViewModelBinder<T>, layoutId: Int) {
-        this.viewModelBinder = viewModelBinder
-        this.layoutId = layoutId
+    constructor(viewBinder: ViewBinder<BindableModel<in T> >, viewComponent: ViewComponent) {
+        this.viewBinder = viewBinder
+        this.viewComponent = viewComponent
     }
 
     override fun view(context: Context, container: ViewGroup?): View {
-        val view = LayoutInflater.from(context).inflate(layoutId, container, false)
-        view.tag = viewModelBinder.bind(view)
+        val view = viewComponent.createView(context)
+        view.tag = viewBinder.bind(view)
         return view
     }
 

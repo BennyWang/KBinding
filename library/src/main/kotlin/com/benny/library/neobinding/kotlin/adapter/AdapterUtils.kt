@@ -14,8 +14,8 @@ public object AdapterUtils {
     public fun <T> toAdapter(viewCreator: IViewCreator<T>, itemAccessor: AdapterItemAccessor<T>): RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             internal inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-                fun notifyPropertyChange(data: T, position: Int) {
-                    ((itemView.tag) as BindableModel<T>).notifyPropertyChange(data, position)
+                fun notifyPropertyChange(data: T?, position: Int) {
+                    ((itemView.tag) as? BindableModel<T>)?.notifyPropertyChange(data, position)
                 }
             }
 
@@ -25,7 +25,7 @@ public object AdapterUtils {
             }
 
             override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-                (holder as ViewHolder).notifyPropertyChange(itemAccessor.get(position) as T, position)
+                (holder as ViewHolder).notifyPropertyChange(itemAccessor.get(position), position)
             }
 
             override fun getItemCount(): Int {
