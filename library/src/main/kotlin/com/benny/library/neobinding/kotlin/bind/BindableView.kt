@@ -2,6 +2,7 @@ package com.benny.library.neobinding.kotlin.bind
 
 import android.os.Build
 import android.view.View
+import com.benny.library.neobinding.kotlin.view.ViewFinder
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -73,5 +74,5 @@ public abstract class BindableView {
         commandBindings.add(commandBinding)
     }
 
-    abstract fun inject(bindingContext: BindingContext<*>, view: View)
+    abstract fun inject(bindingContext: BindingContext<*>, viewFinder: ViewFinder)
 }

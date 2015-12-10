@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.benny.library.neobinding.kotlin.view.ViewComponent
+import com.benny.library.neobinding.kotlin.view.ViewFinderFactory
 
 /**
  * Created by benny on 11/18/15.
@@ -21,7 +22,7 @@ public open class ViewCreator<T> : IViewCreator<T> {
 
     override fun view(context: Context, container: ViewGroup?): View {
         val view = viewComponent.createView(context)
-        view.tag = viewBinder.bind(view)
+        view.tag = viewBinder.bind(ViewFinderFactory.create(view))
         return view
     }
 
