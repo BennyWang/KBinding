@@ -1,8 +1,9 @@
-package com.benny.library.neobinding.kotlin.bind
+package com.benny.library.neobinding.kotlin.view
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import com.benny.library.neobinding.kotlin.view.IViewCreator
 import rx.functions.Func2
 import java.util.*
 
@@ -23,9 +24,9 @@ public class ViewCreatorCollection<T> : IViewCreator<T> {
         throw RuntimeException("can not process view type for:" + data.toString())
     }
 
-    override fun view(context: Context, container: ViewGroup?): View {
+    override fun view(container: ViewGroup): View {
         val index = if (lastViewType != -1) lastViewType else viewTypeFilters.size - 1
-        return viewTypeFilters[index].view(context, container)
+        return viewTypeFilters[index].view(container)
     }
 
     override fun viewTypeFor(data: T?, position: Int): Int {
@@ -47,8 +48,8 @@ public class ViewCreatorCollection<T> : IViewCreator<T> {
             return filter.call(data, position)
         }
 
-        fun view(context: Context, container: ViewGroup?): View {
-            return creator.view(context, container)
+        fun view(container: ViewGroup): View {
+            return creator.view(container)
         }
     }
 }

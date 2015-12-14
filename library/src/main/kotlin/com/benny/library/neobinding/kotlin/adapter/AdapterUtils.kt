@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.benny.library.neobinding.bind.BindableModel
-import com.benny.library.neobinding.kotlin.bind.IViewCreator
+import com.benny.library.neobinding.kotlin.view.IViewCreator
 
 /**
  * Created by benny on 11/19/15.
@@ -20,7 +20,7 @@ public object AdapterUtils {
             }
 
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-                val view = viewCreator.view(parent.context, parent)
+                val view = viewCreator.view(parent)
                 return ViewHolder(view)
             }
 
@@ -49,7 +49,7 @@ public object AdapterUtils {
             }
 
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
-                val view = viewCreator.view(parent.context, parent)
+                val view = viewCreator.view(parent)
                 return createViewHolder(view)
             }
 

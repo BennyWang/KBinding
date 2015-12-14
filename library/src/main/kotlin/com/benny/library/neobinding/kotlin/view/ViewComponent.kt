@@ -8,5 +8,5 @@ import android.view.View
  */
 
 interface ViewComponent {
-    fun createView(context: Context): View
+    fun create(context: Context): ViewBinder
 }

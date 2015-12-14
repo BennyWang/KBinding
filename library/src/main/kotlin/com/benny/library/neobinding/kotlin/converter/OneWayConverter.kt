@@ -2,7 +2,7 @@ package com.benny.library.neobinding.kotlin.converter
 
 import android.support.v7.widget.RecyclerView
 import com.benny.library.neobinding.kotlin.adapter.*
-import com.benny.library.neobinding.kotlin.bind.IViewCreator
+import com.benny.library.neobinding.kotlin.view.IViewCreator
 
 /**
  * Created by benny on 11/18/15.

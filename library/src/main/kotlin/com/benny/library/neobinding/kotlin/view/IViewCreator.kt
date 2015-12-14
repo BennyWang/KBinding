@@ -1,4 +1,4 @@
-package com.benny.library.neobinding.kotlin.bind
+package com.benny.library.neobinding.kotlin.view
 
 import android.content.Context
 import android.view.View
@@ -10,5 +10,5 @@ import android.view.ViewGroup
 interface IViewCreator<T> {
     fun viewTypeFor(data: T?, position: Int): Int
     fun viewTypeCount(): Int
-    fun view(context: Context, container: ViewGroup?): View
+    fun view(container: ViewGroup): View
 }

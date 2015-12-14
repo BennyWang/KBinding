@@ -28,7 +28,7 @@ public class OneWayPropertyBinding<T, R> private constructor(public val key: Str
         this.converter = converter
     }
 
-    constructor(key: String, observer: Action1<T>, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : this(key) {
+    constructor(key: String, observer: Action1<in T>, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : this(key) {
         this.observer = observer
         this.backConverter = backConverter
     }

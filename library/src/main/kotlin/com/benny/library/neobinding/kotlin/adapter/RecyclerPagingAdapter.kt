@@ -2,7 +2,7 @@ package com.benny.library.neobinding.kotlin.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.benny.library.neobinding.kotlin.bind.BindableItemModel
+import com.benny.library.neobinding.kotlin.bind.ItemViewModel
 
 /**
  * Created by benny on 9/17/15.
@@ -14,8 +14,8 @@ abstract class RecyclerPagingAdapter<T> (internal var listener: AdapterPagingLis
     protected class ViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun notifyPropertyChange(data: T?, position: Int) {
             var tag = itemView.tag
-            if (tag != null && tag is BindableItemModel<*>) {
-                (tag as? BindableItemModel<T>)?.notifyPropertyChange(data, position)
+            if (tag != null && tag is ItemViewModel<*>) {
+                (tag as? ItemViewModel<T>)?.notifyPropertyChange(data, position)
             }
         }
     }
