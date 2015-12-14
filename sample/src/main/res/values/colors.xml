@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_f1">#f1f1f1</color>
+    <color name="color_f2">#f2f2f2</color>
+    <color name="color_3b98fd">#3b98fd</color>
+    <color name="color_c2c2c2">#c2c2c2</color>
+    <color name="color_1">#666666</color>
+    <color name="color_blue">#3b98fd</color>
+    <color name="color_20blue">#e03b98fd</color>
+    <color name="color_e6">#e6e6e6</color>
+    <color name="color_6">#666666</color>
+    <color name="color_3">#333333</color>
+    <color name="color_f">#ffffff</color>
+    <color name="color_9">#999999</color>
+    <color name="color_stock_rise_background">#e74524</color>
+    <color name="color_stock_fall_background">#0f9920</color>
+    <color name="color_0">#00000000</color>
+    <color name="color_c">#cccccc</color>
+    <color name="color_f8">#f8f8f8</color>
+    <color name="color_cd">#cdcdcd</color>
+    <color name="color_ed">#ededed</color>
+    <color name="color_0091ff">#0091ff</color>
+    <color name="title_bar_bg">#393a4c</color>
+    <color name="bottom_bar_bg">#cc2f3442</color>
+    <color name="color_profit_loss_bg">#94ceef</color>
+    <color name="overview_optional_chart_circle_click">#999999</color>
+    <color name="overview_optional_chart_circle_unclick">#dbdbdb</color>
+    <color name="color_8b">#8b8b8b</color>
+    <color name="color_black">#000000</color>
+    <color name="color_white">#ffffff</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="view2px">#ced5d9</color>
+    <color name="button_check">#393a4c</color>
+    <color name="color_blue_2">#007aff</color>
+    <color name="color_c8">#c8c8c8</color>
+    <color name="color_market">#9c9ca3</color>
+    <color name="color_2e">#282835</color>
+    <color name="add_optional">#6d7e8c</color>
+    <color name="optional_buttom_login">#aebecc</color>
+    <color name="index">#e1e1e3</color>
+    <color name="index_count">#ff5758</color>
+
+    <!-- Commom -->
+    <color name="text_main">#333333</color>
+    <color name="text_hint">#999999</color>
+    <color name="text_sub">#666666</color>
+    <color name="divider">#e0e0e0</color>
+    <color name="divider_section">#dbdbdb</color>
+    <color name="divider_tag">#e0e0e0</color>
+    <color name="bg_activity">#f2f2f2</color>
+    <color name="btn_highlighted">#10000000</color>
+    <color name="btn_highlighted_dark">#10ffffff</color>
+    <color name="lv_highlighted">#10000000</color>
+    <color name="text_stock_info">#383a4c</color>
+    <color name="topbar_segment">#e6e6e6</color>
+    <color name="color_red">#e74524</color>
+    <color name="color_red_light">#cce74524</color>
+    <color name="color_green">#0f9920</color>
+    <color name="color_green_light">#cc0f9920</color>
+    <color name="color_green_pressed">#990f9920</color>
+    <color name="color_yellow">#ffa500</color>
+
+    <!-- Button -->
+    <color name="button_blue">#4285f4</color>
+    <color name="button_red">#e74524</color>
+    <color name="button_red_pressed">#99e74524</color>
+    <color name="button_gray">#999999</color>
+    <color name="button_white">#ffffff</color>
+
+    <!-- Login -->
+    <color name="login_divider">#bababa</color>
+    <color name="login_bg_mask">#d0000000</color>
+    <color name="login_forgot">#0168b6</color>
+
+    <!-- investment allocation -->
+    <color name="investment_allocation_up">#e74524</color>
+    <color name="investment_allocation_down">#0f9920</color>
+    <color name="transparent_text">#90ffffff</color>
+    <color name="eula_text">#818181</color>
+    <color name="eula_link">#73b9ff</color>
+    <color name="color_232736">#232736</color>
+    <color name="color_007aff">#007aff</color>
+    <color name="color_8f94ab">#8f94ab</color>
+    <color name="color_fc5152">#e74524</color>
+    <color name="lock_pattern_view_regular_color">#666</color>
+    <color name="lock_pattern_view_error_color">#666</color>
+    <color name="lock_pattern_view_success_color">#666</color>
+
+    <!-- SmsCode -->
+    <color name="bg_sms_code">#e6e6e6</color>
+    <color name="sms_code_text">#222222</color>
+    <color name="sms_code_phone">#1477d5</color>
+    <color name="sms_code_resend_border">#3784d6</color>
+
+    <!-- share_board -->
+    <color name="color_cce8e8e8">#cce8e8e8</color>
+    <color name="color_a">#aaaaaa</color>
+    <color name="basket_market_chart_basket_line_color">#f02532</color>
+    <color name="basket_market_chart_market_line_color">#0091ff</color>
+</resources>

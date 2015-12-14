@@ -1,5 +1,6 @@
 package com.benny.library.neobinding.kotlin.view
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -13,11 +14,26 @@ import com.jakewharton.rxbinding.widget.textChanges
 
 import com.benny.library.neobinding.kotlin.bind.*
 import com.benny.library.neobinding.kotlin.converter.*
+import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.custom.ankoView
 import rx.functions.Action1
 
 /**
  * Created by benny on 12/12/15.
  */
+
+public fun View.bindTo(bindingContext: BindingContext<*>, viewModel: ViewModel<*>): Unit = when(this) {
+    is BindableLayout -> bindTo(bindingContext, viewModel)
+    else -> {}
+}
+
+public fun Activity.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
+    return ankoView({ BindableLayout(this) }, init)
+}
+
+public fun AnkoContext<*>.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
+    return ankoView({ BindableLayout(this.ctx) }, init)
+}
 
 public class BindableLayout(context: Context) : RelativeLayout(context), ViewBinder {
     private val bindingAssembler = BindingAssembler()
@@ -77,7 +93,5 @@ public class BindableLayout(context: Context) : RelativeLayout(context), ViewBin
             bindingAssembler.addTwoWayPropertyBinding(TwoWayPropertyBinding<String, String>(path, this.textChanges().map { it.toString() }.skip(1), this.text(), converter as? TwoWayConverter<String, String> ?: EmptyTwoWayConverter<String, String>()))
         }
     }
-
-
 }
 

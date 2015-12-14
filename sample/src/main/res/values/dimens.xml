@@ -1,0 +1,122 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- 字体大小 -->
+    <dimen name="font_68">34.0sp</dimen>
+    <dimen name="font_66">33.0sp</dimen>
+    <dimen name="font_48">24.0sp</dimen>
+    <dimen name="font_100">50.0sp</dimen>
+    <dimen name="font_84">42.0sp</dimen>
+    <dimen name="font_80">40.0sp</dimen>
+    <dimen name="font_50">25.0sp</dimen>
+    <dimen name="font_44">22.0sp</dimen>
+    <dimen name="font_40">20.0sp</dimen>
+    <dimen name="font_42">21.0sp</dimen>
+    <dimen name="font_38">19.0sp</dimen>
+    <dimen name="font_36">18.0sp</dimen>
+    <dimen name="font_34">17.0sp</dimen>
+    <dimen name="font_32">16.0sp</dimen>
+    <dimen name="font_30">15.0sp</dimen>
+    <dimen name="font_28">14.0sp</dimen>
+    <dimen name="font_26">13.0sp</dimen>
+    <dimen name="font_24">12.0sp</dimen>
+    <dimen name="font_22">11.0sp</dimen>
+    <dimen name="font_20">10.0sp</dimen>
+    <dimen name="font_18">9.0sp</dimen>
+    <dimen name="font_16">8.0sp</dimen>
+    <dimen name="font_14">7.0sp</dimen>
+    <dimen name="font_12">6.0sp</dimen>
+
+    <!-- 尺寸大小   给出的像素*0.583 -->
+    <dimen name="size_0">0dp</dimen>
+    <dimen name="size_3">2dp</dimen>
+    <dimen name="size_6">3.5dp</dimen>
+    <dimen name="size_7">4dp</dimen>
+    <dimen name="size_10">6dp</dimen>
+    <dimen name="size_14">8dp</dimen>
+    <dimen name="size_16">10dp</dimen>
+    <dimen name="size_18">10.4dp</dimen>
+    <dimen name="size_20">12dp</dimen>
+    <dimen name="size_22">13dp</dimen>
+    <dimen name="size_24">14dp</dimen>
+    <dimen name="size_26">15.6dp</dimen>
+    <dimen name="size_28">16dp</dimen>
+    <dimen name="size_32">18dp</dimen>
+    <dimen name="size_34">19.5dp</dimen>
+    <dimen name="size_35">20dp</dimen>
+    <dimen name="size_36">21dp</dimen>
+    <dimen name="size_40">23dp</dimen>
+    <dimen name="size_46">27dp</dimen>
+    <dimen name="size_48">28dp</dimen>
+    <dimen name="size_50">30dp</dimen>
+    <dimen name="size_54">32dp</dimen>
+    <dimen name="size_56">33dp</dimen>
+    <dimen name="size_60">35dp</dimen>
+    <dimen name="size_64">37dp</dimen>
+    <dimen name="size_70">42dp</dimen>
+    <dimen name="size_80">46dp</dimen>
+    <dimen name="size_81">47dp</dimen>
+    <dimen name="size_82">48dp</dimen>
+    <dimen name="size_84">50dp</dimen>
+    <dimen name="size_86">52dp</dimen>
+    <dimen name="size_88">53dp</dimen>
+    <dimen name="size_96">56dp</dimen>
+    <dimen name="size_100">58dp</dimen>
+    <dimen name="size_102">59dp</dimen>
+    <dimen name="size_120">70dp</dimen>
+    <dimen name="size_127">74dp</dimen>
+    <dimen name="size_131">76dp</dimen>
+    <dimen name="size_138">80dp</dimen>
+    <dimen name="size_140">82dp</dimen>
+    <dimen name="size_150">87dp</dimen>
+    <dimen name="size_160">93dp</dimen>
+    <dimen name="size_112">65dip</dimen>
+    <dimen name="size_116">67dip</dimen>
+    <dimen name="size_180">105dp</dimen>
+    <dimen name="size_200">116dp</dimen>
+    <dimen name="size_207">120dp</dimen>
+    <dimen name="size_210">122dp</dimen>
+    <dimen name="size_220">128dp</dimen>
+    <dimen name="size_240">140dp</dimen>
+    <dimen name="size_310">180dp</dimen>
+    <dimen name="size_324">189dp</dimen>
+    <dimen name="size_326">190dp</dimen>
+    <dimen name="size_450">262dp</dimen>
+    <dimen name="size_512">307dp</dimen>
+
+    <dimen name="size98px">57dp</dimen>
+    <dimen name="size300px">175dp</dimen>
+    <dimen name="size230px">134dp</dimen>
+    <dimen name="radius_size">3.0dip</dimen>
+    <dimen name="friends_list_item_height">68dp</dimen>
+    <dimen name="friends_list_item_progress_height">7dp</dimen>
+    <dimen name="friends_list_item_progress_width">105dp</dimen>
+    <dimen name="overview_viewpager_height">180dp</dimen>
+
+    <!-- Tab Bar -->
+    <dimen name="tabbar_drawable_padding">3dp</dimen>
+    <dimen name="tabbar_padding_top">8dp</dimen>
+    <dimen name="tabbar_segment_height">32dp</dimen>
+    <dimen name="tabbar_segment_width">70dp</dimen>
+    <dimen name="tabbar_segment_radius">17dp</dimen>
+    <dimen name="tabbar_segment_text">15sp</dimen>
+
+    <!-- login page -->
+    <dimen name="login_margin_horizontal">17.5dip</dimen>
+    <dimen name="login_edittext_height">51dip</dimen>
+    <dimen name="login_button_height">52dip</dimen>
+    <dimen name="login_edittext_textsize">19sp</dimen>
+
+    <!-- Dimension for LockPatternView -->
+    <dimen name="lock_pattern_dot_line_width">1.7dp</dimen>
+    <dimen name="lock_pattern_dot_size">74.6dp</dimen>
+    <dimen name="lock_pattern_dot_size_activated">74.6dp</dimen>
+
+    <dimen name="basket_stocks_operation_width">61.3dp</dimen>
+
+    <!-- share board -->
+    <dimen name="dimen_228">133dp</dimen>
+    <dimen name="basket_return_chart_line_width">2dp</dimen>
+</resources>
