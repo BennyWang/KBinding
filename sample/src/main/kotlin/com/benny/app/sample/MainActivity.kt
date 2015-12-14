@@ -6,26 +6,18 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.EditText
-import com.benny.app.sample.extension.longToast
-import com.benny.library.neobinding.kotlin.bind.BindingContext
+import com.benny.library.neobinding.bind.BindingContext
 import com.trello.rxlifecycle.ActivityEvent
 import com.trello.rxlifecycle.components.support.RxFragmentActivity
 import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.*
 
-//if use extension functions from this, compile success
-import com.benny.app.sample.extension.*
-//if use extension functions from this, compile failed
-//import com.benny.library.neobinding.kotlin.drawable.*
-//import com.benny.library.neobinding.kotlin.view.*
-//
-
-
 import com.benny.app.sample.viewmodel.LoginViewModel
-
-import com.benny.library.neobinding.kotlin.bind.BindingMode
-import com.benny.library.neobinding.kotlin.converter.*
+import com.benny.library.neobinding.drawable.*
+import com.benny.library.neobinding.view.*
+import com.benny.library.neobinding.bind.BindingMode
+import com.benny.library.neobinding.converter.*
 
 
 class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
@@ -42,11 +34,11 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
     }
 
     override fun onLoginSuccess(user: String) {
-        ("Login success with user " + user).longToast(this)
+        toast("Login success with user " + user)
     }
 
     override fun onLoginFailed(e: Throwable) {
-        e.message.longToast(this)
+        toast(e.message ?: "")
     }
 
     class MainActivityUI : AnkoComponent<MainActivity> {
@@ -55,7 +47,6 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
             with(this) {
                 if(v is EditText) with(v) {
                     textSizeDimen = R.dimen.font_38
-                    textColor = Color.BLACK
                     verticalPadding = dip(8)
                     horizontalPadding = 0
                     background = null

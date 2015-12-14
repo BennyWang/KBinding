@@ -1,8 +1,8 @@
 package com.benny.app.sample.viewmodel
 
 import java.lang.RuntimeException
-import com.benny.library.neobinding.kotlin.bind.ViewModel
-import com.benny.library.neobinding.kotlin.bind.Command
+import com.benny.library.neobinding.bind.ViewModel
+import com.benny.library.neobinding.bind.Command
 import kotlin.properties.Delegates
 
 /**
