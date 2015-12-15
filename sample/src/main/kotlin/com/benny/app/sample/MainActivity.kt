@@ -6,17 +6,16 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.view.ViewManager
 import android.widget.EditText
-import com.benny.library.neobinding.bind.BindingContext
 import com.trello.rxlifecycle.ActivityEvent
 import com.trello.rxlifecycle.components.support.RxFragmentActivity
 import org.jetbrains.anko.*
 
 import com.benny.app.sample.viewmodel.LoginViewModel
+import com.benny.library.neobinding.bind.*
 import com.benny.library.neobinding.drawable.*
 import com.benny.library.neobinding.view.*
-import com.benny.library.neobinding.bind.BindingMode
-import com.benny.library.neobinding.bind.ViewBindingProperty
 import com.benny.library.neobinding.converter.*
 
 
@@ -42,7 +41,7 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
     }
 
     class MainActivityUI : ViewBinderComponent<MainActivity> {
-        val Context.editTextStyle: (View) -> Unit get() = {
+        val AnkoContext<*>.editTextStyle: (View) -> Unit get() = {
             v: View ->
             with(this) {
                 if(v is EditText) with(v) {
@@ -54,7 +53,7 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
             }
         }
 
-        val Context.bgButton: Drawable get() = with(this) {
+        val AnkoContext<*>.bgButton: Drawable get() = with(this) {
             stateList {
                 borderRoundRect(dip(2).toFloat(), resources.getColor(R.color.color_20blue)) {
                     drawableState = intArrayOf(android.R.attr.state_enabled, android.R.attr.state_pressed)
@@ -68,34 +67,32 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
             }
         }
 
-        override fun createViewBinder(context: Context): ViewBinder = with(context) {
-            bindableLayout {
+        override fun builder(): AnkoContext<*>.() -> Unit = {
+            verticalLayout {
                 verticalLayout {
-                    verticalLayout {
-                        backgroundColor = Color.WHITE
-                        leftPadding = dip(14)
-                        editText {
-                            hint = "请输入手机号或者电子邮箱地址"
-                            bind(textProp, path="name", mode = BindingMode.TwoWay)
-                        }.lparams(width = matchParent)
-                        view { backgroundResource = R.color.color_f2 }.lparams(width = matchParent, height = 1)
-                        editText {
-                            hint = "请输入密码"
-                            bind(textProp, path="password", mode = BindingMode.TwoWay)
-                        }.lparams(width = matchParent)
+                    backgroundColor = Color.WHITE
+                    leftPadding = dip(14)
+                    editText {
+                        hint = "请输入手机号或者电子邮箱地址"
+                        bind(text(path="name", mode = BindingMode.TwoWay))
                     }.lparams(width = matchParent)
-                    textView {
-                        text = "登录"
-                        textSizeDimen = R.dimen.font_38
-                        textColor = Color.WHITE
-                        background = bgButton
-                        verticalPadding = dip(10.4f)
-                        isClickable = true
-                        bind(clickProp, path="login")
-                        bind(enabledProp, paths=listOf("name", "password"), converter = ArrayToBooleanConverter())
-                    }.lparams(width = matchParent) { margin = dip(14) }.let { it.gravity = Gravity.CENTER }
-                }.style(editTextStyle)
-            }
+                    view { backgroundResource = R.color.color_f2 }.lparams(width = matchParent, height = 1)
+                    editText {
+                        hint = "请输入密码"
+                        bind(text(path="password", mode = BindingMode.TwoWay))
+                    }.lparams(width = matchParent)
+                }.lparams(width = matchParent)
+                textView {
+                    text = "登录"
+                    textSizeDimen = R.dimen.font_38
+                    textColor = Color.WHITE
+                    background = bgButton
+                    verticalPadding = dip(10.4f)
+                    isClickable = true
+                    bind(click("login"))
+                    bind(enabled(paths=listOf("name", "password"), converter = ArrayToBooleanConverter()))
+                }.lparams(width = matchParent) { margin = dip(14) }.let { it.gravity = Gravity.CENTER }
+            }.style(editTextStyle)
         }
     }
 }

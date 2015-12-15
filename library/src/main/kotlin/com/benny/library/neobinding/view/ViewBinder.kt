@@ -9,6 +9,6 @@ import com.benny.library.neobinding.bind.ViewModel
  */
 
 interface ViewBinder {
-    val contentView: View
+    val view: View
     fun bindTo(bindingContext: BindingContext<*>, viewModel: ViewModel<*>)
 }

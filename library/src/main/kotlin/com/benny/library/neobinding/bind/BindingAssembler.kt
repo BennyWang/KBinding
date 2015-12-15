@@ -11,7 +11,7 @@ import java.util.*
 
 open public class BindingAssembler {
     private val oneWayPropertyBindings = ArrayList<OneWayPropertyBinding<*, *>>()
-    private val multiplePropertyBindings = ArrayList<OneWayPropertyBinding<*, *>>()
+    private val multiplePropertyBindings = ArrayList<MultiplePropertyBinding<*>>()
     private val twoWayPropertyBindings = ArrayList<TwoWayPropertyBinding<*, *>>()
     private var commandBindings = ArrayList<CommandBinding>()
 
@@ -23,7 +23,7 @@ open public class BindingAssembler {
         return twoWayPropertyBindings
     }
 
-    fun multiplePropertyBindings(): List<OneWayPropertyBinding<*, *>> {
+    fun multiplePropertyBindings(): List<MultiplePropertyBinding<*>> {
         return multiplePropertyBindings
     }
 
@@ -31,40 +31,34 @@ open public class BindingAssembler {
         return commandBindings
     }
 
-    public fun addOneWayPropertyBinding(oneWayPropertyBinding: OneWayPropertyBinding<*, *>) {
-        oneWayPropertyBindings.add(oneWayPropertyBinding)
-    }
-
     public fun <T, R> addOneWayPropertyBinding(key: String, observable: Observable<T>, converter: OneWayConverter<R>? = EmptyOneWayConverter<R>()) {
-        oneWayPropertyBindings.add(OneWayPropertyBinding(key, observable, converter))
+        oneWayPropertyBindings.add(oneWayPropertyBinding(key, observable, converter))
     }
 
     public fun <T> addOneWayPropertyBinding(key: String, observer: Action1<in T>, backConverter: OneWayConverter<T>? = EmptyOneWayConverter<T>()) {
-        oneWayPropertyBindings.add(OneWayPropertyBinding<T, Any>(key, observer, backConverter))
+        oneWayPropertyBindings.add(oneWayPropertyBinding<T, Any>(key, observer, backConverter))
     }
 
     public fun <T> addMultiplePropertyBinding(keys: List<String>, observer: Action1<in T>, multipleConverter: MultipleConverter<T>) {
-        multiplePropertyBindings.add(OneWayPropertyBinding<T, Any>(keys, observer, multipleConverter))
-    }
-
-    public fun addTwoWayPropertyBinding(twoWayPropertyBinding: TwoWayPropertyBinding<*, *>) {
-        twoWayPropertyBindings.add(twoWayPropertyBinding)
+        multiplePropertyBindings.add(multiplePropertyBinding(keys, observer, multipleConverter))
     }
 
     public fun <T, R> addTwoWayPropertyBinding(key: String, observable: Observable<T>, observer: Action1<in T>, converter: TwoWayConverter<T, R>? = EmptyTwoWayConverter<T, R>()) {
-        twoWayPropertyBindings.add(TwoWayPropertyBinding(key, observable, observer, converter))
-    }
-
-    public fun addMultiplePropertyBinding(multiplePropertyBinding: OneWayPropertyBinding<*, *>) {
-        multiplePropertyBindings.add(multiplePropertyBinding)
-    }
-
-    public fun addCommandBinding(commandBinding: CommandBinding) {
-        commandBindings.add(commandBinding)
+        twoWayPropertyBindings.add(twoWayPropertyBinding(key, observable, observer, converter))
     }
 
     public fun addCommandBinding(key: String, trigger: Observable<Unit>, canExecute: Action1<in Boolean> = Action1 {}) {
-        commandBindings.add(CommandBinding(key, trigger, canExecute))
+        commandBindings.add(commandBinding(key, trigger, canExecute))
+    }
+
+    public fun addBinding(propertyBinding: PropertyBinding): Unit {
+        when (propertyBinding) {
+            is CommandBinding -> commandBindings.add(propertyBinding)
+            is OneWayPropertyBinding<*, *> -> oneWayPropertyBindings.add(propertyBinding)
+            is MultiplePropertyBinding<*> -> multiplePropertyBindings.add(propertyBinding)
+            is TwoWayPropertyBinding<*, *> -> twoWayPropertyBindings.add(propertyBinding)
+            else -> { }
+        }
     }
 
     public fun bindTo(bindingContext: BindingContext<*>, viewModel: ViewModel<*>) {
@@ -72,5 +66,28 @@ open public class BindingAssembler {
         twoWayPropertyBindings().forEach { propertyBinding -> viewModel.bindProperty(bindingContext, propertyBinding) }
         multiplePropertyBindings().forEach { propertyBinding -> viewModel.bindProperties(bindingContext, propertyBinding) }
         commandBindings().forEach { commandBinding -> viewModel.bindCommand(bindingContext, commandBinding) }
+    }
+
+    public companion object {
+        public fun <T, R> oneWayPropertyBinding(key: String, observable: Observable<T>, converter: OneWayConverter<R>? = EmptyOneWayConverter<R>()) : OneWayPropertyBinding<T, R> {
+            return OneWayPropertyBinding(key, observable, converter)
+        }
+
+        public fun <T, R> oneWayPropertyBinding(key: String, observer: Action1<in T>, backConverter: OneWayConverter<T>? = EmptyOneWayConverter<T>()) : OneWayPropertyBinding<T, R>  {
+            return OneWayPropertyBinding(key, observer, backConverter)
+        }
+
+
+        public fun <T> multiplePropertyBinding(keys: List<String>, observer: Action1<in T>, multipleConverter: MultipleConverter<T>) : MultiplePropertyBinding<T> {
+            return MultiplePropertyBinding(keys, observer, multipleConverter)
+        }
+
+        public fun <T, R> twoWayPropertyBinding(key: String, observable: Observable<T>, observer: Action1<in T>, converter: TwoWayConverter<T, R>? = EmptyTwoWayConverter<T, R>()) : TwoWayPropertyBinding<T, R> {
+            return TwoWayPropertyBinding(key, observable, observer, converter)
+        }
+
+        public fun commandBinding(key: String, trigger: Observable<Unit>, canExecute: Action1<in Boolean> = Action1 {}) : CommandBinding {
+            return CommandBinding(key, trigger, canExecute)
+        }
     }
 }

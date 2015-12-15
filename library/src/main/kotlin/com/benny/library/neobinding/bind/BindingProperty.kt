@@ -28,3 +28,10 @@ class TextViewBindingProperty {
     class Text : BindingProperty()
     class TextColor : BindingProperty()
 }
+
+val Drawable.levelProp: DrawableBindingProperty.Level get() = DrawableBindingProperty.Level()
+val View.clickProp: ViewBindingProperty.Click get() = ViewBindingProperty.Click()
+val View.enabledProp: ViewBindingProperty.Enabled get() = ViewBindingProperty.Enabled()
+val View.visibilityProp: ViewBindingProperty.Visibility get() = ViewBindingProperty.Visibility()
+val TextView.textColorProp: TextViewBindingProperty.TextColor get() = TextViewBindingProperty.TextColor()
+val TextView.textProp: TextViewBindingProperty.Text get() = TextViewBindingProperty.Text()

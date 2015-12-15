@@ -40,7 +40,7 @@ abstract public class ViewModel<T> {
         observable.bindTo(bindingContext, property<Any>(observable.key))
     }
 
-    fun bindProperties(bindingContext: BindingContext<*>, observer: OneWayPropertyBinding<*, *>) {
+    fun bindProperties(bindingContext: BindingContext<*>, observer: MultiplePropertyBinding<*>) {
         val props = ArrayList<Property<*>>()
         observer.keys?.forEach { key -> props.add(property<Any>(key)) }
         observer.bindTo(bindingContext, props)

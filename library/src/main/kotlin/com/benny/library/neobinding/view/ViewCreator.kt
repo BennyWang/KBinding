@@ -15,8 +15,8 @@ public open class ViewCreator<T>(val bindingContext: BindingContext<*>, val view
         val viewBinder = viewBinderComponent.createViewBinder(bindingContext.context)
         val viewModel = viewModelFactory()
         viewBinder.bindTo(bindingContext, viewModel)
-        viewBinder.contentView.tag = viewModel
-        return viewBinder.contentView
+        viewBinder.view.tag = viewModel
+        return viewBinder.view
     }
 
     override fun viewTypeFor(data: T?, position: Int): Int {

@@ -11,7 +11,7 @@ import rx.functions.Func1
  * Created by benny on 11/17/15.
  */
 
-public class TwoWayPropertyBinding<T, R>(public val key: String, val observable: Observable<T>, val observer: Action1<in T>, converter: TwoWayConverter<T, R>? = EmptyTwoWayConverter()) {
+public class TwoWayPropertyBinding<T, R>(public val key: String, val observable: Observable<T>, val observer: Action1<in T>, converter: TwoWayConverter<T, R>? = EmptyTwoWayConverter()) : PropertyBinding() {
     val converter: TwoWayConverter<T, R> = converter ?: EmptyTwoWayConverter()
 
     public fun bindTo(bindingContext: BindingContext<*>, property: Property<R>) {

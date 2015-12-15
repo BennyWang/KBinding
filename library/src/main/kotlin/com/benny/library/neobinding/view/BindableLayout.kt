@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
@@ -26,67 +27,48 @@ import java.util.*
  * Created by benny on 12/12/15.
  */
 
+fun AnkoContext<*>.bind(propertyBinding: PropertyBinding): Unit {
+   if(this is BindableLayout) bindingAssembler.addBinding(propertyBinding)
+}
+
 public fun Context.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
     val bindableLayout = BindableLayout(this)
     bindableLayout.init()
-    AnkoInternals.addView(this, bindableLayout.contentView)
+    AnkoInternals.addView(this, bindableLayout.view)
     return bindableLayout
 }
 
 public fun AnkoContext<*>.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
     val bindableLayout = BindableLayout(this.ctx)
     bindableLayout.init()
-    AnkoInternals.addView(this, bindableLayout.contentView)
+    AnkoInternals.addView(this, bindableLayout.view)
     return bindableLayout
 }
 
-public class BindableLayout(ctx: Context) : ViewGroup(ctx), ViewBinder, BindingPropertyProvider {
-    var view: View? = null
-    override val contentView: View get() = view ?: throw UnsupportedOperationException("BindableLayout must have child")
+public class BindableLayout(override val ctx: Context) : AnkoContext<Unit>, ViewBinder, BindingPropertyProvider {
+    var childView: View? = null
 
-    public companion object {
-        val bindingExtensions: MutableMap<Class<*>, BindingExtension<in BindingProperty, in Any, *>> = HashMap()
-        public fun addBindingExtension(propClass:Class<*>, extension: BindingExtension<*, *, *>) {
-            bindingExtensions.put(propClass, extension as BindingExtension<in BindingProperty, in Any, *>)
-        }
+    override val owner: Unit
+        get() = throw UnsupportedOperationException()
 
-        init {
-            addBindingExtension(DrawableBindingProperty.Level().javaClass, DrawableLevelBindingExtension())
+    override val view: View
+        get() = childView ?: throw IllegalStateException("View was not set previously")
 
-            addBindingExtension(ViewBindingProperty.Click().javaClass, ClickBindingExtension())
-            addBindingExtension(ViewBindingProperty.Enabled().javaClass, EnabledBindingExtension())
-            addBindingExtension(ViewBindingProperty.Visibility().javaClass, VisibilityBindingExtension())
-
-            addBindingExtension(TextViewBindingProperty.TextColor().javaClass, TextColorBindingExtension())
-            addBindingExtension(TextViewBindingProperty.Text().javaClass, TextBindingExtension())
-        }
-    }
-
-    private val bindingAssembler = BindingAssembler()
+    val bindingAssembler = BindingAssembler()
 
     public override fun bindTo(bindingContext: BindingContext<*>, viewModel: ViewModel<*>) {
         bindingAssembler.bindTo(bindingContext, viewModel)
     }
 
-    fun View.bind(prop: BindingProperty, path: String): Unit {
-        bindingExtensions[prop.javaClass]?.bind(this, bindingAssembler, prop, path)
-    }
-    fun View.bind(prop: BindingProperty, path: String, mode: BindingMode = BindingMode.OneWay, converter: Any? = null): Unit {
-        bindingExtensions[prop.javaClass]?.bind(this, bindingAssembler, prop, path, mode, converter)
-    }
-    fun View.bind(prop: BindingProperty, paths: List<String>, converter: MultipleConverter<*>) {
-        bindingExtensions[prop.javaClass]?.bind(this, bindingAssembler, prop, paths, converter)
+    public fun bind(propertyBinding: PropertyBinding): Unit {
+        bindingAssembler.addBinding(propertyBinding)
     }
 
-    override fun addView(view: View?) {
+    override fun addView(view: View?, params: ViewGroup.LayoutParams?) {
         if(view == null) return
 
-        if(this.view != null) throw UnsupportedOperationException("BindableLayout can only have one child")
-        this.view = view
-    }
-
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-
+        if(this.childView != null) throw UnsupportedOperationException("BindableLayout can only have one child")
+        this.childView = view
     }
 }
 
