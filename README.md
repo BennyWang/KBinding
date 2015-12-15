@@ -86,3 +86,28 @@ Binding
 
     MainActivityUI().setContentView(activity).bindTo(bindingContext, LoginViewModel(delegate object))
     
+## Extend Binding Property 
+Event
+    val BindingPropertyProvider.clickProp: ViewBindingProperty.Click get() = ViewBindingProperty.Click()
+    class ClickBindingExtension: BindingExtension<ViewBindingProperty.Click, View, Any> {
+        override fun bind(view: View, bindingAssembler: BindingAssembler, prop: ViewBindingProperty.Click, path: String): Unit {
+            bindingAssembler.addCommandBinding(path, view.clicks(), view.enabled())
+        }
+    }
+
+Property
+    val BindingPropertyProvider.enabledProp: ViewBindingProperty.Enabled get() = ViewBindingProperty.Enabled()
+    class EnabledBindingExtension: BindingExtension<ViewBindingProperty.Enabled, View, Boolean> {
+        override fun bind(view: View, bindingAssembler: BindingAssembler, prop: ViewBindingProperty.Enabled, path: String, mode: BindingMode, converter: Any?): Unit {
+            when(mode) {
+                BindingMode.OneWay -> {
+                    bindingAssembler.addOneWayPropertyBinding(path, view.enabled(), converter as? OneWayConverter<Boolean> ?: EmptyOneWayConverter<Boolean>())
+                }
+                BindingMode.OneWayToSource -> throw UnsupportedOperationException("OneWayToSource not allowed for enabled")
+                BindingMode.TwoWay -> throw UnsupportedOperationException("TwoWay not allowed for enabled")
+            }
+        }
+        override fun bind(view: View, bindingAssembler: BindingAssembler, prop: ViewBindingProperty.Enabled, paths: List<String>, converter: MultipleConverter<Boolean>): Unit {
+            bindingAssembler.addMultiplePropertyBinding(paths, view.enabled(), converter)
+        }
+    }
