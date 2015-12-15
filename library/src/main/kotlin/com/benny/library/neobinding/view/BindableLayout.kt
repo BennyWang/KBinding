@@ -3,7 +3,10 @@ package com.benny.library.neobinding.view
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.support.v4.app.Fragment
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewManager
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -15,6 +18,7 @@ import com.benny.library.neobinding.bind.*
 import com.benny.library.neobinding.converter.*
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.custom.ankoView
+import org.jetbrains.anko.internals.AnkoInternals
 import rx.functions.Action1
 import java.util.*
 
@@ -22,27 +26,33 @@ import java.util.*
  * Created by benny on 12/12/15.
  */
 
-public fun View.bindTo(bindingContext: BindingContext<*>, viewModel: ViewModel<*>): Unit = when(this) {
-    is BindableLayout -> bindTo(bindingContext, viewModel)
-    else -> {}
-}
-
-public fun Activity.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
-    return ankoView({ BindableLayout(this) }, init)
+public fun Context.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
+    val bindableLayout = BindableLayout(this)
+    bindableLayout.init()
+    AnkoInternals.addView(this, bindableLayout.contentView)
+    return bindableLayout
 }
 
 public fun AnkoContext<*>.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
-    return ankoView({ BindableLayout(this.ctx) }, init)
+    val bindableLayout = BindableLayout(this.ctx)
+    bindableLayout.init()
+    AnkoInternals.addView(this, bindableLayout.contentView)
+    return bindableLayout
 }
 
-public class BindableLayout(context: Context) : RelativeLayout(context), ViewBinder, BindingPropertyProvider {
+public class BindableLayout(ctx: Context) : ViewGroup(ctx), ViewBinder, BindingPropertyProvider {
+    var view: View? = null
+    override val contentView: View get() = view ?: throw UnsupportedOperationException("BindableLayout must have child")
+
     public companion object {
-        val bindingExtensions: MutableMap<Class<*>, BindingExtension<in BindingProperty, in View, *>> = HashMap()
+        val bindingExtensions: MutableMap<Class<*>, BindingExtension<in BindingProperty, in Any, *>> = HashMap()
         public fun addBindingExtension(propClass:Class<*>, extension: BindingExtension<*, *, *>) {
-            bindingExtensions.put(propClass, extension as BindingExtension<in BindingProperty, in View, *>)
+            bindingExtensions.put(propClass, extension as BindingExtension<in BindingProperty, in Any, *>)
         }
 
         init {
+            addBindingExtension(DrawableBindingProperty.Level().javaClass, DrawableLevelBindingExtension())
+
             addBindingExtension(ViewBindingProperty.Click().javaClass, ClickBindingExtension())
             addBindingExtension(ViewBindingProperty.Enabled().javaClass, EnabledBindingExtension())
             addBindingExtension(ViewBindingProperty.Visibility().javaClass, VisibilityBindingExtension())
@@ -53,7 +63,6 @@ public class BindableLayout(context: Context) : RelativeLayout(context), ViewBin
     }
 
     private val bindingAssembler = BindingAssembler()
-    override val contentView: View get() = this
 
     public override fun bindTo(bindingContext: BindingContext<*>, viewModel: ViewModel<*>) {
         bindingAssembler.bindTo(bindingContext, viewModel)
@@ -69,12 +78,15 @@ public class BindableLayout(context: Context) : RelativeLayout(context), ViewBin
         bindingExtensions[prop.javaClass]?.bind(this, bindingAssembler, prop, paths, converter)
     }
 
-    fun Drawable.bind(prop: DrawableBindingProperty.Level, path: String, mode: BindingMode = BindingMode.OneWay, converter: Any? = null): Unit = when(mode) {
-        BindingMode.OneWay -> {
-            bindingAssembler.addOneWayPropertyBinding(OneWayPropertyBinding<Int, Any>(path, Action1<kotlin.Int> { t -> setLevel(t) }, converter as? OneWayConverter<Int> ?: EmptyOneWayConverter<Int>()))
-        }
-        BindingMode.OneWayToSource -> throw UnsupportedOperationException("enabled is one way mode, can not bind as one way to source")
-        BindingMode.TwoWay -> throw UnsupportedOperationException("enabled is one way mode, can not bind as two way")
+    override fun addView(view: View?) {
+        if(view == null) return
+
+        if(this.view != null) throw UnsupportedOperationException("BindableLayout can only have one child")
+        this.view = view
+    }
+
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+
     }
 }
 

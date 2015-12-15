@@ -35,11 +35,11 @@ open public class BindingAssembler {
         oneWayPropertyBindings.add(oneWayPropertyBinding)
     }
 
-    public fun <T, R> addOneWayPropertyBinding(key: String, observable: Observable<T>, converter: OneWayConverter<R> = EmptyOneWayConverter<R>()) {
+    public fun <T, R> addOneWayPropertyBinding(key: String, observable: Observable<T>, converter: OneWayConverter<R>? = EmptyOneWayConverter<R>()) {
         oneWayPropertyBindings.add(OneWayPropertyBinding(key, observable, converter))
     }
 
-    public fun <T> addOneWayPropertyBinding(key: String, observer: Action1<in T>, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) {
+    public fun <T> addOneWayPropertyBinding(key: String, observer: Action1<in T>, backConverter: OneWayConverter<T>? = EmptyOneWayConverter<T>()) {
         oneWayPropertyBindings.add(OneWayPropertyBinding<T, Any>(key, observer, backConverter))
     }
 
@@ -51,7 +51,7 @@ open public class BindingAssembler {
         twoWayPropertyBindings.add(twoWayPropertyBinding)
     }
 
-    public fun <T, R> addTwoWayPropertyBinding(key: String, observable: Observable<T>, observer: Action1<in T>, converter: TwoWayConverter<T, R> = EmptyTwoWayConverter<T, R>()) {
+    public fun <T, R> addTwoWayPropertyBinding(key: String, observable: Observable<T>, observer: Action1<in T>, converter: TwoWayConverter<T, R>? = EmptyTwoWayConverter<T, R>()) {
         twoWayPropertyBindings.add(TwoWayPropertyBinding(key, observable, observer, converter))
     }
 

@@ -12,8 +12,6 @@ import android.widget.TextView
 open class BindingProperty
 
 interface BindingPropertyProvider {
-    val Drawable.levelProp: DrawableBindingProperty.Level get() = DrawableBindingProperty.Level()
-
 }
 
 class DrawableBindingProperty {

@@ -1,5 +1,6 @@
 package com.benny.app.sample
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -9,8 +10,6 @@ import android.widget.EditText
 import com.benny.library.neobinding.bind.BindingContext
 import com.trello.rxlifecycle.ActivityEvent
 import com.trello.rxlifecycle.components.support.RxFragmentActivity
-import org.jetbrains.anko.AnkoComponent
-import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.*
 
 import com.benny.app.sample.viewmodel.LoginViewModel
@@ -30,8 +29,6 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BindableLayout.addBindingExtension(ViewBindingProperty.Click().javaClass, ClickBindingExtension())
-
 
         MainActivityUI().setContentView(this).bindTo(bindingContext, viewModel)
     }
@@ -44,8 +41,8 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
         toast(e.message ?: "")
     }
 
-    class MainActivityUI : AnkoComponent<MainActivity> {
-        val AnkoContext<MainActivity>.editTextStyle: (View) -> Unit get() = {
+    class MainActivityUI : ViewBinderComponent<MainActivity> {
+        val Context.editTextStyle: (View) -> Unit get() = {
             v: View ->
             with(this) {
                 if(v is EditText) with(v) {
@@ -57,7 +54,7 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
             }
         }
 
-        val AnkoContext<MainActivity>.bgButton: Drawable get() = with(this) {
+        val Context.bgButton: Drawable get() = with(this) {
             stateList {
                 borderRoundRect(dip(2).toFloat(), resources.getColor(R.color.color_20blue)) {
                     drawableState = intArrayOf(android.R.attr.state_enabled, android.R.attr.state_pressed)
@@ -71,25 +68,7 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
             }
         }
 
-        val AnkoContext<MainActivity>.levelBackground: Drawable get() = with(this) {
-            levelList {
-                minLevel = 0
-                oval {
-                    colorResource = R.color.color_red
-                    drawableLevel = 1
-                }
-                oval {
-                    colorResource = R.color.color_blue
-                    drawableLevel = 2
-                }
-                oval {
-                    colorResource = R.color.color_black
-                    drawableLevel = 3
-                }
-            }
-        }
-
-        override fun createView(ui: AnkoContext<MainActivity>) = with(ui) {
+        override fun createViewBinder(context: Context): ViewBinder = with(context) {
             bindableLayout {
                 verticalLayout {
                     verticalLayout {

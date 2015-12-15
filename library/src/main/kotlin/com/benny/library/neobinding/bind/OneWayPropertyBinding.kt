@@ -21,14 +21,14 @@ public class OneWayPropertyBinding<T, R> private constructor(public val key: Str
     var observable: Observable<T>? = null
     var observer: Action1<in T>? = null
 
-    constructor(key: String, observable: Observable<T>, converter: OneWayConverter<R> = EmptyOneWayConverter<R>()) : this(key) {
+    constructor(key: String, observable: Observable<T>, converter: OneWayConverter<R>? = EmptyOneWayConverter<R>()) : this(key) {
         this.observable = observable
-        this.converter = converter
+        this.converter = converter ?: EmptyOneWayConverter<R>()
     }
 
-    constructor(key: String, observer: Action1<in T>, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : this(key) {
+    constructor(key: String, observer: Action1<in T>, backConverter: OneWayConverter<T>? = EmptyOneWayConverter<T>()) : this(key) {
         this.observer = observer
-        this.backConverter = backConverter
+        this.backConverter = backConverter ?: EmptyOneWayConverter<T>()
     }
 
     constructor(keys: List<String>, observer: Action1<in T>, multipleConverter: MultipleConverter<T> ) : this(keys.first()) {
