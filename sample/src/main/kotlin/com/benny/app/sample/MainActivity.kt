@@ -17,6 +17,7 @@ import com.benny.app.sample.viewmodel.LoginViewModel
 import com.benny.library.neobinding.drawable.*
 import com.benny.library.neobinding.view.*
 import com.benny.library.neobinding.bind.BindingMode
+import com.benny.library.neobinding.bind.ViewBindingProperty
 import com.benny.library.neobinding.converter.*
 
 
@@ -29,6 +30,8 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        BindableLayout.addBindingExtension(ViewBindingProperty.Click().javaClass, ClickBindingExtension())
+
 
         MainActivityUI().setContentView(this).bindTo(bindingContext, viewModel)
     }
