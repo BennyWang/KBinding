@@ -87,8 +87,11 @@ Binding
     MainActivityUI().setContentView(activity).bindTo(bindingContext, LoginViewModel(delegate object))
     
 ## Extend Binding Property 
+
 Event
+    
     val BindingPropertyProvider.clickProp: ViewBindingProperty.Click get() = ViewBindingProperty.Click()
+    
     class ClickBindingExtension: BindingExtension<ViewBindingProperty.Click, View, Any> {
         override fun bind(view: View, bindingAssembler: BindingAssembler, prop: ViewBindingProperty.Click, path: String): Unit {
             bindingAssembler.addCommandBinding(path, view.clicks(), view.enabled())
@@ -96,7 +99,9 @@ Event
     }
 
 Property
+
     val BindingPropertyProvider.enabledProp: ViewBindingProperty.Enabled get() = ViewBindingProperty.Enabled()
+    
     class EnabledBindingExtension: BindingExtension<ViewBindingProperty.Enabled, View, Boolean> {
         override fun bind(view: View, bindingAssembler: BindingAssembler, prop: ViewBindingProperty.Enabled, path: String, mode: BindingMode, converter: Any?): Unit {
             when(mode) {
