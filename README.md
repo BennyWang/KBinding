@@ -1,59 +1,118 @@
 # NeoBinding
-Android View Model binding implement, base on RxJava
+Android View Model binding framework, Simple but powerful.
 
 ## Usage
 
-LoginActivity
+UI Component
 
-    val viewCreator = ViewCreator(ViewModelBinder(bindingContext, { LoginViewModel() }, { LoginBindableView(CommandHandler({ e -> loginFailed(e) }, { user -> loginSuccess(user) })) }), R.layout.activity_login)
-    setContentView(viewCreator.view(this, null))
+    class MainActivityUI : AnkoComponent<MainActivity> {
+        val AnkoContext<MainActivity>.editTextStyle: (View) -> Unit get() = {
+            v: View ->
+            with(this) {
+                if(v is EditText) with(v) {
+                    textSizeDimen = R.dimen.font_38
+                    verticalPadding = dip(8)
+                    horizontalPadding = 0
+                    background = null
+                }
+            }
+        }
 
-LoginBindableView
+        val AnkoContext<MainActivity>.bgButton: Drawable get() = with(this) {
+            stateList {
+                borderRoundRect(dip(2).toFloat(), resources.getColor(R.color.color_20blue)) {
+                    drawableState = intArrayOf(android.R.attr.state_enabled, android.R.attr.state_pressed)
+                }
+                borderRoundRect(dip(2).toFloat(), resources.getColor(R.color.color_8b)) {
+                    drawableState = intArrayOf(-android.R.attr.state_enabled)
+                }
+                borderRoundRect(dip(2).toFloat(), resources.getColor(R.color.color_blue)) {
+                    drawableState = intArrayOf(android.R.attr.state_enabled)
+                }
+            }
+        }
 
-    class LoginBindableView(val loginHandler: CommandHandler<Throwable, User>) : BindableView() {
-
-        override fun inject(bindingContext: BindingContext<*>, view: View) {
-            val etLogin = view.findViewById(R.id.et_login) as EditText
-            val etPassword = view.findViewById(R.id.et_password) as EditText
-            val btnLogin = view.findViewById(R.id.btn_login)
-
-            addTwoWayPropertyBinding(TwoWayPropertyBinding<String, String>(LoginViewModel.PROPERTY_NAME, etLogin.textChanges().map { it.toString() }, etLogin.text()))
-            addTwoWayPropertyBinding(TwoWayPropertyBinding<String, String>(LoginViewModel.PROPERTY_PASSWORD, etPassword.textChanges().map { it.toString() }, etPassword.text()))
-            addMultiplePropertyBinding(OneWayPropertyBinding<Boolean, String>(listOf(LoginViewModel.PROPERTY_NAME, LoginViewModel.Companion.PROPERTY_PASSWORD), btnLogin.enabled(), ArrayToBooleanConverter()))
-            addCommandBinding(CommandBinding(LoginViewModel.COMMAND_LOGIN, btnLogin.clicks(), loginHandler, btnLogin.enabled()))
+        override fun createView(ui: AnkoContext<MainActivity>) = with(ui) {
+            bindableLayout {
+                verticalLayout {
+                    verticalLayout {
+                        backgroundColor = Color.WHITE
+                        leftPadding = dip(14)
+                        editText {
+                            hint = "请输入手机号或者电子邮箱地址"
+                            bind(textProp, path="name", mode = BindingMode.TwoWay)
+                        }.lparams(width = matchParent)
+                        view { backgroundResource = R.color.color_f2 }.lparams(width = matchParent, height = 1)
+                        editText {
+                            hint = "请输入密码"
+                            bind(textProp, path="password", mode = BindingMode.TwoWay)
+                        }.lparams(width = matchParent)
+                    }.lparams(width = matchParent)
+                    textView {
+                        text = "登录"
+                        textSizeDimen = R.dimen.font_38
+                        textColor = Color.WHITE
+                        background = bgButton
+                        verticalPadding = dip(10.4f)
+                        isClickable = true
+                        bind(clickProp, path="login")
+                        bind(enabledProp, paths=listOf("name", "password"), converter = ArrayToBooleanConverter())
+                    }.lparams(width = matchParent) { margin = dip(14) }.let { it.gravity = Gravity.CENTER }
+                }.style(editTextStyle)
+            }
         }
     }
     
-LoginViewModel
+ViewModel
 
-    class LoginViewModel : BindableModel<User>() {
-        companion object {
-            public val PROPERTY_NAME = "property_login_name"
-            public val PROPERTY_PASSWORD = "property_login_password"
-            public val COMMAND_LOGIN = "command_login"
+    class LoginViewModel(val delegate: LoginViewModel.LoginDelegate) : ViewModel<String>() {
+
+        var level: Int by Delegates.bindProperty("level", 3)
+        var name: String by Delegates.bindProperty("name", "xxxxxxx@xxxxx.com")
+        var password: String by Delegates.bindProperty("password", "xxxxxxxxx")
+
+        val login: Command<String> by Delegates.bindCommand("login", { if(name.equals("wangbin")) "SUCCESS" else throw RuntimeException("Incorrect name or password") }, { t: String -> delegate.onLoginSuccess(t)}, { e -> delegate.onLoginFailed(e)})
+
+        override fun notifyPropertyChange(t: String?) {
         }
 
-        override fun notifyPropertyChange(t: User?) {
+        interface LoginDelegate {
+            fun onLoginSuccess(s: String)
+            fun onLoginFailed(e: Throwable)
         }
+    }
+    
+Binding
 
-        override fun initProperty() {
-            addProperty(PROPERTY_NAME, Property("xxxxxx@xxx.com"))
-            addProperty(PROPERTY_PASSWORD, Property("xxxxxxxxxx"))
+    MainActivityUI().setContentView(activity).bindTo(bindingContext, LoginViewModel(delegate object))
+    
+## Extend Binding Property 
+
+Event
+    
+    val BindingPropertyProvider.clickProp: ViewBindingProperty.Click get() = ViewBindingProperty.Click()
+    
+    class ClickBindingExtension: BindingExtension<ViewBindingProperty.Click, View, Any> {
+        override fun bind(view: View, bindingAssembler: BindingAssembler, prop: ViewBindingProperty.Click, path: String): Unit {
+            bindingAssembler.addCommandBinding(path, view.clicks(), view.enabled())
         }
+    }
 
-        override fun initCommand() {
-            addCommand(COMMAND_LOGIN, Command<User>(Observable.defer { this.observableForLogin() }))
+Property
+
+    val BindingPropertyProvider.enabledProp: ViewBindingProperty.Enabled get() = ViewBindingProperty.Enabled()
+    
+    class EnabledBindingExtension: BindingExtension<ViewBindingProperty.Enabled, View, Boolean> {
+        override fun bind(view: View, bindingAssembler: BindingAssembler, prop: ViewBindingProperty.Enabled, path: String, mode: BindingMode, converter: Any?): Unit {
+            when(mode) {
+                BindingMode.OneWay -> {
+                    bindingAssembler.addOneWayPropertyBinding(path, view.enabled(), converter as? OneWayConverter<Boolean> ?: EmptyOneWayConverter<Boolean>())
+                }
+                BindingMode.OneWayToSource -> throw UnsupportedOperationException("OneWayToSource not allowed for enabled")
+                BindingMode.TwoWay -> throw UnsupportedOperationException("TwoWay not allowed for enabled")
+            }
         }
-
-        private fun ensureInputValid() {
-            val name = property<String>(PROPERTY_NAME).value
-            val password = property<String>(PROPERTY_PASSWORD).value
-
-            if (name.isNullOrEmpty() || password.isNullOrEmpty()) throw RuntimeException(if (name.isNullOrEmpty()) "用户名不能为空" else "密码不能为空")
-        }
-
-        private fun observableForLogin(): Observable<User> {
-            ensureInputValid()
-            return CaishuoService.getInstance().login(property<String>(PROPERTY_NAME).value, property<String>(PROPERTY_PASSWORD).value)
+        override fun bind(view: View, bindingAssembler: BindingAssembler, prop: ViewBindingProperty.Enabled, paths: List<String>, converter: MultipleConverter<Boolean>): Unit {
+            bindingAssembler.addMultiplePropertyBinding(paths, view.enabled(), converter)
         }
     }
