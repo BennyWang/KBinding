@@ -10,5 +10,5 @@ import com.benny.library.neobinding.bind.ViewModel
 
 interface ViewBinder {
     val view: View
-    fun bindTo(bindingContext: BindingContext<*>, viewModel: ViewModel<*>)
+    fun bindTo(bindingContext: BindingContext, viewModel: ViewModel<*>)
 }

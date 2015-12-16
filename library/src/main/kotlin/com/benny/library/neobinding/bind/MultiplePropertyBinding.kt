@@ -11,7 +11,7 @@ import rx.functions.Action1
  */
 
 public class MultiplePropertyBinding<T>(val keys: List<String>, val observer: Action1<in T>, val multipleConverter: MultipleConverter<T>) : PropertyBinding() {
-    public fun bindTo(bindingContext: BindingContext<*>, properties: List<Property<*>>) {
+    public fun bindTo(bindingContext: BindingContext, properties: List<Property<*>>) {
         Observable.combineLatest(properties.map { property -> property.observable }, { multipleConverter.convert(it) })
                 .compose(bindingContext.applyLifecycle<T>())
                 .subscribe(observer)

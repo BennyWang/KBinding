@@ -27,7 +27,7 @@ public class OneWayPropertyBinding<T, R> private constructor(public val key: Str
         this.backConverter = backConverter ?: EmptyOneWayConverter<T>()
     }
 
-    public fun bindTo(bindingContext: BindingContext<*>, property: Property<R>) {
+    public fun bindTo(bindingContext: BindingContext, property: Property<R>) {
         if (observable != null) {
             observable!!.compose(bindingContext.applyLifecycle<T>())
                     .map { (converter as OneWayConverter<R>).convert(it as Any) }

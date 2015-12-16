@@ -32,21 +32,21 @@ abstract public class ViewModel<T> {
         commands.put(key, command)
     }
 
-    fun bindProperty(bindingContext: BindingContext<*>, observer: OneWayPropertyBinding<*, *>) {
+    fun bindProperty(bindingContext: BindingContext, observer: OneWayPropertyBinding<*, *>) {
         observer.bindTo(bindingContext, property<Any>(observer.key))
     }
 
-    fun bindProperty(bindingContext: BindingContext<*>, observable: TwoWayPropertyBinding<*, *>) {
+    fun bindProperty(bindingContext: BindingContext, observable: TwoWayPropertyBinding<*, *>) {
         observable.bindTo(bindingContext, property<Any>(observable.key))
     }
 
-    fun bindProperties(bindingContext: BindingContext<*>, observer: MultiplePropertyBinding<*>) {
+    fun bindProperties(bindingContext: BindingContext, observer: MultiplePropertyBinding<*>) {
         val props = ArrayList<Property<*>>()
         observer.keys?.forEach { key -> props.add(property<Any>(key)) }
         observer.bindTo(bindingContext, props)
     }
 
-    fun bindCommand(bindingContext: BindingContext<*>, observable: CommandBinding) {
+    fun bindCommand(bindingContext: BindingContext, observable: CommandBinding) {
         observable.bindTo(bindingContext, command(observable.key))
     }
 

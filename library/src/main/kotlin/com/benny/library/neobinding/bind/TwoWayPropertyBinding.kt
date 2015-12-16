@@ -14,7 +14,7 @@ import rx.functions.Func1
 public class TwoWayPropertyBinding<T, R>(public val key: String, val observable: Observable<T>, val observer: Action1<in T>, converter: TwoWayConverter<T, R>? = EmptyTwoWayConverter()) : PropertyBinding() {
     val converter: TwoWayConverter<T, R> = converter ?: EmptyTwoWayConverter()
 
-    public fun bindTo(bindingContext: BindingContext<*>, property: Property<R>) {
+    public fun bindTo(bindingContext: BindingContext, property: Property<R>) {
         val breaker = CircleBreaker<T>()
         observable.filter(breaker)
                 .map { converter.convert(it as Any) }.compose(bindingContext.applyLifecycle<R>())

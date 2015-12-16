@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.EditText
-import com.trello.rxlifecycle.ActivityEvent
+import com.benny.app.sample.extension.bindingContext
 import com.trello.rxlifecycle.components.support.RxFragmentActivity
 import org.jetbrains.anko.*
 
@@ -20,14 +20,10 @@ import com.benny.library.neobinding.converter.*
 class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
     val viewModel = LoginViewModel(this)
 
-    protected val bindingContext: BindingContext<ActivityEvent> by lazy {
-        BindingContext(this, lifecycle(), ActivityEvent.DESTROY)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        MainActivityUI().setContentView(this).bindTo(bindingContext, viewModel)
+        MainActivityUI().setContentView(this).bindTo(bindingContext(this), viewModel)
     }
 
     override fun onLoginSuccess(user: String) {

@@ -9,7 +9,7 @@ import com.benny.library.neobinding.bind.ViewModel
  * Created by benny on 11/18/15.
  */
 
-public open class ViewCreator<T>(val bindingContext: BindingContext<*>, val viewBinderComponent: ViewBinderComponent<*>, val viewModelFactory: () -> ViewModel<T>) : IViewCreator<T> {
+public open class ViewCreator<T>(val bindingContext: BindingContext, val viewBinderComponent: ViewBinderComponent<*>, val viewModelFactory: () -> ViewModel<T>) : IViewCreator<T> {
 
     override fun view(container: ViewGroup): View {
         val viewBinder = viewBinderComponent.createViewBinder(bindingContext.context)
