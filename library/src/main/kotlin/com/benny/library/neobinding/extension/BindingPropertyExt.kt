@@ -1,10 +1,15 @@
-package com.benny.library.neobinding.view
+package com.benny.library.neobinding.extension
 
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.TextView
-import com.benny.library.neobinding.bind.*
-import com.benny.library.neobinding.converter.*
+import com.benny.library.neobinding.bind.BindingAssembler
+import com.benny.library.neobinding.bind.BindingMode
+import com.benny.library.neobinding.bind.PropertyBinding
+import com.benny.library.neobinding.converter.EmptyOneWayConverter
+import com.benny.library.neobinding.converter.MultipleConverter
+import com.benny.library.neobinding.converter.OneWayConverter
+import com.benny.library.neobinding.converter.TwoWayConverter
 import com.jakewharton.rxbinding.view.clicks
 import com.jakewharton.rxbinding.view.enabled
 import com.jakewharton.rxbinding.view.visibility
@@ -14,7 +19,7 @@ import com.jakewharton.rxbinding.widget.textChanges
 import rx.functions.Action1
 
 /**
- * Created by benny on 12/15/15.
+ * Created by benny on 12/16/15.
  */
 
 fun Drawable.level(): Action1<Int> = Action1 { t -> setLevel(t) }

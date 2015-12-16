@@ -16,6 +16,8 @@ import com.benny.library.neobinding.drawable.*
 import com.benny.library.neobinding.view.*
 import com.benny.library.neobinding.converter.*
 
+import com.benny.app.sample.viewcomponent.LoadingItemViewComponent
+import com.benny.library.neobinding.extension.*
 
 class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
     val viewModel = LoginViewModel(this)
@@ -63,6 +65,7 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
 
         override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
+                inflate(LoadingItemViewComponent(), this@verticalLayout)
                 verticalLayout {
                     backgroundColor = Color.WHITE
                     leftPadding = dip(14)

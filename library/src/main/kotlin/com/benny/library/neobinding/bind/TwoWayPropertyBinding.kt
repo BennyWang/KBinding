@@ -11,8 +11,16 @@ import rx.functions.Func1
  * Created by benny on 11/17/15.
  */
 
-public class TwoWayPropertyBinding<T, R>(public val key: String, val observable: Observable<T>, val observer: Action1<in T>, converter: TwoWayConverter<T, R>? = EmptyTwoWayConverter()) : PropertyBinding() {
+public class TwoWayPropertyBinding<T, R>(key: String, val observable: Observable<T>, val observer: Action1<in T>, converter: TwoWayConverter<T, R>? = EmptyTwoWayConverter()) : PropertyBinding() {
+    public var key: String = key
+        private set
+
     val converter: TwoWayConverter<T, R> = converter ?: EmptyTwoWayConverter()
+
+    public fun prefix(prefix: String): TwoWayPropertyBinding<T, R> {
+        if(!prefix.isEmpty()) key = "$prefix.$key"
+        return this
+    }
 
     public fun bindTo(bindingContext: BindingContext, property: Property<R>) {
         val breaker = CircleBreaker<T>()

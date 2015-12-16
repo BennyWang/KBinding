@@ -68,6 +68,13 @@ open public class BindingAssembler {
         commandBindings().forEach { commandBinding -> viewModel.bindCommand(bindingContext, commandBinding) }
     }
 
+    public fun merge(prefix: String, assembler: BindingAssembler) {
+        assembler.oneWayPropertyBindings.forEach { it -> oneWayPropertyBindings.add(it.prefix(prefix)) }
+        assembler.multiplePropertyBindings.forEach { it -> multiplePropertyBindings.add(it.prefix(prefix)) }
+        assembler.twoWayPropertyBindings.forEach { it -> twoWayPropertyBindings.add(it.prefix(prefix)) }
+        assembler.commandBindings.forEach { it -> commandBindings.add(it.prefix(prefix)) }
+    }
+
     public companion object {
         public fun <T, R> oneWayPropertyBinding(key: String, observable: Observable<T>, converter: OneWayConverter<R>? = EmptyOneWayConverter<R>()) : OneWayPropertyBinding<T, R> {
             return OneWayPropertyBinding(key, observable, converter)

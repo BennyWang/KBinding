@@ -3,11 +3,9 @@ package com.benny.library.neobinding.view
 import android.app.Activity
 import android.content.Context
 import android.view.View
+import com.benny.library.neobinding.extension.bindableLayout
 import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext
-import org.jetbrains.anko.UI
-import org.jetbrains.anko.internals.AnkoInternals
-import org.jetbrains.anko.relativeLayout
 
 /**
  * Created by benny on 12/9/15.

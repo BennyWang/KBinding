@@ -10,7 +10,10 @@ import rx.functions.Action1
  * Created by benny on 11/17/15.
  */
 
-public class OneWayPropertyBinding<T, R> private constructor(public val key: String) : PropertyBinding() {
+public class OneWayPropertyBinding<T, R> private constructor(key: String) : PropertyBinding() {
+    public var key:String = key
+        private set
+
     var converter: OneWayConverter<R>? = null
     var backConverter: OneWayConverter<T>? = null
 
@@ -25,6 +28,11 @@ public class OneWayPropertyBinding<T, R> private constructor(public val key: Str
     constructor(key: String, observer: Action1<in T>, backConverter: OneWayConverter<T>? = EmptyOneWayConverter<T>()) : this(key) {
         this.observer = observer
         this.backConverter = backConverter ?: EmptyOneWayConverter<T>()
+    }
+
+    public fun prefix(prefix: String) : OneWayPropertyBinding<T, R> {
+        if(!prefix.isEmpty()) key = "$prefix.$key"
+        return this
     }
 
     public fun bindTo(bindingContext: BindingContext, property: Property<R>) {
