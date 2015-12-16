@@ -27,8 +27,8 @@ import java.util.*
  * Created by benny on 12/12/15.
  */
 
-fun AnkoContext<*>.bind(propertyBinding: PropertyBinding): Unit {
-   if(this is BindableLayout) bindingAssembler.addBinding(propertyBinding)
+fun AnkoContext<*>.bind(propertyBindingFactory: () -> PropertyBinding): Unit {
+   if(this is BindableLayout) bindingAssembler.addBinding(propertyBindingFactory())
 }
 
 public fun Context.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
@@ -45,7 +45,7 @@ public fun AnkoContext<*>.bindableLayout(init: BindableLayout.() -> Unit): Binda
     return bindableLayout
 }
 
-public class BindableLayout(override val ctx: Context) : AnkoContext<Unit>, ViewBinder, BindingPropertyProvider {
+public class BindableLayout(override val ctx: Context) : AnkoContext<Unit>, ViewBinder {
     var childView: View? = null
 
     override val owner: Unit

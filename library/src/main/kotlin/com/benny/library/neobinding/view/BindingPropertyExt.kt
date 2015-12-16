@@ -17,7 +17,7 @@ import rx.functions.Action1
  * Created by benny on 12/15/15.
  */
 
-fun Drawable.level(): Action1<Int> = Action1<Int> { t -> setLevel(t) }
+fun Drawable.level(): Action1<Int> = Action1 { t -> setLevel(t) }
 fun Drawable.level(path: String, mode: BindingMode, converter: Any? = EmptyOneWayConverter<Any>()) : PropertyBinding = when(mode) {
     BindingMode.OneWay -> BindingAssembler.oneWayPropertyBinding<Int, Any>(path, level(), converter as? OneWayConverter<Int>)
     BindingMode.OneWayToSource -> throw UnsupportedOperationException("OneWayToSource not allowed for drawable level")

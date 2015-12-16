@@ -11,24 +11,24 @@ import kotlin.reflect.KProperty
  * Created by benny on 11/17/15.
  */
 abstract public class ViewModel<T> {
-    private val properties : MutableMap<String, Property<*>> = HashMap()
-    private val commands : MutableMap<String, Command<*>> = HashMap()
+    val properties : MutableMap<String, Property<*>> = HashMap()
+    val commands : MutableMap<String, Command> = HashMap()
 
     public fun <T> property(key: String) : Property<T> {
-        val property: Property<T>? = properties.get(key) as Property<T>? ?: throw RuntimeException("invalid key:$key for binding")
+        val property: Property<T>? = properties[key] as Property<T>? ?: throw RuntimeException("invalid key:$key for binding")
         return property as Property<T>;
     }
 
-    public fun <T> command(key: String) : Command<T> {
-        val command: Command<T>? = commands.get(key) as Command<T>? ?: throw RuntimeException("invalid key:$key for binding")
-        return command as Command<T>
+    public fun command(key: String) : Command {
+        val command: Command? = commands[key] ?: throw RuntimeException("invalid key:$key for binding")
+        return command as Command
     }
 
     public fun addProperty(key: String, property: Property<*>) {
         properties.put(key, property)
     }
 
-    public fun addCommand(key: String, command: Command<*>) {
+    public fun addCommand(key: String, command: Command) {
         commands.put(key, command)
     }
 
@@ -47,30 +47,29 @@ abstract public class ViewModel<T> {
     }
 
     fun bindCommand(bindingContext: BindingContext<*>, observable: CommandBinding) {
-        observable.bindTo(bindingContext, command<Any>(observable.key))
+        observable.bindTo(bindingContext, command(observable.key))
     }
 
     public abstract fun notifyPropertyChange(t: T?)
 
     public fun <T> Delegates.bindProperty(key: String, initialValue: T): ReadWriteProperty<Any?, T> {
         this@ViewModel.addProperty(key, Property(initialValue))
+        //support for nested view model
+        if(initialValue is ViewModel<*>) {
+            for((k, v) in initialValue.properties) this@ViewModel.addProperty("$key.$k", v)
+            for((k, v) in initialValue.commands) this@ViewModel.addCommand("$key.$k", v)
+        }
+
         return object : ReadWriteProperty<Any?, T> {
             override fun getValue(thisRef: Any?, property: KProperty<*>): T = property<T>(property.name).value ?: initialValue
             override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) { property<T>(property.name).value = value }
         }
     }
 
-    public fun <T> Delegates.bindCommand(key: String, observable: Observable<T>, onSuccess: (t: T) -> Unit = {}, onError: (e: Throwable) -> Unit = {}): ReadOnlyProperty<Any?, Command<T> > {
-        this@ViewModel.addCommand(key, Command(observable, onSuccess, onError))
-        return object : ReadOnlyProperty<Any?, Command<T> > {
-            override fun getValue(thisRef: Any?, property: KProperty<*>): Command<T> = command(property.name)
-        }
-    }
-
-    public fun <T> Delegates.bindCommand(key: String, action: () -> T, onSuccess: (t: T) -> Unit = {}, onError: (e: Throwable) -> Unit = {}): ReadOnlyProperty<Any?, Command<T> > {
-        this@ViewModel.addCommand(key, Command(action, onSuccess, onError))
-        return object : ReadOnlyProperty<Any?, Command<T> > {
-            override fun getValue(thisRef: Any?, property: KProperty<*>): Command<T> = command(property.name)
+    public fun Delegates.bindCommand(key: String, initialValue: Command): ReadOnlyProperty<Any?, Command > {
+        this@ViewModel.addCommand(key, initialValue)
+        return object : ReadOnlyProperty<Any?, Command > {
+            override fun getValue(thisRef: Any?, property: KProperty<*>): Command = command(property.name)
         }
     }
 }

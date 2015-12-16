@@ -1,12 +1,10 @@
 package com.benny.app.sample
 
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.view.ViewManager
 import android.widget.EditText
 import com.trello.rxlifecycle.ActivityEvent
 import com.trello.rxlifecycle.components.support.RxFragmentActivity
@@ -74,12 +72,12 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
                     leftPadding = dip(14)
                     editText {
                         hint = "请输入手机号或者电子邮箱地址"
-                        bind(text(path="name", mode = BindingMode.TwoWay))
+                        bind { text(path="name", mode = BindingMode.TwoWay) }
                     }.lparams(width = matchParent)
                     view { backgroundResource = R.color.color_f2 }.lparams(width = matchParent, height = 1)
                     editText {
                         hint = "请输入密码"
-                        bind(text(path="password", mode = BindingMode.TwoWay))
+                        bind { text(path="password", mode = BindingMode.TwoWay) }
                     }.lparams(width = matchParent)
                 }.lparams(width = matchParent)
                 textView {
@@ -89,8 +87,8 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
                     background = bgButton
                     verticalPadding = dip(10.4f)
                     isClickable = true
-                    bind(click("login"))
-                    bind(enabled(paths=listOf("name", "password"), converter = ArrayToBooleanConverter()))
+                    bind { click("login") }
+                    bind { enabled(paths=listOf("name", "password"), converter = ArrayToBooleanConverter()) }
                 }.lparams(width = matchParent) { margin = dip(14) }.let { it.gravity = Gravity.CENTER }
             }.style(editTextStyle)
         }

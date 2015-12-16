@@ -1,6 +1,5 @@
 package com.benny.app.sample.viewmodel
 
-import java.lang.RuntimeException
 import com.benny.library.neobinding.bind.ViewModel
 import com.benny.library.neobinding.bind.Command
 import kotlin.properties.Delegates
@@ -14,7 +13,10 @@ class LoginViewModel(val delegate: LoginViewModel.LoginDelegate) : ViewModel<Str
     var name: String by Delegates.bindProperty("name", "xxxxxxx@xxxxx.com")
     var password: String by Delegates.bindProperty("password", "xxxxxxxxx")
 
-    val login: Command<String> by Delegates.bindCommand("login", { if(name.equals("wangbin")) "SUCCESS" else throw RuntimeException("Incorrect name or password") }, { t: String -> delegate.onLoginSuccess(t)}, { e -> delegate.onLoginFailed(e)})
+    val login: Command by Delegates.bindCommand("login", Command { it ->
+        if(name.equals("wangbin")) delegate.onLoginSuccess("wangbin")
+        else delegate.onLoginFailed(RuntimeException("incorrect name or password"))
+    })
 
     override fun notifyPropertyChange(t: String?) {
     }

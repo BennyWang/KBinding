@@ -9,8 +9,8 @@ import rx.functions.Action1
 
 public class CommandBinding(val key: String, val trigger: Observable<Unit>, val canExecute: Action1<in Boolean> = Action1 {}) : PropertyBinding() {
 
-    fun bindTo(bindingContext: BindingContext<*>, command: Command<*>) {
+    fun bindTo(bindingContext: BindingContext<*>, command: Command) {
         trigger.compose(bindingContext.applyLifecycle<Unit>())
-                .subscribe({ command.execute { canExecute.call(it) } })
+                .subscribe { command.execute(canExecute) }
     }
 }
