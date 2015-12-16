@@ -7,8 +7,6 @@ import com.trello.rxlifecycle.FragmentEvent
 import com.trello.rxlifecycle.RxLifecycle
 import com.trello.rxlifecycle.components.ActivityLifecycleProvider
 import com.trello.rxlifecycle.components.FragmentLifecycleProvider
-import com.trello.rxlifecycle.components.support.RxFragment
-import com.trello.rxlifecycle.components.support.RxFragmentActivity
 import rx.Observable
 
 /**

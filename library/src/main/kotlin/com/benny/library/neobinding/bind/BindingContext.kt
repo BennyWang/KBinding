@@ -1,9 +1,6 @@
 package com.benny.library.neobinding.bind
 
 import android.content.Context
-import com.trello.rxlifecycle.ActivityEvent
-import com.trello.rxlifecycle.FragmentEvent
-import com.trello.rxlifecycle.RxLifecycle
 import rx.Observable
 
 /**
@@ -12,5 +9,5 @@ import rx.Observable
 
 public interface BindingContext {
     val context: Context
-    fun <R> applyLifecycle(): Observable.Transformer<R, R>
+    fun <T> applyLifecycle(): Observable.Transformer<T, T>
 }
