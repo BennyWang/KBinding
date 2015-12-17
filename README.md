@@ -80,3 +80,7 @@ Property
         BindingMode.TwoWay -> BindingAssembler.twoWayPropertyBinding(path, textChanges().map { it.toString() }.skip(1), text(), converter as? TwoWayConverter<String, String>)
     }
     fun TextView.text(paths: List<String>, converter: MultipleConverter<CharSequence>) : PropertyBinding = BindingAssembler.multiplePropertyBinding(paths, text(), converter)
+
+## Discussion
+
+QQ Group 516157585
