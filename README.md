@@ -1,5 +1,5 @@
 # KBinding
-Android View Model binding framework, Simple but powerful.
+Android View Model binding framework write in kotlin, Simple but powerful.
 
 ## Usage
 
