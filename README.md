@@ -1,4 +1,4 @@
-# NeoBinding
+# KBinding
 Android View Model binding framework, Simple but powerful.
 
 ## Usage
