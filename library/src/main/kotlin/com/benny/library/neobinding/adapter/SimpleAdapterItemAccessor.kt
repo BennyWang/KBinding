@@ -3,8 +3,7 @@ package com.benny.library.neobinding.adapter
 /**
  * Created by benny on 9/18/15.
  */
-class SimpleAdapterItemAccessor<T> (private val list: List<T>) : AdapterItemAccessor<T> {
-
+class SimpleAdapterItemAccessor<T> (private var list: List<T>) : AdapterItemAccessor<T>, Swappable<SimpleAdapterItemAccessor<T>> {
     override fun size(): Int {
         return list.size
     }
@@ -16,4 +15,9 @@ class SimpleAdapterItemAccessor<T> (private val list: List<T>) : AdapterItemAcce
     override fun isEmpty(): Boolean {
         return list.isEmpty()
     }
+
+    override fun swap(itemAccessor: SimpleAdapterItemAccessor<T>) {
+        list = itemAccessor.list
+    }
+
 }

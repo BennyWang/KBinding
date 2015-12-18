@@ -1,15 +1,21 @@
 package com.benny.library.neobinding.extension
 
 import android.content.Context
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
+import android.widget.ListAdapter
+import android.widget.ListView
+import android.widget.TextView
+import com.benny.library.neobinding.adapter.Swappable
 import com.benny.library.neobinding.bind.PropertyBinding
 import com.benny.library.neobinding.view.BindableLayout
 import com.benny.library.neobinding.view.ViewComponent
 import org.jetbrains.anko.*
 import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.internals.AnkoInternals
+import rx.functions.Action1
 
 /**
  * Created by benny on 12/16/15.
@@ -33,7 +39,6 @@ public fun AnkoContext<*>.inflate(viewComponent: ViewComponent, parent: ViewGrou
     }
 }
 
-
 public fun Context.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
     val bindableLayout = BindableLayout(this)
     bindableLayout.init()
@@ -47,39 +52,19 @@ public fun AnkoContext<*>.bindableLayout(init: BindableLayout.() -> Unit): Binda
     return bindableLayout
 }
 
+public var TextView.textColorResource: Int
+    get() = throw AnkoException("'textColorResource' property does not have a getter")
+    set(v) = setTextColor(context.resources.getColor(v))
 
 public fun ViewManager.progressBar(style: Int, init: android.widget.ProgressBar.() -> Unit): android.widget.ProgressBar {
     return ankoView({ctx: Context -> android.widget.ProgressBar(ctx, null, style)}) { init() }
 }
 
-public fun ViewManager.dip(value: Int): Int = when(this) {
-    is ViewGroup -> context.dip(value)
-    else -> value
+public var android.widget.TextView.textStyle: Int
+    get() = throw AnkoException("'android.widget.TextView.textStyle' property does not have a getter")
+    set(v) = setTypeface(typeface, v)
+
+public fun RecyclerView.swapAdapter() : Action1<RecyclerView.Adapter<RecyclerView.ViewHolder>> {
+    return Action1 { it -> this.swapAdapter(it, false) }
 }
 
-public fun ViewManager.dip(value: Float): Int = when(this) {
-    is ViewGroup -> context.dip(value)
-    else -> value.toInt()
-}
-
-public fun ViewManager.sp(value: Int): Int = when(this) {
-    is ViewGroup -> context.sp(value)
-    else -> value
-}
-public fun ViewManager.sp(value: Float): Int = when(this) {
-    is ViewGroup -> context.sp(value)
-    else -> value.toInt()
-}
-
-public fun ViewManager.px2dip(px: Int): Float = when(this) {
-    is ViewGroup -> context.px2dip(px)
-    else -> px.toFloat()
-}
-public fun ViewManager.px2sp(px: Int): Float = when(this) {
-    is ViewGroup -> context.px2sp(px)
-    else -> px.toFloat()
-}
-public fun ViewManager.dimen(resource: Int): Int = when(this) {
-    is ViewGroup -> context.dimen(resource)
-    else -> throw UnsupportedOperationException()
-}

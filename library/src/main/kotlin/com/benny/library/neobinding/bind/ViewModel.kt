@@ -1,6 +1,8 @@
 package com.benny.library.neobinding.bind;
 
+import com.benny.library.neobinding.converter.MultipleConverter
 import rx.Observable
+import rx.functions.Action1
 import java.util.*
 import kotlin.properties.Delegates
 import kotlin.properties.ReadOnlyProperty
@@ -10,7 +12,7 @@ import kotlin.reflect.KProperty
 /**
  * Created by benny on 11/17/15.
  */
-abstract public class ViewModel<T> {
+abstract public class ViewModel() {
     val properties : MutableMap<String, Property<*>> = HashMap()
     val commands : MutableMap<String, Command> = HashMap()
 
@@ -32,6 +34,12 @@ abstract public class ViewModel<T> {
         commands.put(key, command)
     }
 
+    public fun <T> addDependOf(key: String, keys: List<String>, getter: () -> T) {
+        bindProperties(BindingAssembler.multiplePropertyBinding(keys, Action1{ t -> property<T>(key).observer.onNext(t) }, object : MultipleConverter<T> {
+            override fun convert(params: Array<Any>): T = getter()
+        }))
+    }
+
     fun bindProperty(bindingContext: BindingContext, observer: OneWayPropertyBinding<*, *>) {
         observer.bindTo(bindingContext, property<Any>(observer.key))
     }
@@ -42,20 +50,24 @@ abstract public class ViewModel<T> {
 
     fun bindProperties(bindingContext: BindingContext, observer: MultiplePropertyBinding<*>) {
         val props = ArrayList<Property<*>>()
-        observer.keys?.forEach { key -> props.add(property<Any>(key)) }
+        observer.keys.forEach { key -> props.add(property<Any>(key)) }
         observer.bindTo(bindingContext, props)
+    }
+
+    private fun bindProperties(observer: MultiplePropertyBinding<*>) {
+        val props = ArrayList<Property<*>>()
+        observer.keys.forEach { key -> props.add(property<Any>(key)) }
+        observer.bindTo(props)
     }
 
     fun bindCommand(bindingContext: BindingContext, observable: CommandBinding) {
         observable.bindTo(bindingContext, command(observable.key))
     }
 
-    public abstract fun notifyPropertyChange(t: T?)
-
     public fun <T> Delegates.bindProperty(key: String, initialValue: T): ReadWriteProperty<Any?, T> {
         this@ViewModel.addProperty(key, Property(initialValue))
         //support for nested view model
-        if(initialValue is ViewModel<*>) {
+        if(initialValue is ViewModel) {
             for((k, v) in initialValue.properties) this@ViewModel.addProperty("$key.$k", v)
             for((k, v) in initialValue.commands) this@ViewModel.addCommand("$key.$k", v)
         }
@@ -63,6 +75,25 @@ abstract public class ViewModel<T> {
         return object : ReadWriteProperty<Any?, T> {
             override fun getValue(thisRef: Any?, property: KProperty<*>): T = property<T>(property.name).value ?: initialValue
             override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) { property<T>(property.name).value = value }
+        }
+    }
+
+    public fun <T> Delegates.bindProperty(key: String): ReadWriteProperty<Any?, T?> {
+        this@ViewModel.addProperty(key, Property<T>())
+
+        return object : ReadWriteProperty<Any?, T?> {
+            override fun getValue(thisRef: Any?, property: KProperty<*>): T? = property<T>(property.name).value
+            override fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) { property<T>(property.name).value = value }
+        }
+    }
+
+    public fun <T> Delegates.bindProperty(key: String, keys: List<String>, getter: () -> T): ReadOnlyProperty<Any?, T?> {
+        // dose not need support nested view model
+        this@ViewModel.addProperty(key, Property<T>())
+        addDependOf(key, keys, getter)
+
+        return object : ReadOnlyProperty<Any?, T?> {
+            override fun getValue(thisRef: Any?, property: KProperty<*>): T? = property<T>(property.name).value
         }
     }
 

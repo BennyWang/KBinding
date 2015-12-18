@@ -7,7 +7,7 @@ import kotlin.properties.Delegates
 /**
  * Created by benny on 11/19/15.
  */
-class LoginViewModel(val delegate: LoginViewModel.LoginDelegate) : ViewModel<String>() {
+class LoginViewModel(val delegate: LoginViewModel.LoginDelegate) : ViewModel() {
 
     var level: Int by Delegates.bindProperty("level", 3)
     var name: String by Delegates.bindProperty("name", "xxxxxxx@xxxxx.com")
@@ -17,9 +17,6 @@ class LoginViewModel(val delegate: LoginViewModel.LoginDelegate) : ViewModel<Str
         if(name.equals("wangbin")) delegate.onLoginSuccess("wangbin")
         else delegate.onLoginFailed(RuntimeException("incorrect name or password"))
     })
-
-    override fun notifyPropertyChange(t: String?) {
-    }
 
     interface LoginDelegate {
         fun onLoginSuccess(s: String)

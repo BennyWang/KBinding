@@ -2,45 +2,32 @@ package com.benny.library.neobinding.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.view.ViewGroup
 import com.benny.library.neobinding.bind.ItemViewModel
+import com.benny.library.neobinding.view.IViewCreator
 
 /**
  * Created by benny on 9/17/15.
  */
 
-abstract class RecyclerPagingAdapter<T> (internal var listener: AdapterPagingListener<T>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var hasNextPage = true
 
-    protected class ViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun notifyPropertyChange(data: T?, position: Int) {
-            var tag = itemView.tag
-            if (tag != null && tag is ItemViewModel<*>) {
-                (tag as? ItemViewModel<T>)?.notifyPropertyChange(data, position)
-            }
-        }
+class RecyclerPagingAdapter<T>(val viewCreator: IViewCreator<T>, val itemAccessor: AdapterItemAccessor<T>, listener: AdapterPagingListener<T>) : BaseRecyclerPagingAdapter<T>(listener) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
+        val view = viewCreator.view(parent)
+        return createViewHolder(view)
     }
 
-    protected fun createViewHolder(itemView: View) : RecyclerView.ViewHolder {
-        return ViewHolder<T>(itemView)
+    override fun getItem(position: Int): T? {
+        return itemAccessor.get(position)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as? ViewHolder<T>)?.notifyPropertyChange(getItem(position), position)
-
-        if (position == itemCount - 1 && hasNextPage) {
-            listener.onLoadPage(getItem(position - 1), position)
-        }
+    override fun getCount(): Int {
+        return itemAccessor.size()
     }
 
-    override fun getItemCount(): Int {
-        return if (hasNextPage) countBase() + 1 else countBase()
+    override fun getItemViewType(position: Int): Int {
+        return viewCreator.viewTypeFor(getItem(position), position)
     }
 
-    fun loadComplete(hasNextPage: Boolean) {
-        this.hasNextPage = hasNextPage
-        notifyDataSetChanged()
-    }
-
-    abstract fun getItem(position: Int): T?
-    abstract fun countBase(): Int
 }

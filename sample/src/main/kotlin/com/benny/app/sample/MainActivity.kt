@@ -1,5 +1,6 @@
 package com.benny.app.sample
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -7,16 +8,19 @@ import android.view.Gravity
 import android.view.View
 import android.widget.EditText
 import com.benny.app.sample.extension.bindingContext
+import com.benny.app.sample.model.Stock
+import com.benny.app.sample.network.service.caishuo.CaishuoService
+import com.benny.app.sample.viewcomponent.StockItemView
 import com.trello.rxlifecycle.components.support.RxFragmentActivity
 import org.jetbrains.anko.*
 
 import com.benny.app.sample.viewmodel.LoginViewModel
+import com.benny.app.sample.viewmodel.StockViewModel
 import com.benny.library.neobinding.bind.*
 import com.benny.library.neobinding.drawable.*
 import com.benny.library.neobinding.view.*
 import com.benny.library.neobinding.converter.*
 
-import com.benny.app.sample.viewcomponent.LoadingItemViewComponent
 import com.benny.library.neobinding.extension.*
 
 class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
@@ -24,12 +28,14 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ApplicationContext.init(this)
 
         MainActivityUI().setContentView(this).bindTo(bindingContext(this), viewModel)
     }
 
     override fun onLoginSuccess(user: String) {
         toast("Login success with user " + user)
+        startActivity(Intent(this, StockActivity::class.java))
     }
 
     override fun onLoginFailed(e: Throwable) {
@@ -65,7 +71,6 @@ class MainActivity : RxFragmentActivity(), LoginViewModel.LoginDelegate {
 
         override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
-                inflate(LoadingItemViewComponent(), this@verticalLayout)
                 verticalLayout {
                     backgroundColor = Color.WHITE
                     leftPadding = dip(14)

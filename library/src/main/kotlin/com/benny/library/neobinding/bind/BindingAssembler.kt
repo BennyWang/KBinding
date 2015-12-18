@@ -61,7 +61,7 @@ open public class BindingAssembler {
         }
     }
 
-    public fun bindTo(bindingContext: BindingContext, viewModel: ViewModel<*>) {
+    public fun bindTo(bindingContext: BindingContext, viewModel: ViewModel) {
         oneWayPropertyBindings().forEach { propertyBinding -> viewModel.bindProperty(bindingContext, propertyBinding) }
         twoWayPropertyBindings().forEach { propertyBinding -> viewModel.bindProperty(bindingContext, propertyBinding) }
         multiplePropertyBindings().forEach { propertyBinding -> viewModel.bindProperties(bindingContext, propertyBinding) }

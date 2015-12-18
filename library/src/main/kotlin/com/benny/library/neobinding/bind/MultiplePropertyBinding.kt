@@ -20,6 +20,12 @@ public class MultiplePropertyBinding<T>(keys: List<String>, val observer: Action
                 .subscribe(observer)
     }
 
+    //just for depends property for ViewModel
+    internal fun bindTo(properties: List<Property<*>>) {
+        Observable.combineLatest(properties.map { property -> property.observable }, { multipleConverter.convert(it) })
+                .subscribe(observer)
+    }
+
     public fun prefix(prefix: String) : MultiplePropertyBinding<T> {
         if(!prefix.isEmpty()) keys = keys.map { it -> "$prefix.$it" }
         return this

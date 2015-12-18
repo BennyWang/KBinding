@@ -327,8 +327,42 @@ class _ArcManager(ctx: Context) : _ShapeManager(ctx) {
 inline fun DrawableManager.borderRoundRect(radius: Float, color: Int, init: _LayerManager.() -> Unit) : Drawable {
     return borderRoundRect(radius, color, 0f, Color.TRANSPARENT, init)
 }
+inline fun Context.borderRoundRect(radius: Float, color: Int, init: _LayerManager.() -> Unit) : Drawable {
+    return borderRoundRect(radius, color, 0f, Color.TRANSPARENT, init)
+}
+inline fun AnkoContext<*>.borderRoundRect(radius: Float, color: Int, init: _LayerManager.() -> Unit) : Drawable {
+    return borderRoundRect(radius, color, 0f, Color.TRANSPARENT, init)
+}
 
 inline fun DrawableManager.borderRoundRect(radius: Float, color: Int, strokeWidth: Float, strokeColor: Int, init: _LayerManager.() -> Unit) : Drawable {
+    return layer {
+        roundRect {
+            padding = strokeWidth.toInt()
+            this.radius = radius
+            this.color = strokeColor
+        }
+        roundRect {
+            this.radius = if(radius >= strokeWidth) radius - strokeWidth else 0f
+            this.color = color
+        }
+        init()
+    }
+}
+inline fun Context.borderRoundRect(radius: Float, color: Int, strokeWidth: Float, strokeColor: Int, init: _LayerManager.() -> Unit) : Drawable {
+    return layer {
+        roundRect {
+            padding = strokeWidth.toInt()
+            this.radius = radius
+            this.color = strokeColor
+        }
+        roundRect {
+            this.radius = if(radius >= strokeWidth) radius - strokeWidth else 0f
+            this.color = color
+        }
+        init()
+    }
+}
+inline fun AnkoContext<*>.borderRoundRect(radius: Float, color: Int, strokeWidth: Float, strokeColor: Int, init: _LayerManager.() -> Unit) : Drawable {
     return layer {
         roundRect {
             padding = strokeWidth.toInt()
