@@ -1,6 +1,7 @@
 package com.benny.library.neobinding.bind;
 
 import com.benny.library.neobinding.converter.MultipleConverter
+import com.benny.library.neobinding.converter.OneWayConverter
 import rx.Observable
 import rx.functions.Action1
 import java.util.*
@@ -40,8 +41,18 @@ abstract public class ViewModel() {
         }))
     }
 
+    public fun <T> addDependOf(key: String, path: String, getter: () -> T) {
+        bindProperty(BindingAssembler.oneWayPropertyBinding<T, Any>(path, Action1{ t -> property<T>(key).observer.onNext(t) }, object : OneWayConverter<T> {
+            override fun convert(source: Any?): T = getter()
+        }))
+    }
+
     fun bindProperty(bindingContext: BindingContext, observer: OneWayPropertyBinding<*, *>) {
         observer.bindTo(bindingContext, property<Any>(observer.key))
+    }
+
+    fun bindProperty(observer: OneWayPropertyBinding<*, *>) {
+        observer.bindTo(property<Any>(observer.key))
     }
 
     fun bindProperty(bindingContext: BindingContext, observable: TwoWayPropertyBinding<*, *>) {
@@ -92,6 +103,15 @@ abstract public class ViewModel() {
         this@ViewModel.addProperty(key, Property<T>())
         addDependOf(key, keys, getter)
 
+        return object : ReadOnlyProperty<Any?, T?> {
+            override fun getValue(thisRef: Any?, property: KProperty<*>): T? = property<T>(property.name).value
+        }
+    }
+
+    public fun <T> Delegates.bindProperty(key: String, path: String, getter: () -> T): ReadOnlyProperty<Any?, T?> {
+        // dose not need support nested view model
+        this@ViewModel.addProperty(key, Property<T>())
+        addDependOf(key, path, getter)
         return object : ReadOnlyProperty<Any?, T?> {
             override fun getValue(thisRef: Any?, property: KProperty<*>): T? = property<T>(property.name).value
         }
