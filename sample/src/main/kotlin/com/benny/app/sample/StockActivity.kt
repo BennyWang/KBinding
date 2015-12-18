@@ -1,39 +1,42 @@
 package com.benny.app.sample
 
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.View
-import android.widget.EditText
 import com.benny.app.sample.extension.bindingContext
 import com.benny.app.sample.model.Stock
-import com.benny.app.sample.network.service.caishuo.CaishuoService
 import com.benny.app.sample.viewcomponent.StockItemView
+import com.benny.app.sample.viewmodel.SelectedStocksViewModel
 import com.trello.rxlifecycle.components.support.RxFragmentActivity
+import com.benny.app.sample.viewmodel.StockViewModel
+import com.benny.library.neobinding.bind.BindingContext
+import com.benny.library.neobinding.converter.ListToAdapterConverter
+import com.benny.library.neobinding.drawable.color
+import com.benny.library.neobinding.extension.*
+import com.benny.library.neobinding.view.ViewBinderComponent
+import com.benny.library.neobinding.view.ViewCreator
 import org.jetbrains.anko.*
 
-import com.benny.app.sample.viewmodel.LoginViewModel
-import com.benny.app.sample.viewmodel.StockViewModel
-import com.benny.library.neobinding.bind.*
-import com.benny.library.neobinding.drawable.*
-import com.benny.library.neobinding.view.*
-import com.benny.library.neobinding.converter.*
-
-import com.benny.library.neobinding.extension.*
-
 class StockActivity : RxFragmentActivity() {
-    val stockViewModel = StockViewModel()
+    val selectedStocksViewModel = SelectedStocksViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ApplicationContext.init(this)
 
-        StockItemView().setContentView(this).bindTo(bindingContext(this), stockViewModel)
-        CaishuoService.getInstance().followedStocks("1301").subscribe { updateStock(it) }
+        StockActivityUI(bindingContext(this)).setContentView(this).bindTo(bindingContext(this), selectedStocksViewModel)
+        selectedStocksViewModel.fetchStocks()
     }
 
-    fun updateStock(stocks: List<Stock>) {
-        stockViewModel.stock = stocks.first()
+    class StockActivityUI(val bindingContext: BindingContext) : ViewBinderComponent<StockActivityUI> {
+        override fun builder(): AnkoContext<*>.() -> Unit = {
+            val viewCreator = ViewCreator<Stock>(bindingContext, StockItemView(), {StockViewModel()})
+            relativeLayout() {
+                listView {
+                    dividerHeight = dip(-1)
+                    selector = color { color = Color.TRANSPARENT }
+                    bind { adapter(path = "stocks", converter = ListToAdapterConverter(viewCreator)) }
+                }.lparams(matchParent, matchParent)
+            }
+        }
     }
 }

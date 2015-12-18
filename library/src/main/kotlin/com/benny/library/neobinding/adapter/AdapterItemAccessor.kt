@@ -7,4 +7,5 @@ interface AdapterItemAccessor<T> {
     fun size(): Int
     fun get(position: Int): T?
     fun isEmpty(): Boolean
+    fun swap(itemAccessor: AdapterItemAccessor<T>): Unit
 }

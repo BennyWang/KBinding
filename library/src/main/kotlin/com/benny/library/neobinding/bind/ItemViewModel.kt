@@ -12,5 +12,8 @@ public abstract class ItemViewModel<T> : ViewModel() {
 
     public fun notifyPropertyChange(t: T?, position: Int) {
         this.position = position
+        updateData(t)
     }
+
+    abstract fun updateData(t: T?)
 }
