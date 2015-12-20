@@ -1,6 +1,7 @@
 package com.benny.library.neobinding.extension
 
 import android.content.Context
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,15 @@ public fun AnkoContext<*>.bindableLayout(init: BindableLayout.() -> Unit): Binda
     bindableLayout.init()
     AnkoInternals.addView(this, bindableLayout.view)
     return bindableLayout
+}
+
+public fun ViewManager.recyclerView(init: RecyclerView.() -> Unit): RecyclerView {
+    val recyclerViewFactory: (Context) -> RecyclerView = { ctx ->
+        val recyclerView: RecyclerView = RecyclerView(ctx)
+        recyclerView.layoutManager = LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false)
+        recyclerView
+    }
+    return ankoView(recyclerViewFactory, init)
 }
 
 public var TextView.textColorResource: Int

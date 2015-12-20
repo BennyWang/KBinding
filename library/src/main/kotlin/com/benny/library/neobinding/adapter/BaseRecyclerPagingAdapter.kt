@@ -9,7 +9,7 @@ import com.benny.library.neobinding.view.IViewCreator
  * Created by benny on 12/18/15.
  */
 
-abstract class BaseRecyclerPagingAdapter<T> (viewCreator: IViewCreator<T>, itemAccessor: AdapterItemAccessor<T>) : BaseRecyclerAdapter<T>(viewCreator, itemAccessor) {
+class BaseRecyclerPagingAdapter<T> (viewCreator: IViewCreator<T>, itemAccessor: AdapterItemAccessor<T>) : BaseRecyclerAdapter<T>(viewCreator, itemAccessor) {
     private var hasNextPage = true
     private var loading = false
 

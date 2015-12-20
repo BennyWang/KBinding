@@ -10,6 +10,7 @@ import com.trello.rxlifecycle.components.support.RxFragmentActivity
 import com.benny.app.sample.viewmodel.StockViewModel
 import com.benny.library.neobinding.bind.BindingContext
 import com.benny.library.neobinding.converter.ListToAdapterConverter
+import com.benny.library.neobinding.converter.ListToRecyclerAdapterConverter
 import com.benny.library.neobinding.drawable.color
 import com.benny.library.neobinding.extension.*
 import com.benny.library.neobinding.view.ViewBinderComponent
@@ -31,10 +32,9 @@ class StockActivity : RxFragmentActivity() {
         override fun builder(): AnkoContext<*>.() -> Unit = {
             val viewCreator = ViewCreator<Stock>(bindingContext, StockItemView(), {StockViewModel()})
             relativeLayout() {
-                listView {
-                    dividerHeight = dip(-1)
-                    selector = color { color = Color.TRANSPARENT }
-                    bind { adapter(path = "stocks", converter = ListToAdapterConverter(viewCreator)) }
+                recyclerView {
+                    backgroundColor = Color.GREEN
+                    bind { adapter(path = "stocks", converter = ListToRecyclerAdapterConverter(viewCreator)) }
                 }.lparams(matchParent, matchParent)
             }
         }

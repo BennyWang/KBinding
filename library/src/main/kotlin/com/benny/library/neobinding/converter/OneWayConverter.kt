@@ -36,3 +36,15 @@ class ListToPagingAdapterConverter<T>(val viewCreator: IViewCreator<T>, val item
         return BaseListPagingAdapter(viewCreator, itemAccessorFactory(source as List<T>))
     }
 }
+
+class ListToRecyclerAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> AdapterItemAccessor<T> = { list -> SimpleAdapterItemAccessor(list) } ) : OneWayConverter<BaseRecyclerAdapter<T>> {
+    override fun convert(source: Any?): BaseRecyclerAdapter<T> {
+        return BaseRecyclerAdapter(viewCreator, itemAccessorFactory(source as List<T>))
+    }
+}
+
+class ListToRecyclerPagingAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> AdapterItemAccessor<T> = { list -> SimpleAdapterItemAccessor(list) } ) : OneWayConverter<BaseRecyclerPagingAdapter<T>> {
+    override fun convert(source: Any?): BaseRecyclerPagingAdapter<T> {
+        return BaseRecyclerPagingAdapter(viewCreator, itemAccessorFactory(source as List<T>))
+    }
+}

@@ -1,6 +1,7 @@
 package com.benny.library.neobinding.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import com.benny.library.neobinding.bind.ItemViewModel
@@ -22,17 +23,21 @@ open class BaseRecyclerAdapter<T> (val viewCreator: IViewCreator<T>, val itemAcc
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
+        Log.d("BaseRecyclerAdapter", "onCreateViewHolder")
         return createViewHolder(viewCreator.view(parent))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        Log.d("BaseRecyclerAdapter", "onBindViewHolder position is " + position)
         (holder as ViewHolder<T>).notifyPropertyChange(itemAccessor.get(position), position)
     }
 
     override fun getItemViewType(position: Int): Int {
         return viewCreator.viewTypeFor(itemAccessor.get(position), position)
     }
+
     override fun getItemCount(): Int {
+        Log.d("BaseRecyclerAdapter", "get count is " + itemAccessor.size())
         return itemAccessor.size()
     }
 
