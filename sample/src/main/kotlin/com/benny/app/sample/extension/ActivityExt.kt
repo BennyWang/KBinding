@@ -29,7 +29,7 @@ public fun FragmentLifecycleProvider.bindingContext(context: Context): BindingCo
         override val context: Context get() = context
 
         override fun <T> applyLifecycle(): Observable.Transformer<T, T> {
-            return RxLifecycle.bindUntilFragmentEvent(lifecycle(), FragmentEvent.DESTROY_VIEW)
+            return RxLifecycle.bindUntilFragmentEvent(lifecycle(), FragmentEvent.DESTROY)
         }
 
     }

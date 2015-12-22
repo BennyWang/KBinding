@@ -53,4 +53,6 @@ dependencies {
 
     compile 'com.trello:rxlifecycle:0.3.0'
     compile 'com.trello:rxlifecycle-components:0.3.0'
+
+    compile 'de.greenrobot:eventbus:2.4.0'
 }

@@ -22,8 +22,9 @@ public class BindableLayout(override val ctx: Context) : AnkoContext<Unit>, View
 
     val bindingAssembler = BindingAssembler()
 
-    public override fun bindTo(bindingContext: BindingContext, viewModel: ViewModel) {
+    public override fun bindTo(bindingContext: BindingContext, viewModel: ViewModel): View {
         bindingAssembler.bindTo(bindingContext, viewModel)
+        return view
     }
 
     public fun bind(propertyBinding: PropertyBinding): Unit {
