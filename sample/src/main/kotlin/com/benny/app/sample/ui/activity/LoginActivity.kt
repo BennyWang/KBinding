@@ -1,19 +1,14 @@
-package com.benny.app.sample.ui.fragment
+package com.benny.app.sample.ui.activity
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.util.Log
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import com.benny.app.sample.R
-import com.benny.app.sample.SampleApplication
-import com.benny.app.sample.ui.dialog.SampleDialog
 import org.jetbrains.anko.*
 
 import com.benny.app.sample.viewmodel.LoginViewModel
@@ -23,27 +18,12 @@ import com.benny.library.neobinding.view.*
 import com.benny.library.neobinding.converter.*
 
 import com.benny.library.neobinding.extension.*
-import org.jetbrains.anko.support.v4.act
-import org.jetbrains.anko.support.v4.toast
 
-class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
+class LoginActivity : BaseActivity(), LoginViewModel.LoginDelegate {
     val viewModel = LoginViewModel(this)
-    var contentView: View? = null
-
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Log.d("LoginFragment", "onCreateView")
-
-        if(contentView == null) {
-            contentView = LoginFragmentUI().createViewBinder(act, this).sBindTo(viewModel)
-        }
-        return contentView
-    }
 
     override fun onLoginSuccess(user: String) {
         toast("Login success with user " + user)
-
-        val dialogFragment: SampleDialog = SampleDialog(viewModel);
-        dialogFragment.show(childFragmentManager, "Sample Fragment");
     }
 
     override fun onLoginFailed(e: Throwable) {
@@ -52,23 +32,15 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("LoginFragment", "onCreate")
+        LoginFragmentUI().setContentView(this).sBindTo(viewModel)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        bindingDisposer.unbind()
         Log.d("LoginFragment", "onDestroy")
-        SampleApplication.getRefWatcher(context).watch(this)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("LoginFragment", "onDestroyView")
-
-    }
-
-    class LoginFragmentUI : ViewBinderComponent<LoginFragment> {
+    class LoginFragmentUI : ViewBinderComponent<LoginActivity> {
         val AnkoContext<*>.editTextStyle: (View) -> Unit get() = {
             v: View ->
             with(this) {

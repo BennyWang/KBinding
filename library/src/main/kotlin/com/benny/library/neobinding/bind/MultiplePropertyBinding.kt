@@ -4,6 +4,7 @@ import com.benny.library.neobinding.converter.EmptyOneWayConverter
 import com.benny.library.neobinding.converter.MultipleConverter
 import com.benny.library.neobinding.converter.OneWayConverter
 import rx.Observable
+import rx.Subscription
 import rx.functions.Action1
 
 /**
@@ -14,16 +15,8 @@ public class MultiplePropertyBinding<T>(keys: List<String>, val observer: Action
     public var keys: List<String> = keys
     private set
 
-    public fun bindTo(bindingContext: BindingContext, properties: List<Property<*>>) {
-        Observable.combineLatest(properties.map { property -> property.observable }, { multipleConverter.convert(it) })
-                .compose(bindingContext.applyLifecycle<T>())
-                .subscribe(observer)
-    }
-
-    //just for depends property for ViewModel
-    internal fun bindTo(properties: List<Property<*>>) {
-        Observable.combineLatest(properties.map { property -> property.observable }, { multipleConverter.convert(it) })
-                .subscribe(observer)
+    public fun bindTo(properties: List<Property<*>>): Subscription {
+        return Observable.combineLatest(properties.map { property -> property.observable }, { multipleConverter.convert(it) }).subscribe(observer)
     }
 
     public fun prefix(prefix: String) : MultiplePropertyBinding<T> {

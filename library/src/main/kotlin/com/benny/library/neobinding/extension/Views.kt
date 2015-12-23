@@ -21,9 +21,9 @@ fun AnkoContext<*>.bind(propertyBindingFactory: () -> PropertyBinding): Unit {
     if(this is BindableLayout) bindingAssembler.addBinding(propertyBindingFactory())
 }
 
-public fun AnkoContext<*>.inflate(viewComponent: ViewComponent, parent: ViewGroup, prefix: String = "") : View = when(this) {
+public fun <T> AnkoContext<T>.inflate(viewComponent: ViewComponent<*>, parent: ViewGroup, prefix: String = "") : View = when(this) {
     is BindableLayout -> {
-        val layout = ctx.bindableLayout { viewComponent.builder()() }
+        val layout = this.bindableLayout { viewComponent.builder()() }
         merge(prefix, layout)
         parent.addView(layout.view)
         layout.view
@@ -35,14 +35,14 @@ public fun AnkoContext<*>.inflate(viewComponent: ViewComponent, parent: ViewGrou
     }
 }
 
-public fun Context.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
+/*public fun Context.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
     val bindableLayout = BindableLayout(this)
     bindableLayout.init()
     AnkoInternals.addView(this, bindableLayout.view)
     return bindableLayout
-}
-public fun AnkoContext<*>.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
-    val bindableLayout = BindableLayout(this.ctx)
+}*/
+public fun <T> AnkoContext<T>.bindableLayout(init: BindableLayout<T>.() -> Unit): BindableLayout<T> {
+    val bindableLayout = BindableLayout(this.ctx, this.owner)
     bindableLayout.init()
     AnkoInternals.addView(this, bindableLayout.view)
     return bindableLayout

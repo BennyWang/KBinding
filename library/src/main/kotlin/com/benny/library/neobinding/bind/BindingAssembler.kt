@@ -3,6 +3,7 @@ package com.benny.library.neobinding.bind
 import com.benny.library.neobinding.converter.*
 import rx.Observable
 import rx.functions.Action1
+import rx.subscriptions.CompositeSubscription
 import java.util.*
 
 /**
@@ -31,26 +32,6 @@ open public class BindingAssembler {
         return commandBindings
     }
 
-    public fun <T, R> addOneWayPropertyBinding(key: String, observable: Observable<T>, converter: OneWayConverter<R>? = EmptyOneWayConverter<R>()) {
-        oneWayPropertyBindings.add(oneWayPropertyBinding(key, observable, converter))
-    }
-
-    public fun <T> addOneWayPropertyBinding(key: String, observer: Action1<in T>, backConverter: OneWayConverter<T>? = EmptyOneWayConverter<T>()) {
-        oneWayPropertyBindings.add(oneWayPropertyBinding<T, Any>(key, observer, backConverter))
-    }
-
-    public fun <T> addMultiplePropertyBinding(keys: List<String>, observer: Action1<in T>, multipleConverter: MultipleConverter<T>) {
-        multiplePropertyBindings.add(multiplePropertyBinding(keys, observer, multipleConverter))
-    }
-
-    public fun <T, R> addTwoWayPropertyBinding(key: String, observable: Observable<T>, observer: Action1<in T>, converter: TwoWayConverter<T, R>? = EmptyTwoWayConverter<T, R>()) {
-        twoWayPropertyBindings.add(twoWayPropertyBinding(key, observable, observer, converter))
-    }
-
-    public fun addCommandBinding(key: String, trigger: Observable<Unit>, canExecute: Action1<in Boolean> = Action1 {}) {
-        commandBindings.add(commandBinding(key, trigger, canExecute))
-    }
-
     public fun addBinding(propertyBinding: PropertyBinding): Unit {
         when (propertyBinding) {
             is CommandBinding -> commandBindings.add(propertyBinding)
@@ -61,11 +42,13 @@ open public class BindingAssembler {
         }
     }
 
-    public fun bindTo(bindingContext: BindingContext, viewModel: ViewModel) {
-        oneWayPropertyBindings().forEach { propertyBinding -> viewModel.bindProperty(bindingContext, propertyBinding) }
-        twoWayPropertyBindings().forEach { propertyBinding -> viewModel.bindProperty(bindingContext, propertyBinding) }
-        multiplePropertyBindings().forEach { propertyBinding -> viewModel.bindProperties(bindingContext, propertyBinding) }
-        commandBindings().forEach { commandBinding -> viewModel.bindCommand(bindingContext, commandBinding) }
+    public fun bindTo(bindingDisposer: BindingDisposer, viewModel: ViewModel): Unit {
+        val cs: CompositeSubscription = CompositeSubscription()
+        oneWayPropertyBindings().forEach { propertyBinding -> cs.add(propertyBinding.bindTo(viewModel.property<Any>(propertyBinding.key))) }
+        twoWayPropertyBindings().forEach { propertyBinding -> cs.add(propertyBinding.bindTo(viewModel.property<Any>(propertyBinding.key))) }
+        multiplePropertyBindings().forEach { propertyBinding -> cs.add(propertyBinding.bindTo(viewModel.properties(propertyBinding.keys))) }
+        commandBindings().forEach { commandBinding -> cs.add(commandBinding.bindTo(viewModel.command(commandBinding.key))) }
+        bindingDisposer.add { cs.unsubscribe() }
     }
 
     public fun merge(prefix: String, assembler: BindingAssembler) {

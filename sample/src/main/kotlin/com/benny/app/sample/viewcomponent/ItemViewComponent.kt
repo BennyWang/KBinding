@@ -28,8 +28,8 @@ import com.benny.library.neobinding.view.ViewBinderComponent
  * Created by benny on 12/16/15.
  */
 
-class LoadingItemView : ViewBinderComponent<Activity> {
-    override fun builder(): AnkoContext<*>.() -> Unit = {
+class LoadingItemView : ViewBinderComponent<Any> {
+    override fun builder(): AnkoContext<Any>.() -> Unit = {
         frameLayout {
             progressBar (android.R.attr.progressBarStyle) {
                 isIndeterminate = true
@@ -38,7 +38,7 @@ class LoadingItemView : ViewBinderComponent<Activity> {
     }
 }
 
-class StockItemView : ViewBinderComponent<Activity> {
+class StockItemView : ViewBinderComponent<Any> {
     class ChangePercentBackgroundConverter(val context: Context) : MultipleConverter<Drawable> {
         override fun convert(params: Array<Any>): Drawable {
             if(params.size < 2) return context.roundRect{ radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_9) }
@@ -65,7 +65,7 @@ class StockItemView : ViewBinderComponent<Activity> {
         }
     }
 
-    override fun builder(): AnkoContext<*>.() -> Unit = {
+    override fun builder(): AnkoContext<Any>.() -> Unit = {
             relativeLayout {
                 verticalLayout {
                     verticalPadding = dip(7)

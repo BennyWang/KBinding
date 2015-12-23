@@ -22,6 +22,10 @@ abstract public class ViewModel() {
         return property as Property<T>;
     }
 
+    public fun properties(keys: List<String>): List<Property<*>> {
+        return keys.map { it -> property<Any>(it) }
+    }
+
     public fun command(key: String) : Command {
         val command: Command? = commands[key] ?: throw RuntimeException("invalid key:$key for binding")
         return command as Command
@@ -36,46 +40,18 @@ abstract public class ViewModel() {
     }
 
     public fun <T> addDependOf(key: String, keys: List<String>, getter: () -> T) {
-        bindProperties(BindingAssembler.multiplePropertyBinding(keys, Action1{ t -> property<T>(key).observer.onNext(t) }, object : MultipleConverter<T> {
+        BindingAssembler.multiplePropertyBinding(keys, Action1{ t -> property<T>(key).observer.onNext(t) }, object : MultipleConverter<T> {
             override fun convert(params: Array<Any>): T = getter()
-        }))
+        }).bindTo(properties(keys))
     }
 
     public fun <T> addDependOf(key: String, path: String, getter: () -> T) {
-        bindProperty(BindingAssembler.oneWayPropertyBinding<T, Any>(path, Action1{ t -> property<T>(key).observer.onNext(t) }, object : OneWayConverter<T> {
+        BindingAssembler.oneWayPropertyBinding<T, Any>(path, Action1{ t -> property<T>(key).observer.onNext(t) }, object : OneWayConverter<T> {
             override fun convert(source: Any?): T = getter()
-        }))
+        }).bindTo(property(path))
     }
 
-    fun bindProperty(bindingContext: BindingContext, observer: OneWayPropertyBinding<*, *>) {
-        observer.bindTo(bindingContext, property<Any>(observer.key))
-    }
-
-    fun bindProperty(observer: OneWayPropertyBinding<*, *>) {
-        observer.bindTo(property<Any>(observer.key))
-    }
-
-    fun bindProperty(bindingContext: BindingContext, observable: TwoWayPropertyBinding<*, *>) {
-        observable.bindTo(bindingContext, property<Any>(observable.key))
-    }
-
-    fun bindProperties(bindingContext: BindingContext, observer: MultiplePropertyBinding<*>) {
-        val props = ArrayList<Property<*>>()
-        observer.keys.forEach { key -> props.add(property<Any>(key)) }
-        observer.bindTo(bindingContext, props)
-    }
-
-    private fun bindProperties(observer: MultiplePropertyBinding<*>) {
-        val props = ArrayList<Property<*>>()
-        observer.keys.forEach { key -> props.add(property<Any>(key)) }
-        observer.bindTo(props)
-    }
-
-    fun bindCommand(bindingContext: BindingContext, observable: CommandBinding) {
-        observable.bindTo(bindingContext, command(observable.key))
-    }
-
-    public fun <T> Delegates.bindProperty(key: String, initialValue: T): ReadWriteProperty<Any?, T> {
+    protected fun <T> Delegates.bindProperty(key: String, initialValue: T): ReadWriteProperty<Any?, T> {
         this@ViewModel.addProperty(key, Property(initialValue))
         //support for nested view model
         if(initialValue is ViewModel) {
@@ -89,7 +65,7 @@ abstract public class ViewModel() {
         }
     }
 
-    public fun <T> Delegates.bindProperty(key: String): ReadWriteProperty<Any?, T?> {
+    protected fun <T> Delegates.bindProperty(key: String): ReadWriteProperty<Any?, T?> {
         this@ViewModel.addProperty(key, Property<T>())
 
         return object : ReadWriteProperty<Any?, T?> {
@@ -98,7 +74,7 @@ abstract public class ViewModel() {
         }
     }
 
-    public fun <T> Delegates.bindProperty(key: String, keys: List<String>, getter: () -> T): ReadOnlyProperty<Any?, T?> {
+    protected fun <T> Delegates.bindProperty(key: String, keys: List<String>, getter: () -> T): ReadOnlyProperty<Any?, T?> {
         // dose not need support nested view model
         this@ViewModel.addProperty(key, Property<T>())
         addDependOf(key, keys, getter)
@@ -108,7 +84,7 @@ abstract public class ViewModel() {
         }
     }
 
-    public fun <T> Delegates.bindProperty(key: String, path: String, getter: () -> T): ReadOnlyProperty<Any?, T?> {
+    protected fun <T> Delegates.bindProperty(key: String, path: String, getter: () -> T): ReadOnlyProperty<Any?, T?> {
         // dose not need support nested view model
         this@ViewModel.addProperty(key, Property<T>())
         addDependOf(key, path, getter)
@@ -117,7 +93,7 @@ abstract public class ViewModel() {
         }
     }
 
-    public fun Delegates.bindCommand(key: String, initialValue: Command): ReadOnlyProperty<Any?, Command > {
+    protected fun Delegates.bindCommand(key: String, initialValue: Command): ReadOnlyProperty<Any?, Command > {
         this@ViewModel.addCommand(key, initialValue)
         return object : ReadOnlyProperty<Any?, Command > {
             override fun getValue(thisRef: Any?, property: KProperty<*>): Command = command(property.name)

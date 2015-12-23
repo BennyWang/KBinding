@@ -6,15 +6,21 @@ import android.view.View
 import com.benny.library.neobinding.extension.bindableLayout
 import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.AnkoContextImpl
 
 /**
  * Created by benny on 12/9/15.
  */
 
-interface ViewBinderComponent<T> : AnkoComponent<T>, ViewComponent {
-    fun createViewBinder(context: Context): ViewBinder {
+interface ViewBinderComponent<T> : AnkoComponent<T>, ViewComponent<T> {
+    fun createViewBinder(ankoContext: AnkoContext<T>): ViewBinder {
         val viewBuilder = builder()
-        return context.bindableLayout { this@bindableLayout.viewBuilder() }
+        return ankoContext.bindableLayout { this@bindableLayout.viewBuilder() }
+    }
+
+    fun createViewBinder(ctx: Context, owner: T): ViewBinder {
+        val viewBuilder = builder()
+        return AnkoContext.create(ctx, owner).bindableLayout { this@bindableLayout.viewBuilder() }
     }
 
     //just for preview
@@ -23,8 +29,7 @@ interface ViewBinderComponent<T> : AnkoComponent<T>, ViewComponent {
         this.viewBuilder()
         return view
     }
-
-    fun setContentView(activity: Activity) : ViewBinder {
-        return createViewBinder(activity).apply { activity.setContentView(view) }
-    }
 }
+
+fun ViewBinderComponent<out Activity>.setContentView(activity: Activity) =
+        createViewBinder(AnkoContextImpl(activity, activity, true))

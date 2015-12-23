@@ -10,6 +10,7 @@ import java.util.*
  */
 
 public class ViewCreatorCollection<T> : IViewCreator<T> {
+
     private var viewTypeBegin = 0
     internal var lastViewType = -1
 
@@ -36,12 +37,12 @@ public class ViewCreatorCollection<T> : IViewCreator<T> {
         return viewTypeFilters.size
     }
 
-    fun add(filter: Func2<T, Int, Boolean>, viewCreator: ViewCreator<*>): ViewCreatorCollection<T> {
+    fun add(filter: Func2<T, Int, Boolean>, viewCreator: ViewCreator): ViewCreatorCollection<T> {
         viewTypeFilters.add(ViewTypeFilter(filter, viewCreator, viewTypeBegin++))
         return this
     }
 
-    private class ViewTypeFilter<T>(val filter: Func2<T, Int, Boolean>, val creator: ViewCreator<*>, val viewType: Int) {
+    private class ViewTypeFilter<T>(val filter: Func2<T, Int, Boolean>, val creator: ViewCreator, val viewType: Int) {
         fun canProcess(data: T?, position: Int): Boolean {
             return filter.call(data, position)
         }

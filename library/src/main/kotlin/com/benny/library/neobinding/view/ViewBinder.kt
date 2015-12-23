@@ -1,7 +1,7 @@
 package com.benny.library.neobinding.view
 
 import android.view.View
-import com.benny.library.neobinding.bind.BindingContext
+import com.benny.library.neobinding.bind.BindingDisposer
 import com.benny.library.neobinding.bind.ViewModel
 
 /**
@@ -10,5 +10,5 @@ import com.benny.library.neobinding.bind.ViewModel
 
 interface ViewBinder {
     val view: View
-    fun bindTo(bindingContext: BindingContext, viewModel: ViewModel): View
+    fun bindTo(bindingDisposer: BindingDisposer, viewModel: ViewModel): View
 }

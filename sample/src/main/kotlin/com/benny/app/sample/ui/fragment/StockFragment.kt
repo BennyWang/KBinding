@@ -1,46 +1,70 @@
 package com.benny.app.sample.ui.fragment
 
-import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.benny.app.sample.ApplicationContext
-import com.benny.app.sample.extension.bindingContext
-import com.benny.app.sample.model.Stock
-import com.benny.app.sample.viewcomponent.StockItemView
-import com.benny.app.sample.viewmodel.SelectedStocksViewModel
-import com.trello.rxlifecycle.components.support.RxFragmentActivity
-import com.benny.app.sample.viewmodel.StockViewModel
-import com.benny.library.neobinding.bind.BindingContext
+import com.benny.app.sample.SampleApplication
+import org.jetbrains.anko.*
+import org.jetbrains.anko.support.v4.act
+import kotlin.properties.Delegates
+
+import com.benny.library.neobinding.bind.ViewModel
 import com.benny.library.neobinding.converter.ListToRecyclerAdapterConverter
 import com.benny.library.neobinding.extension.*
 import com.benny.library.neobinding.view.ViewBinderComponent
-import com.benny.library.neobinding.view.ViewCreator
-import com.trello.rxlifecycle.components.support.RxFragment
-import org.jetbrains.anko.*
-import org.jetbrains.anko.support.v4.act
+import com.benny.app.sample.model.Stock
+import com.benny.app.sample.network.service.caishuo.CaishuoService
+import com.benny.app.sample.viewcomponent.StockItemView
+import com.benny.app.sample.viewmodel.StockViewModel
 
-class StockFragment : RxFragment() {
+class StockFragment : BaseFragment() {
     val selectedStocksViewModel = SelectedStocksViewModel()
     var contentView: View? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Log.d("StockFragment", "onCreateView")
+
         if(contentView == null) {
-            contentView = StockFragmentUI().createViewBinder(act).bindTo(bindingContext(act), selectedStocksViewModel)
+            contentView = StockFragmentUI().createViewBinder(act, this).sBindTo(selectedStocksViewModel)
             selectedStocksViewModel.fetchStocks()
         }
         return contentView
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("StockFragment", "onCreate")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("StockFragment", "onDestroy")
+        SampleApplication.getRefWatcher(context).watch(this)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("StockFragment", "onDestroyView")
+
+    }
+
     inner class StockFragmentUI() : ViewBinderComponent<StockFragment> {
-        override fun builder(): AnkoContext<*>.() -> Unit = {
-            val viewCreator = ViewCreator<Stock>(bindingContext(act), StockItemView(), { StockViewModel() })
+        override fun builder(): AnkoContext<StockFragment>.() -> Unit = {
             relativeLayout() {
                 recyclerView {
-                    bind { adapter(path = "stocks", converter = ListToRecyclerAdapterConverter(viewCreator)) }
+                    bind { adapter(path = "stocks", converter = ListToRecyclerAdapterConverter(owner.sViewCreator(StockItemView(), { StockViewModel() }))) }
                 }.lparams(matchParent, matchParent)
             }
+        }
+    }
+
+    class SelectedStocksViewModel : ViewModel() {
+        public var stocks: List<Stock>? by Delegates.bindProperty<List<Stock>>("stocks")
+
+        fun fetchStocks() {
+            CaishuoService.getInstance().followedStocks("1301").subscribe { stocks = it }
         }
     }
 }

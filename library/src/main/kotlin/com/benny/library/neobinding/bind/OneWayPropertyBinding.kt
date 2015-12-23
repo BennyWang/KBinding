@@ -4,6 +4,7 @@ import com.benny.library.neobinding.converter.EmptyOneWayConverter
 import com.benny.library.neobinding.converter.MultipleConverter
 import com.benny.library.neobinding.converter.OneWayConverter
 import rx.Observable
+import rx.Subscription
 import rx.functions.Action1
 
 /**
@@ -35,26 +36,11 @@ public class OneWayPropertyBinding<T, R> private constructor(key: String) : Prop
         return this
     }
 
-    public fun bindTo(bindingContext: BindingContext, property: Property<R>) {
+    public fun bindTo(property: Property<R>): Subscription {
         if (observable != null) {
-            observable!!.compose(bindingContext.applyLifecycle<T>())
-                    .map { (converter as OneWayConverter<R>).convert(it as Any) }
-                    .subscribe(property.observer)
-        } else {
-            property.observable
-                    .compose(bindingContext.applyLifecycle<R>())
-                    .map { backConverter!!.convert(it as Any) }
-                    .subscribe(observer)
+            return observable!!.map { (converter as OneWayConverter<R>).convert(it as Any) }.subscribe(property.observer)
         }
-    }
 
-    public fun bindTo(property: Property<R>) {
-        if (observable != null) {
-            observable!!.map { (converter as OneWayConverter<R>).convert(it as Any) }
-                    .subscribe(property.observer)
-        } else {
-            property.observable.map { backConverter!!.convert(it as Any) }
-                    .subscribe(observer)
-        }
+        return property.observable.map { backConverter!!.convert(it as Any) }.subscribe(observer)
     }
 }

@@ -1,78 +1,51 @@
-package com.benny.app.sample.ui.fragment
+package com.benny.app.sample.ui.dialog
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.util.Log
+import android.support.v4.app.DialogFragment
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import com.benny.app.sample.R
-import com.benny.app.sample.SampleApplication
-import com.benny.app.sample.ui.dialog.SampleDialog
+import com.benny.library.neobinding.bind.BindingDisposer
+import com.benny.library.neobinding.bind.BindingMode
+import com.benny.library.neobinding.bind.ViewModel
+import com.benny.library.neobinding.converter.ArrayToBooleanConverter
+import com.benny.library.neobinding.drawable.borderRoundRect
+import com.benny.library.neobinding.drawable.stateList
+import com.benny.library.neobinding.extension.bind
+import com.benny.library.neobinding.extension.click
+import com.benny.library.neobinding.extension.enabled
+import com.benny.library.neobinding.extension.text
+import com.benny.library.neobinding.view.ViewBinderComponent
 import org.jetbrains.anko.*
-
-import com.benny.app.sample.viewmodel.LoginViewModel
-import com.benny.library.neobinding.bind.*
-import com.benny.library.neobinding.drawable.*
-import com.benny.library.neobinding.view.*
-import com.benny.library.neobinding.converter.*
-
-import com.benny.library.neobinding.extension.*
 import org.jetbrains.anko.support.v4.act
-import org.jetbrains.anko.support.v4.toast
 
-class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
-    val viewModel = LoginViewModel(this)
-    var contentView: View? = null
+/**
+ * Created by benny on 12/23/15.
+ */
 
+class SampleDialog(val viewModel: ViewModel) : DialogFragment() {
+    var bindingDisposer: BindingDisposer = BindingDisposer()
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Log.d("LoginFragment", "onCreateView")
-
-        if(contentView == null) {
-            contentView = LoginFragmentUI().createViewBinder(act, this).sBindTo(viewModel)
-        }
-        return contentView
-    }
-
-    override fun onLoginSuccess(user: String) {
-        toast("Login success with user " + user)
-
-        val dialogFragment: SampleDialog = SampleDialog(viewModel);
-        dialogFragment.show(childFragmentManager, "Sample Fragment");
-    }
-
-    override fun onLoginFailed(e: Throwable) {
-        toast(e.message ?: "")
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d("LoginFragment", "onCreate")
+        val viewBinder = LoginFragmentUI().createViewBinder(act, this)
+        viewBinder.bindTo(bindingDisposer, viewModel)
+        return viewBinder.view
     }
 
     override fun onDestroy() {
         super.onDestroy()
         bindingDisposer.unbind()
-        Log.d("LoginFragment", "onDestroy")
-        SampleApplication.getRefWatcher(context).watch(this)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("LoginFragment", "onDestroyView")
-
-    }
-
-    class LoginFragmentUI : ViewBinderComponent<LoginFragment> {
+    class LoginFragmentUI : ViewBinderComponent<SampleDialog> {
         val AnkoContext<*>.editTextStyle: (View) -> Unit get() = {
             v: View ->
             with(this) {
-                if(v is EditText) with(v) {
+                if (v is EditText) with(v) {
                     textSizeDimen = R.dimen.font_38
                     verticalPadding = dip(8)
                     horizontalPadding = 0
@@ -118,7 +91,7 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
                     verticalPadding = dip(10.4f)
                     isClickable = true
                     bind { click("login") }
-                    bind { enabled(paths=listOf("name", "password"), converter = ArrayToBooleanConverter()) }
+                    bind { enabled(paths= listOf("name", "password"), converter = ArrayToBooleanConverter()) }
                 }.lparams(width = matchParent) { margin = dip(14) }.let { it.gravity = Gravity.CENTER }
             }.style(editTextStyle)
         }

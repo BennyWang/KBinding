@@ -1,6 +1,7 @@
 package com.benny.library.neobinding.bind
 
 import rx.Observable
+import rx.Subscription
 import rx.functions.Action1
 
 /**
@@ -16,8 +17,7 @@ public class CommandBinding(key: String, val trigger: Observable<Unit>, val canE
         return this
     }
 
-    fun bindTo(bindingContext: BindingContext, command: Command) {
-        trigger.compose(bindingContext.applyLifecycle<Unit>())
-                .subscribe { command.execute(canExecute) }
+    fun bindTo(command: Command): Subscription {
+        return trigger.subscribe { command.execute(canExecute) }
     }
 }

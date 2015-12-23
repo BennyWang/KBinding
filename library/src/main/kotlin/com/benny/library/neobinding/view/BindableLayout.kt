@@ -11,19 +11,16 @@ import com.benny.library.neobinding.bind.*
  * Created by benny on 12/12/15.
  */
 
-public class BindableLayout(override val ctx: Context) : AnkoContext<Unit>, ViewBinder {
+public class BindableLayout<T>(override val ctx: Context, override val owner: T) : AnkoContext<T>, ViewBinder {
     var childView: View? = null
-
-    override val owner: Unit
-        get() = throw UnsupportedOperationException()
 
     override val view: View
         get() = childView ?: throw IllegalStateException("View was not set previously")
 
     val bindingAssembler = BindingAssembler()
 
-    public override fun bindTo(bindingContext: BindingContext, viewModel: ViewModel): View {
-        bindingAssembler.bindTo(bindingContext, viewModel)
+    public override fun bindTo(bindingDisposer: BindingDisposer, viewModel: ViewModel): View {
+        bindingAssembler.bindTo(bindingDisposer, viewModel)
         return view
     }
 
@@ -31,7 +28,7 @@ public class BindableLayout(override val ctx: Context) : AnkoContext<Unit>, View
         bindingAssembler.addBinding(propertyBinding)
     }
 
-    public fun merge(prefix: String, layout: BindableLayout) {
+    public fun merge(prefix: String, layout: BindableLayout<*>) {
         bindingAssembler.merge(prefix, layout.bindingAssembler)
     }
 

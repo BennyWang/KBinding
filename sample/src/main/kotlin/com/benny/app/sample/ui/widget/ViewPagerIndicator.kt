@@ -170,9 +170,9 @@ class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.O
         }
     }
 
-    companion object {
-        val TOP = 0
-        val BOTTOM = 1
+    public companion object {
+        public val TOP = 0
+        public val BOTTOM = 1
 
         private lateinit var setOnAdapterChangeListenerMethod: Method
         private lateinit var onAdapterChangeListenerInterface: Class<*>

@@ -1,23 +1,24 @@
 package com.benny.app.sample.ui.fragment
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.util.Log
 import com.benny.app.sample.event.BaseEvent
-import com.trello.rxlifecycle.components.support.RxFragment
+import com.benny.library.neobinding.bind.BindingDisposer
+import com.benny.library.neobinding.view.BindingDisposerGenerator
+
 import de.greenrobot.event.EventBus
 
 /**
  * Created by benny on 12/21/15.
  */
 
-open class BaseFragment : RxFragment() {
+open class BaseFragment : Fragment(), BindingDisposerGenerator {
+    override val bindingDisposer: BindingDisposer = BindingDisposer()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        EventBus.getDefault().register(this)
+    override fun onDestroy() {
+        super.onDestroy()
+        bindingDisposer.unbind()
     }
 
-    public fun onEvent(event: BaseEvent) {
-        Log.d("EventBus", "base event")
-    }
 }
