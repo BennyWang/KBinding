@@ -3,7 +3,6 @@ package com.benny.app.sample.ui.activity
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -21,7 +20,7 @@ import com.benny.library.kbinding.extension.click
 import com.benny.library.kbinding.extension.enabled
 import com.benny.library.kbinding.extension.text
 import com.benny.library.kbinding.view.ViewBinderComponent
-import com.benny.library.kbinding.view.setContentView
+import com.benny.library.kbinding.extension.setContentView
 
 class LoginActivity : BaseActivity(), LoginViewModel.LoginDelegate {
     val viewModel = LoginViewModel(this)

@@ -31,5 +31,3 @@ interface ViewBinderComponent<T> : AnkoComponent<T>, ViewComponent<T> {
     }
 }
 
-fun ViewBinderComponent<out Activity>.setContentView(activity: Activity) =
-        createViewBinder(AnkoContextImpl(activity, activity, true))

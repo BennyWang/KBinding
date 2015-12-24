@@ -17,7 +17,8 @@ import com.benny.app.sample.ui.fragment.SampleFragment
 import com.benny.app.sample.ui.fragment.StockFragment
 import com.benny.app.sample.ui.widget.ViewPagerIndicator
 import com.benny.library.kbinding.view.ViewBinderComponent
-import com.benny.library.kbinding.view.setContentView
+import com.benny.library.kbinding.extension.setContentView
+import org.jetbrains.anko.design.coordinatorLayout
 
 
 class MainActivity : FragmentActivity() {

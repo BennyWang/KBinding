@@ -1,5 +1,6 @@
 package com.benny.library.kbinding.extension
 
+import android.app.Activity
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ListAdapter
@@ -12,6 +13,7 @@ import rx.functions.Action1
 import com.benny.library.kbinding.adapter.AdapterPagingListener
 import com.benny.library.kbinding.adapter.BaseListAdapter
 import com.benny.library.kbinding.adapter.BaseRecyclerPagingAdapter
+import com.benny.library.kbinding.view.ViewBinderComponent
 import com.jakewharton.rxbinding.internal.MainThreadSubscription
 import rx.Subscriber
 
@@ -36,6 +38,9 @@ class AdapterViewPagingOnSubscribe(val view: View) : Observable.OnSubscribe<Void
         });
     }
 }
+
+fun ViewBinderComponent<out Activity>.setContentView(activity: Activity) =
+        createViewBinder(AnkoContextImpl(activity, activity, true))
 
 public var TextView.textColorResource: Int
     get() = throw AnkoException("'textColorResource' property does not have a getter")

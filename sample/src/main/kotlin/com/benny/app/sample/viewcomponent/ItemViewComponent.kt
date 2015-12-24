@@ -1,16 +1,12 @@
 package com.benny.app.sample.viewcomponent
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
-import com.benny.app.sample.Constants
 import com.benny.app.sample.R
 import com.benny.app.sample.converter.StockColorConverter
 import com.benny.app.sample.converter.StockPriceChangePercentageConverter

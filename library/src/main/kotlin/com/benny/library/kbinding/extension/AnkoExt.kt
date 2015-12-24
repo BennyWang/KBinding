@@ -36,12 +36,6 @@ public fun <T> AnkoContext<T>.inflate(viewComponent: ViewComponent<*>, parent: V
     }
 }
 
-/*public fun Context.bindableLayout(init: BindableLayout.() -> Unit): BindableLayout {
-    val bindableLayout = BindableLayout(this)
-    bindableLayout.init()
-    AnkoInternals.addView(this, bindableLayout.view)
-    return bindableLayout
-}*/
 public fun <T> AnkoContext<T>.bindableLayout(init: BindableLayout<T>.() -> Unit): BindableLayout<T> {
     val bindableLayout = BindableLayout(this.ctx, this.owner)
     bindableLayout.init()

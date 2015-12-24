@@ -1,5 +1,6 @@
 buildscript {
-    ext.kotlin_version = '1.0.0-beta-3595'
+    ext.kotlin_version = '1.0.0-beta-4584'
+    ext.anko_version = '0.8.1'
     repositories {
         mavenCentral()
     }
@@ -11,16 +12,19 @@ buildscript {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.jfrog.bintray'
+
+version = "0.1.0"
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName version
     }
     buildTypes {
         release {
@@ -36,10 +40,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'com.android.support:recyclerview-v7:23.1.0'
-
-    //compile 'com.trello:rxlifecycle:0.3.0'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
 
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'io.reactivex:rxandroid:1.0.1'
@@ -47,12 +49,27 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding-kotlin:0.3.0'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-    compile 'org.jetbrains.anko:anko-sdk15:0.8' // sdk19, sdk21, sdk23 are also available
-    compile 'org.jetbrains.anko:anko-support-v4:0.8' // In case you need support-v4 bindings
-    compile 'org.jetbrains.anko:anko-appcompat-v7:0.8' // For appcompat-v7 bindings
+    compile "org.jetbrains.anko:anko-common:$anko_version"
 
 }
 repositories {
     mavenCentral()
+}
+
+bintray {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "KBinding"
+        desc = 'Android MVVM framework write by kotlin'
+        websiteUrl = 'https://github.com/BennyWang/KBinding'
+        issueTrackerUrl = 'https://github.com/BennyWang/KBinding/issues'
+        vcsUrl = 'https://github.com/BennyWang/KBinding.git'
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
 }

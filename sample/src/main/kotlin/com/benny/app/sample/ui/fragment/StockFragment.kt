@@ -56,7 +56,7 @@ class StockFragment : BaseFragment() {
         override fun builder(): AnkoContext<StockFragment>.() -> Unit = {
             relativeLayout() {
                 recyclerView {
-                    bind { adapter(path = "stocks", converter = ListToRecyclerAdapterConverter(owner.sViewCreator(StockItemView(), { StockViewModel() }))) }
+                    bind { adapter(path = "stocks", converter = ListToRecyclerAdapterConverter(owner.sViewCreator(StockItemView(), ::StockViewModel))) }
                 }.lparams(matchParent, matchParent)
             }
         }
