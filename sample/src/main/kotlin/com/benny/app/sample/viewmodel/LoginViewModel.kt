@@ -1,7 +1,7 @@
 package com.benny.app.sample.viewmodel
 
-import com.benny.library.neobinding.bind.ViewModel
-import com.benny.library.neobinding.bind.Command
+import com.benny.library.kbinding.bind.ViewModel
+import com.benny.library.kbinding.bind.Command
 import kotlin.properties.Delegates
 
 /**
@@ -14,7 +14,7 @@ class LoginViewModel(val delegate: LoginViewModel.LoginDelegate) : ViewModel() {
     var password: String by Delegates.bindProperty("password", "xxxxxxxxx")
 
     val login: Command by Delegates.bindCommand("login", Command { it ->
-        if(name.equals("wangbin")) delegate.onLoginSuccess("wangbin")
+        if (name.equals("wangbin")) delegate.onLoginSuccess("wangbin")
         else delegate.onLoginFailed(RuntimeException("incorrect name or password"))
     })
 

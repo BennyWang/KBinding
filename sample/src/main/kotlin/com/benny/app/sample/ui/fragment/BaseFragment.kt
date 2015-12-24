@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
 import com.benny.app.sample.event.BaseEvent
-import com.benny.library.neobinding.bind.BindingDisposer
-import com.benny.library.neobinding.view.BindingDisposerGenerator
+import com.benny.library.kbinding.bind.BindingDisposer
+import com.benny.library.kbinding.view.BindingDisposerGenerator
 
 import de.greenrobot.event.EventBus
 

@@ -1,9 +1,9 @@
 package com.benny.app.sample.viewmodel
 
 import com.benny.app.sample.model.Stock
-import com.benny.library.neobinding.bind.ViewModel
-import com.benny.library.neobinding.bind.Command
-import com.benny.library.neobinding.bind.ItemViewModel
+import com.benny.library.kbinding.bind.ViewModel
+import com.benny.library.kbinding.bind.Command
+import com.benny.library.kbinding.bind.ItemViewModel
 import kotlin.properties.Delegates
 
 /**

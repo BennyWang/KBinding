@@ -17,12 +17,12 @@ import com.benny.app.sample.converter.StockPriceChangePercentageConverter
 import com.benny.app.sample.converter.StockPriceConverter
 import com.benny.app.sample.extension.generateViewId
 import com.benny.app.sample.model.Stock
-import com.benny.library.neobinding.converter.MultipleConverter
-import com.benny.library.neobinding.drawable.roundRect
+import com.benny.library.kbinding.converter.MultipleConverter
+import com.benny.library.kbinding.drawable.roundRect
+import com.benny.library.kbinding.extension.*
 import org.jetbrains.anko.*
 
-import com.benny.library.neobinding.extension.*
-import com.benny.library.neobinding.view.ViewBinderComponent
+import com.benny.library.kbinding.view.ViewBinderComponent
 
 /**
  * Created by benny on 12/16/15.

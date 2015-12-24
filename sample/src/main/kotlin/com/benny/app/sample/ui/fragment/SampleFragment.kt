@@ -11,8 +11,8 @@ import com.benny.app.sample.SampleApplication
 import com.benny.app.sample.event.BaseEvent
 import com.benny.app.sample.event.TestEvent
 import com.benny.app.sample.ui.activity.LoginActivity
-import com.benny.library.neobinding.bind.BindingDisposer
-import com.benny.library.neobinding.view.ViewBinderComponent
+import com.benny.library.kbinding.bind.BindingDisposer
+import com.benny.library.kbinding.view.ViewBinderComponent
 import de.greenrobot.event.EventBus
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.UI

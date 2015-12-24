@@ -10,14 +10,16 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.act
 import kotlin.properties.Delegates
 
-import com.benny.library.neobinding.bind.ViewModel
-import com.benny.library.neobinding.converter.ListToRecyclerAdapterConverter
-import com.benny.library.neobinding.extension.*
-import com.benny.library.neobinding.view.ViewBinderComponent
+import com.benny.library.kbinding.bind.ViewModel
+import com.benny.library.kbinding.converter.ListToRecyclerAdapterConverter
+import com.benny.library.kbinding.view.ViewBinderComponent
 import com.benny.app.sample.model.Stock
 import com.benny.app.sample.network.service.caishuo.CaishuoService
 import com.benny.app.sample.viewcomponent.StockItemView
 import com.benny.app.sample.viewmodel.StockViewModel
+import com.benny.library.kbinding.extension.adapter
+import com.benny.library.kbinding.extension.bind
+import com.benny.library.kbinding.extension.recyclerView
 
 class StockFragment : BaseFragment() {
     val selectedStocksViewModel = SelectedStocksViewModel()

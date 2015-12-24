@@ -9,9 +9,9 @@ import com.benny.app.sample.converter.StockPriceConverter
 import com.benny.app.sample.converter.TagBackgroundConverter
 import org.jetbrains.anko.*
 
-import com.benny.library.neobinding.view.ViewBinderComponent
-import com.benny.library.neobinding.converter.OneWayConverter
-import com.benny.library.neobinding.extension.*
+import com.benny.library.kbinding.view.ViewBinderComponent
+import com.benny.library.kbinding.converter.OneWayConverter
+import com.benny.library.kbinding.extension.*
 
 /**
  * Created by benny on 12/17/15.
@@ -30,7 +30,7 @@ class TagTextWidgetView(val textSize: Float, val colorResource: Int, val horizon
     }
 }
 
-class SrockWidgetView(val highlight: Boolean = true) : ViewBinderComponent<Activity> {
+class StockWidgetView(val highlight: Boolean = true) : ViewBinderComponent<Activity> {
     val symbolConverter = object : OneWayConverter<CharSequence> {
         override fun convert(source: Any?): CharSequence = if(source == null) "" else "(" + source.toString() + ")"
     }

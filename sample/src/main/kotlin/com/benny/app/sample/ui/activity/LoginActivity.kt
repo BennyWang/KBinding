@@ -12,12 +12,16 @@ import com.benny.app.sample.R
 import org.jetbrains.anko.*
 
 import com.benny.app.sample.viewmodel.LoginViewModel
-import com.benny.library.neobinding.bind.*
-import com.benny.library.neobinding.drawable.*
-import com.benny.library.neobinding.view.*
-import com.benny.library.neobinding.converter.*
-
-import com.benny.library.neobinding.extension.*
+import com.benny.library.kbinding.bind.BindingMode
+import com.benny.library.kbinding.converter.ArrayToBooleanConverter
+import com.benny.library.kbinding.drawable.borderRoundRect
+import com.benny.library.kbinding.drawable.stateList
+import com.benny.library.kbinding.extension.bind
+import com.benny.library.kbinding.extension.click
+import com.benny.library.kbinding.extension.enabled
+import com.benny.library.kbinding.extension.text
+import com.benny.library.kbinding.view.ViewBinderComponent
+import com.benny.library.kbinding.view.setContentView
 
 class LoginActivity : BaseActivity(), LoginViewModel.LoginDelegate {
     val viewModel = LoginViewModel(this)

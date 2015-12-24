@@ -10,13 +10,14 @@ import com.benny.app.sample.SampleApplication
 import org.jetbrains.anko.support.v4.viewPager
 import org.jetbrains.anko.*
 
-import com.benny.library.neobinding.view.*
 import com.benny.app.sample.extension.generateViewId
 import com.benny.app.sample.ui.extension.viewPagerIndicator
 import com.benny.app.sample.ui.fragment.LoginFragment
 import com.benny.app.sample.ui.fragment.SampleFragment
 import com.benny.app.sample.ui.fragment.StockFragment
 import com.benny.app.sample.ui.widget.ViewPagerIndicator
+import com.benny.library.kbinding.view.ViewBinderComponent
+import com.benny.library.kbinding.view.setContentView
 
 
 class MainActivity : FragmentActivity() {
