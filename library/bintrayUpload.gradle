@@ -1,0 +1,87 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+// load properties
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+def bintrayUser = properties.getProperty("bintray.user")
+def bintrayApikey = properties.getProperty("bintray.apikey")
+
+// read properties
+def projectName         = "KBinding"
+def projectDescription  = "Android MVVM framework write by kotlin"
+def projectGroupId      = "com.benny.kbinding"
+def projectArtifactId   = "KBinding"
+def projectVersionName  = android.defaultConfig.versionName
+def projectPackaging    = "aar"
+def projectSiteUrl      = "https://github.com/BennyWang/KBinding"
+def projectIssueTrackerUrl = "https://github.com/BennyWang/KBinding/issues"
+def projectGitUrl       = "https://github.com/BennyWang/KBinding.git"
+
+def developerId         = "BennyWang"
+def developerName       = "benny"
+def developerEmail      = "bxx.wang@outlook.com"
+
+
+group = projectGroupId
+version = projectVersionName
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging projectPackaging
+                name projectName
+                url projectSiteUrl
+                //groupId projectGroupId
+                //artifactId projectArtifactId
+                //version projectVersionName
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id developerId
+                        name developerName
+                        email developerEmail
+                    }
+                }
+                scm {
+                    connection projectGitUrl
+                    developerConnection projectGitUrl
+                    url projectSiteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+bintray {
+    user = bintrayUser
+    key = bintrayApikey
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = projectName
+        desc = projectDescription
+        websiteUrl = projectSiteUrl
+        issueTrackerUrl = projectIssueTrackerUrl
+        vcsUrl = projectGitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
