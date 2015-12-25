@@ -1,4 +1,4 @@
-package com.benny.library.kbinding.extension
+package com.benny.library.kbinding.dsl
 
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager

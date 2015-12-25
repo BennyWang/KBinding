@@ -1,12 +1,13 @@
-package com.benny.library.kbinding.drawable
+package com.benny.library.kbinding.dsl
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.*
 import android.graphics.drawable.shapes.ArcShape
 import android.graphics.drawable.shapes.RectShape
 import android.graphics.drawable.shapes.RoundRectShape
-import org.jetbrains.anko.AnkoContext
+import android.view.View
 import org.jetbrains.anko.internals.AnkoInternals
 import java.io.InputStream
 import java.util.*
@@ -38,11 +39,8 @@ interface RawDrawableProvider<T: Drawable> : DrawableProvider<T> {
 }
 
 interface DrawableManager {
-    val ctx: Context
     fun addDrawable(drawable: Drawable, params: Any?)
 }
-
-fun AnkoInternals.getContext(manager: DrawableManager): Context = manager.ctx
 
 fun AnkoInternals.addDrawable(manager: DrawableManager, drawable: Drawable) {
     when(manager) {
@@ -51,131 +49,80 @@ fun AnkoInternals.addDrawable(manager: DrawableManager, drawable: Drawable) {
         else -> manager.addDrawable(drawable, null)
     }
 }
-fun AnkoInternals.addDrawable(manager: AnkoContext<*>, drawable: Drawable) {}
-fun AnkoInternals.addDrawable(manager: Context, drawable: Drawable) {}
 
-inline fun <R: Drawable, T : DrawableProvider<R>> DrawableManager.ankoDrawable(factory: (ctx: Context) -> T, init: T.() -> Unit): R {
-    val ctx = AnkoInternals.getContext(this)
-    val manager = factory(ctx)
+inline fun <R: Drawable, T : DrawableProvider<R>> DrawableManager.ankoDrawable(factory: () -> T, init: T.() -> Unit): R {
+    val manager = factory()
     manager.init()
     val drawable = manager.drawable
     AnkoInternals.addDrawable(this, drawable)
     return drawable
 }
 
-inline fun <R: Drawable, T : DrawableProvider<R>> AnkoContext<*>.ankoDrawable(factory: (ctx: Context) -> T, init: T.() -> Unit): R {
-    val manager = factory(this.ctx)
+inline fun <R: Drawable, T : DrawableProvider<R>> ankoDrawable(factory: () -> T, init: T.() -> Unit): R {
+    val manager = factory()
     manager.init()
     val drawable = manager.drawable
-    AnkoInternals.addDrawable(this, drawable)
-    return drawable
-}
-
-inline fun <R: Drawable, T : DrawableProvider<R>> Context.ankoDrawable(factory: (ctx: Context) -> T, init: T.() -> Unit): R {
-    val manager = factory(this)
-    manager.init()
-    val drawable = manager.drawable
-    AnkoInternals.addDrawable(this, drawable)
     return drawable
 }
 
 inline fun DrawableManager.layer(init: _LayerManager.() -> Unit): Drawable {
-    return ankoDrawable({ _LayerManager(ctx) }, init)
+    return ankoDrawable({ _LayerManager() }, init)
 }
-inline fun AnkoContext<*>.layer(init: _LayerManager.() -> Unit): Drawable {
-    return ankoDrawable({ _LayerManager(ctx) }, init)
+inline fun layer(init: _LayerManager.() -> Unit): Drawable {
+    return ankoDrawable({ _LayerManager() }, init)
 }
-inline fun Context.layer(init: _LayerManager.() -> Unit): Drawable {
-    return ankoDrawable({ _LayerManager(this) }, init)
-}
-
-
 
 inline fun DrawableManager.stateList(init: _StateListManager.() -> Unit): Drawable {
-    return ankoDrawable({ _StateListManager(ctx) }, init)
+    return ankoDrawable({ _StateListManager() }, init)
 }
-inline fun AnkoContext<*>.stateList(init: _StateListManager.() -> Unit): Drawable {
-    return ankoDrawable({ _StateListManager(ctx) }, init)
+inline fun stateList(init: _StateListManager.() -> Unit): Drawable {
+    return ankoDrawable({ _StateListManager() }, init)
 }
-inline fun Context.stateList(init: _StateListManager.() -> Unit): Drawable {
-    return ankoDrawable({ _StateListManager(this) }, init)
-}
-
-
 
 inline fun DrawableManager.levelList(init: _LevelListManager.() -> Unit): Drawable {
-    return ankoDrawable({ _LevelListManager(ctx) }, init)
+    return ankoDrawable({ _LevelListManager() }, init)
 }
-inline fun AnkoContext<*>.levelList(init: _LevelListManager.() -> Unit): Drawable {
-    return ankoDrawable({ _LevelListManager(ctx) }, init)
+inline fun levelList(init: _LevelListManager.() -> Unit): Drawable {
+    return ankoDrawable({ _LevelListManager() }, init)
 }
-inline fun Context.levelList(init: _LevelListManager.() -> Unit): Drawable {
-    return ankoDrawable({ _LevelListManager(this) }, init)
-}
-
-
 
 inline fun DrawableManager.roundRect(init: _RoundRectManager.() -> Unit): ShapeDrawable {
-    return ankoDrawable({ _RoundRectManager(ctx) }, init)
+    return ankoDrawable({ _RoundRectManager() }, init)
 }
-inline fun AnkoContext<*>.roundRect(init: _RoundRectManager.() -> Unit): ShapeDrawable {
-    return ankoDrawable({ _RoundRectManager(ctx) }, init)
+inline fun roundRect(init: _RoundRectManager.() -> Unit): ShapeDrawable {
+    return ankoDrawable({ _RoundRectManager() }, init)
 }
-inline fun Context.roundRect(init: _RoundRectManager.() -> Unit): ShapeDrawable {
-    return ankoDrawable({ _RoundRectManager(this) }, init)
-}
-
-
 
 inline fun DrawableManager.oval(init: _OvalManager.() -> Unit): ShapeDrawable {
-    return ankoDrawable({ _OvalManager(ctx) }, init)
+    return ankoDrawable({ _OvalManager() }, init)
 }
-inline fun AnkoContext<*>.oval(init: _OvalManager.() -> Unit): ShapeDrawable {
-    return ankoDrawable({ _OvalManager(ctx) }, init)
+inline fun oval(init: _OvalManager.() -> Unit): ShapeDrawable {
+    return ankoDrawable({ _OvalManager() }, init)
 }
-inline fun Context.oval(init: _OvalManager.() -> Unit): ShapeDrawable {
-    return ankoDrawable({ _OvalManager(this) }, init)
-}
-
-
 
 inline fun DrawableManager.arc(init: _ArcManager.() -> Unit): ShapeDrawable {
-    return ankoDrawable({ _ArcManager(ctx) }, init)
+    return ankoDrawable({ _ArcManager() }, init)
 }
-inline fun AnkoContext<*>.arc(init: _ArcManager.() -> Unit): ShapeDrawable {
-    return ankoDrawable({ _ArcManager(ctx) }, init)
-}
-inline fun Context.arc(init: _ArcManager.() -> Unit): ShapeDrawable {
-    return ankoDrawable({ _ArcManager(this) }, init)
+inline fun arc(init: _ArcManager.() -> Unit): ShapeDrawable {
+    return ankoDrawable({ _ArcManager() }, init)
 }
 
-
-
-inline fun DrawableManager.bitmap(init: _BitmapManager.() -> Unit): BitmapDrawable {
-    return ankoDrawable({ _BitmapManager(ctx) }, init)
+inline fun DrawableManager.bitmap(res: Resources, init: _BitmapManager.() -> Unit): BitmapDrawable {
+    return ankoDrawable({ _BitmapManager(res) }, init)
 }
-inline fun AnkoContext<*>.bitmap(init: _BitmapManager.() -> Unit): BitmapDrawable {
-    return ankoDrawable({ _BitmapManager(ctx) }, init)
+inline fun bitmap(res: Resources, init: _BitmapManager.() -> Unit): BitmapDrawable {
+    return ankoDrawable({ _BitmapManager(res) }, init)
 }
-inline fun Context.bitmap(init: _BitmapManager.() -> Unit): BitmapDrawable {
-    return ankoDrawable({ _BitmapManager(this) }, init)
-}
-
-
 
 inline fun DrawableManager.color(init: _ColorManager.() -> Unit): ColorDrawable {
-    return ankoDrawable({ _ColorManager(ctx) }, init)
+    return ankoDrawable({ _ColorManager() }, init)
 }
-inline fun AnkoContext<*>.color(init: _ColorManager.() -> Unit): ColorDrawable {
-    return ankoDrawable({ _ColorManager(ctx) }, init)
-}
-inline fun Context.color(init: _ColorManager.() -> Unit): ColorDrawable {
-    return ankoDrawable({ _ColorManager(this) }, init)
+inline fun color(init: _ColorManager.() -> Unit): ColorDrawable {
+    return ankoDrawable({ _ColorManager() }, init)
 }
 
 
-
-class _LevelListManager(override val ctx: Context) : LevelListDrawable(), DrawableManager, RawDrawableProvider<LevelListDrawable> {
+class _LevelListManager() : LevelListDrawable(), DrawableManager, RawDrawableProvider<LevelListDrawable> {
     var minLevel = level
 
     override fun addDrawable(drawable: Drawable, params: Any?) {
@@ -190,14 +137,14 @@ class _LevelListManager(override val ctx: Context) : LevelListDrawable(), Drawab
     }
 }
 
-class _StateListManager(override val ctx: Context) : StateListDrawable(), DrawableManager, RawDrawableProvider<StateListDrawable> {
+class _StateListManager() : StateListDrawable(), DrawableManager, RawDrawableProvider<StateListDrawable> {
     override fun addDrawable(drawable: Drawable, params: Any?) {
         if(params == null) return
         if(params is IntArray) addState(params, drawable)
     }
 }
 
-class _LayerManager(override val ctx: Context): DrawableManager, DrawableProvider<LayerDrawable> {
+class _LayerManager(): DrawableManager, DrawableProvider<LayerDrawable> {
     override var drawableState: IntArray = intArrayOf()
     override var drawableLevel: Int = 0
 
@@ -210,15 +157,10 @@ class _LayerManager(override val ctx: Context): DrawableManager, DrawableProvide
     }
 }
 
-class _ColorManager(val ctx: Context) : ColorDrawable(), RawDrawableProvider<ColorDrawable> {
-    public var colorResource: Int = 0
-        set(value) {
-            if(value == 0) return
-            color = ctx.resources.getColor(value)
-        }
+class _ColorManager() : ColorDrawable(), RawDrawableProvider<ColorDrawable> {
 }
 
-class _BitmapManager(val ctx: Context) : DrawableProvider<BitmapDrawable> {
+class _BitmapManager(val res: Resources) : DrawableProvider<BitmapDrawable> {
     override var drawableState: IntArray = intArrayOf()
     override var drawableLevel: Int = 0
 
@@ -228,25 +170,20 @@ class _BitmapManager(val ctx: Context) : DrawableProvider<BitmapDrawable> {
 
     override val drawable: BitmapDrawable
         get() = when {
-            bitmap != null -> BitmapDrawable(ctx.resources, bitmap)
-            filePath != null -> BitmapDrawable(ctx.resources, filePath)
-            stream != null -> BitmapDrawable(ctx.resources, stream)
+            bitmap != null -> BitmapDrawable(res, bitmap)
+            filePath != null -> BitmapDrawable(res, filePath)
+            stream != null -> BitmapDrawable(res, stream)
             else -> throw RuntimeException("must set one of bitmap, filePath or stream")
         }.apply {
             setState(drawableState); setLevel(drawableLevel)
         }
 }
 
-abstract class _ShapeManager(val ctx: Context) : DrawableProvider<ShapeDrawable> {
+abstract class _ShapeManager() : DrawableProvider<ShapeDrawable> {
     override var drawableState: IntArray = intArrayOf()
     override var drawableLevel: Int = 0
 
     public var color: Int = Color.TRANSPARENT
-    public var colorResource: Int = 0
-        set(value) {
-            if(value == 0) return
-            color = ctx.resources.getColor(value)
-        }
 
     public var leftPadding: Int = 0
     public var topPadding: Int = 0
@@ -261,7 +198,7 @@ abstract class _ShapeManager(val ctx: Context) : DrawableProvider<ShapeDrawable>
         }
 }
 
-class _RoundRectManager(ctx: Context) : _ShapeManager(ctx) {
+class _RoundRectManager() : _ShapeManager() {
     override var drawableState: IntArray = intArrayOf()
 
     public var radius: Float = 0f
@@ -283,7 +220,7 @@ class _RoundRectManager(ctx: Context) : _ShapeManager(ctx) {
         }
 }
 
-class _OvalManager(ctx: Context) : _ShapeManager(ctx) {
+class _OvalManager() : _ShapeManager() {
     override val drawable: ShapeDrawable
         get() {
             return ShapeDrawable(OvalShape()).apply {
@@ -306,7 +243,7 @@ class _OvalManager(ctx: Context) : _ShapeManager(ctx) {
     }
 }
 
-class _ArcManager(ctx: Context) : _ShapeManager(ctx) {
+class _ArcManager() : _ShapeManager() {
     public var start: Float = 0f
     public var sweep: Float = 360f
 
@@ -327,10 +264,7 @@ class _ArcManager(ctx: Context) : _ShapeManager(ctx) {
 inline fun DrawableManager.borderRoundRect(radius: Float, color: Int, init: _LayerManager.() -> Unit) : Drawable {
     return borderRoundRect(radius, color, 0f, Color.TRANSPARENT, init)
 }
-inline fun Context.borderRoundRect(radius: Float, color: Int, init: _LayerManager.() -> Unit) : Drawable {
-    return borderRoundRect(radius, color, 0f, Color.TRANSPARENT, init)
-}
-inline fun AnkoContext<*>.borderRoundRect(radius: Float, color: Int, init: _LayerManager.() -> Unit) : Drawable {
+inline fun View.borderRoundRect(radius: Float, color: Int, init: _LayerManager.() -> Unit) : Drawable {
     return borderRoundRect(radius, color, 0f, Color.TRANSPARENT, init)
 }
 
@@ -348,7 +282,7 @@ inline fun DrawableManager.borderRoundRect(radius: Float, color: Int, strokeWidt
         init()
     }
 }
-inline fun Context.borderRoundRect(radius: Float, color: Int, strokeWidth: Float, strokeColor: Int, init: _LayerManager.() -> Unit) : Drawable {
+inline fun View.borderRoundRect(radius: Float, color: Int, strokeWidth: Float, strokeColor: Int, init: _LayerManager.() -> Unit) : Drawable {
     return layer {
         roundRect {
             padding = strokeWidth.toInt()
@@ -356,21 +290,7 @@ inline fun Context.borderRoundRect(radius: Float, color: Int, strokeWidth: Float
             this.color = strokeColor
         }
         roundRect {
-            this.radius = if(radius >= strokeWidth) radius - strokeWidth else 0f
-            this.color = color
-        }
-        init()
-    }
-}
-inline fun AnkoContext<*>.borderRoundRect(radius: Float, color: Int, strokeWidth: Float, strokeColor: Int, init: _LayerManager.() -> Unit) : Drawable {
-    return layer {
-        roundRect {
-            padding = strokeWidth.toInt()
-            this.radius = radius
-            this.color = strokeColor
-        }
-        roundRect {
-            this.radius = if(radius >= strokeWidth) radius - strokeWidth else 0f
+            this.radius = if (radius >= strokeWidth) radius - strokeWidth else 0f
             this.color = color
         }
         init()

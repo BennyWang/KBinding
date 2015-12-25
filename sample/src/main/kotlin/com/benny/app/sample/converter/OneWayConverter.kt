@@ -5,9 +5,9 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import com.benny.app.sample.R
 import com.benny.library.kbinding.converter.OneWayConverter
-import com.benny.library.kbinding.drawable.borderRoundRect
-import com.benny.library.kbinding.drawable.color
-import com.benny.library.kbinding.drawable.roundRect
+import com.benny.library.kbinding.dsl.borderRoundRect
+import com.benny.library.kbinding.dsl.color
+import com.benny.library.kbinding.dsl.roundRect
 import org.jetbrains.anko.dip
 import java.text.DecimalFormat
 
@@ -54,11 +54,11 @@ class StockPriceChangePercentageConverter(val positiveSign: Boolean = true) : On
 
 class TagBackgroundConverter(val context: Context) : OneWayConverter<Drawable> {
     override fun convert(source: Any?): Drawable {
-        if(source == null) return context.color { color = Color.TRANSPARENT }
+        if(source == null) return color { color = Color.TRANSPARENT }
 
         return when(source.toString()) {
-            "持有" -> context.roundRect{ radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_red) }
-            else -> context.roundRect{ radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_blue) }
+            "持有" -> roundRect { radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_red) }
+            else -> roundRect { radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_blue) }
         }
     }
 }

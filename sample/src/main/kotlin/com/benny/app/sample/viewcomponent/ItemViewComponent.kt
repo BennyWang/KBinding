@@ -14,7 +14,9 @@ import com.benny.app.sample.converter.StockPriceConverter
 import com.benny.app.sample.extension.generateViewId
 import com.benny.app.sample.model.Stock
 import com.benny.library.kbinding.converter.MultipleConverter
-import com.benny.library.kbinding.drawable.roundRect
+import com.benny.library.kbinding.dsl.bind
+import com.benny.library.kbinding.dsl.progressBar
+import com.benny.library.kbinding.dsl.roundRect
 import com.benny.library.kbinding.extension.*
 import org.jetbrains.anko.*
 
@@ -37,15 +39,15 @@ class LoadingItemView : ViewBinderComponent<Any> {
 class StockItemView : ViewBinderComponent<Any> {
     class ChangePercentBackgroundConverter(val context: Context) : MultipleConverter<Drawable> {
         override fun convert(params: Array<Any>): Drawable {
-            if(params.size < 2) return context.roundRect{ radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_9) }
+            if(params.size < 2) return roundRect { radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_9) }
             val listedState = params[0] as? Int ?: Stock.LISTED_STATE_ABNORMAL
             val changePercent = params[1] as? Float ?: 0f
 
             if(listedState == Stock.LISTED_STATE_NORMAL) {
-                return context.roundRect{ radius = context.dip(2).toFloat(); color = StockColorConverter(context.resources.getColor(R.color.color_9)).convert(changePercent) }
+                return roundRect { radius = context.dip(2).toFloat(); color = StockColorConverter(context.resources.getColor(R.color.color_9)).convert(changePercent) }
             }
 
-            return context.roundRect{ radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_9) }
+            return roundRect { radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_9) }
         }
     }
 

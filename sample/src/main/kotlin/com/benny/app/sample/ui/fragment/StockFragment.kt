@@ -18,8 +18,8 @@ import com.benny.app.sample.network.service.caishuo.CaishuoService
 import com.benny.app.sample.viewcomponent.StockItemView
 import com.benny.app.sample.viewmodel.StockViewModel
 import com.benny.library.kbinding.extension.adapter
-import com.benny.library.kbinding.extension.bind
-import com.benny.library.kbinding.extension.recyclerView
+import com.benny.library.kbinding.dsl.bind
+import com.benny.library.kbinding.dsl.recyclerView
 
 class StockFragment : BaseFragment() {
     val selectedStocksViewModel = SelectedStocksViewModel()

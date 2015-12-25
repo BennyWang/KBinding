@@ -11,6 +11,8 @@ import org.jetbrains.anko.*
 
 import com.benny.library.kbinding.view.ViewBinderComponent
 import com.benny.library.kbinding.converter.OneWayConverter
+import com.benny.library.kbinding.dsl.bind
+import com.benny.library.kbinding.dsl.inflate
 import com.benny.library.kbinding.extension.*
 
 /**

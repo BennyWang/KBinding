@@ -14,9 +14,9 @@ import com.benny.library.kbinding.bind.BindingDisposer
 import com.benny.library.kbinding.bind.BindingMode
 import com.benny.library.kbinding.bind.ViewModel
 import com.benny.library.kbinding.converter.ArrayToBooleanConverter
-import com.benny.library.kbinding.drawable.borderRoundRect
-import com.benny.library.kbinding.drawable.stateList
-import com.benny.library.kbinding.extension.bind
+import com.benny.library.kbinding.dsl.borderRoundRect
+import com.benny.library.kbinding.dsl.stateList
+import com.benny.library.kbinding.dsl.bind
 import com.benny.library.kbinding.extension.click
 import com.benny.library.kbinding.extension.enabled
 import com.benny.library.kbinding.extension.text
