@@ -11,7 +11,7 @@ def bintrayApikey = properties.getProperty("bintray.apikey")
 // read properties
 def projectName         = "KBinding"
 def projectDescription  = "Android MVVM framework write by kotlin"
-def projectGroupId      = "com.benny.kbinding"
+def projectGroupId      = "com.benny.library"
 def projectArtifactId   = "KBinding"
 def projectVersionName  = android.defaultConfig.versionName
 def projectPackaging    = "aar"
