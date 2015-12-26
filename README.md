@@ -3,7 +3,7 @@ Android View Model binding framework write in kotlin, Simple but powerful.
 
 ## Usage
 
-compile 'com.benny.kbinding:library:0.1.0'
+### compile 'com.benny.kbinding:library:0.1.0'
 
 
 UI Component
