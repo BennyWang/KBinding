@@ -8,19 +8,14 @@ import android.view.Gravity
 import android.view.View
 import android.widget.EditText
 import com.benny.app.sample.R
-import org.jetbrains.anko.*
 
 import com.benny.app.sample.viewmodel.LoginViewModel
 import com.benny.library.kbinding.bind.BindingMode
 import com.benny.library.kbinding.converter.ArrayToBooleanConverter
-import com.benny.library.kbinding.dsl.borderRoundRect
-import com.benny.library.kbinding.dsl.stateList
-import com.benny.library.kbinding.dsl.bind
-import com.benny.library.kbinding.extension.click
-import com.benny.library.kbinding.extension.enabled
-import com.benny.library.kbinding.extension.text
+import com.benny.library.kbinding.dsl.*
 import com.benny.library.kbinding.view.ViewBinderComponent
-import com.benny.library.kbinding.extension.setContentView
+import com.benny.library.kbinding.view.setContentView
+import org.jetbrains.anko.*
 
 class LoginActivity : BaseActivity(), LoginViewModel.LoginDelegate {
     val viewModel = LoginViewModel(this)
@@ -35,7 +30,7 @@ class LoginActivity : BaseActivity(), LoginViewModel.LoginDelegate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LoginFragmentUI().setContentView(this).sBindTo(viewModel)
+        LoginFragmentUI().setContentView(this).bindTo(viewModel)
     }
 
     override fun onDestroy() {

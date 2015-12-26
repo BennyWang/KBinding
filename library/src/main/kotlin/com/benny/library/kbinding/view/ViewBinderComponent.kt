@@ -1,10 +1,12 @@
 package com.benny.library.kbinding.view
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
 import com.benny.library.kbinding.dsl.bindableLayout
 import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.AnkoContextImpl
 
 /**
  * Created by benny on 12/9/15.
@@ -29,3 +31,4 @@ interface ViewBinderComponent<T> : AnkoComponent<T>, ViewComponent<T> {
     }
 }
 
+fun ViewBinderComponent<out Activity>.setContentView(activity: Activity) = createViewBinder(AnkoContextImpl(activity, activity, true))

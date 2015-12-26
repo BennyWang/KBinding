@@ -14,12 +14,7 @@ import com.benny.library.kbinding.bind.BindingDisposer
 import com.benny.library.kbinding.bind.BindingMode
 import com.benny.library.kbinding.bind.ViewModel
 import com.benny.library.kbinding.converter.ArrayToBooleanConverter
-import com.benny.library.kbinding.dsl.borderRoundRect
-import com.benny.library.kbinding.dsl.stateList
-import com.benny.library.kbinding.dsl.bind
-import com.benny.library.kbinding.extension.click
-import com.benny.library.kbinding.extension.enabled
-import com.benny.library.kbinding.extension.text
+import com.benny.library.kbinding.dsl.*
 import com.benny.library.kbinding.view.ViewBinderComponent
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.act

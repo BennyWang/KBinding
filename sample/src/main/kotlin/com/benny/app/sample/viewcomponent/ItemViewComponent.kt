@@ -14,10 +14,7 @@ import com.benny.app.sample.converter.StockPriceConverter
 import com.benny.app.sample.extension.generateViewId
 import com.benny.app.sample.model.Stock
 import com.benny.library.kbinding.converter.MultipleConverter
-import com.benny.library.kbinding.dsl.bind
-import com.benny.library.kbinding.dsl.progressBar
-import com.benny.library.kbinding.dsl.roundRect
-import com.benny.library.kbinding.extension.*
+import com.benny.library.kbinding.dsl.*
 import org.jetbrains.anko.*
 
 import com.benny.library.kbinding.view.ViewBinderComponent
@@ -29,7 +26,7 @@ import com.benny.library.kbinding.view.ViewBinderComponent
 class LoadingItemView : ViewBinderComponent<Any> {
     override fun builder(): AnkoContext<Any>.() -> Unit = {
         frameLayout {
-            progressBar (android.R.attr.progressBarStyle) {
+            progressBar () {
                 isIndeterminate = true
             }.lparams(width = dip(24), height = dip(24)) { gravity = Gravity.CENTER }
         }.layoutParams = ViewGroup.LayoutParams(matchParent, dip(50))
@@ -51,8 +48,8 @@ class StockItemView : ViewBinderComponent<Any> {
         }
     }
 
-    class ChangePercentConverter : MultipleConverter<String> {
-        override fun convert(params: Array<Any>): String {
+    class ChangePercentConverter : MultipleConverter<CharSequence> {
+        override fun convert(params: Array<Any>): CharSequence {
             if(params.size < 2) return "+0.00%"
             val listedState = params[0] as? Int ?: Stock.LISTED_STATE_ABNORMAL
             val changePercent = params[1] as? Float ?: 0f
@@ -73,19 +70,19 @@ class StockItemView : ViewBinderComponent<Any> {
                         singleLine = true
                         maxEms = 8
                         ellipsize = TextUtils.TruncateAt.END
-                        bind { text(path = "name") }
+                        bind { text(path = "name", mode = OneWay) }
                     }.lparams(width = wrapContent)
                     textView {
                         textSize = 9f
                         textColorResource = R.color.color_9
-                        bind { text(path = "symbol") }
+                        bind { text(path = "symbol", mode = OneWay) }
                     }.lparams(width = wrapContent)
                 }.lparams { leftMargin = dip(14) }
                 val v = textView {
                     id = generateViewId()
                     textSize = 16f
                     textColor = Color.WHITE
-                    textStyle = Typeface.BOLD
+                    textWeight = Typeface.BOLD
                     this@textView.gravity = Gravity.CENTER
                     bind { background(paths = listOf("listedState", "changePercent"), converter = ChangePercentBackgroundConverter(ctx)) }
                     bind { text(paths = listOf("listedState", "changePercent"), converter = ChangePercentConverter()) }
@@ -98,7 +95,7 @@ class StockItemView : ViewBinderComponent<Any> {
                     textSize = 16f
                     textColorResource = R.color.color_3
                     this@textView.gravity = Gravity.CENTER_VERTICAL or Gravity.RIGHT
-                    bind { text(path = "price", converter = StockPriceConverter()) }
+                    bind { text(path = "price", mode = OneWay, converter = StockPriceConverter()) }
                 }.lparams {
                     leftOf(v)
                     centerVertically()

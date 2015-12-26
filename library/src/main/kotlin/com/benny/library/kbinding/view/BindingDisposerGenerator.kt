@@ -10,7 +10,7 @@ import com.benny.library.kbinding.bind.ViewModel
 interface BindingDisposerGenerator {
     val bindingDisposer: BindingDisposer
 
-    fun sViewCreator(viewBinderComponent: ViewBinderComponent<*>, viewModelFactory: () -> ItemViewModel<*>): ViewCreator = ViewCreator(bindingDisposer, viewBinderComponent, viewModelFactory)
-    fun ViewBinder.sBindTo(viewModel: ViewModel) = this.bindTo(bindingDisposer, viewModel)
+    fun viewCreator(viewBinderComponent: ViewBinderComponent<*>, viewModelFactory: () -> ItemViewModel<*>): ViewCreator = ViewCreator(bindingDisposer, viewBinderComponent, viewModelFactory)
+    fun ViewBinder.bindTo(viewModel: ViewModel) = this.bindTo(bindingDisposer, viewModel)
 
 }

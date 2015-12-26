@@ -11,9 +11,7 @@ import org.jetbrains.anko.*
 
 import com.benny.library.kbinding.view.ViewBinderComponent
 import com.benny.library.kbinding.converter.OneWayConverter
-import com.benny.library.kbinding.dsl.bind
-import com.benny.library.kbinding.dsl.inflate
-import com.benny.library.kbinding.extension.*
+import com.benny.library.kbinding.dsl.*
 
 /**
  * Created by benny on 12/17/15.
@@ -27,7 +25,7 @@ class TagTextWidgetView(val textSize: Float, val colorResource: Int, val horizon
             this@textView.horizontalPadding = dip(this@TagTextWidgetView.horizontalPadding)
             this@textView.verticalPadding = dip(this@TagTextWidgetView.verticalPadding)
             bind { background("tag", converter = backgroundConverter) }
-            bind { text("tag") }
+            bind { text("tag", OneWay) }
         }
     }
 }
@@ -44,25 +42,25 @@ class StockWidgetView(val highlight: Boolean = true) : ViewBinderComponent<Activ
                 textSize = 12f
                 textColorResource = R.color.color_6
                 horizontalPadding = dip(2)
-                bind { text("name") }
+                bind { text("name", mode = OneWay) }
             }
             textView {
                 textSize = 12f
                 textColorResource = R.color.color_6
                 horizontalPadding = dip(2)
-                bind { text("symbol", converter = symbolConverter) }
+                bind { text("symbol", mode = OneWay, converter = symbolConverter) }
             }
             textView {
                 textSize = 12f
                 textColorResource = R.color.color_6
                 horizontalPadding = dip(2)
-                bind { text("price", converter = StockPriceConverter()) }
+                bind { text("price", mode = OneWay, converter = StockPriceConverter()) }
             }
             textView {
                 textSize = 12f
                 textColorResource = R.color.color_6
                 horizontalPadding = dip(2)
-                bind { text("changePercent", converter = StockPriceChangeConverter()) }
+                bind { text("changePercent", mode = OneWay, converter = StockPriceChangeConverter()) }
             }
         }.layoutParams = ViewGroup.LayoutParams(matchParent, dip(50))
     }

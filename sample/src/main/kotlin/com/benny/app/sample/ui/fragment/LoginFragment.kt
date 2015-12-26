@@ -1,10 +1,8 @@
 package com.benny.app.sample.ui.fragment
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -19,12 +17,7 @@ import org.jetbrains.anko.*
 import com.benny.app.sample.viewmodel.LoginViewModel
 import com.benny.library.kbinding.bind.BindingMode
 import com.benny.library.kbinding.converter.ArrayToBooleanConverter
-import com.benny.library.kbinding.dsl.borderRoundRect
-import com.benny.library.kbinding.dsl.stateList
-import com.benny.library.kbinding.dsl.bind
-import com.benny.library.kbinding.extension.click
-import com.benny.library.kbinding.extension.enabled
-import com.benny.library.kbinding.extension.text
+import com.benny.library.kbinding.dsl.*
 import com.benny.library.kbinding.view.ViewBinderComponent
 import org.jetbrains.anko.support.v4.act
 import org.jetbrains.anko.support.v4.toast
@@ -37,7 +30,7 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
         Log.d("LoginFragment", "onCreateView")
 
         if(contentView == null) {
-            contentView = LoginFragmentUI().createViewBinder(act, this).sBindTo(viewModel)
+            contentView = LoginFragmentUI().createViewBinder(act, this).bindTo(viewModel)
         }
         return contentView
     }
@@ -105,7 +98,7 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
                     leftPadding = dip(14)
                     editText {
                         hint = "请输入手机号或者电子邮箱地址"
-                        bind { text(path="name", mode = BindingMode.TwoWay) }
+                        bind { text(path="name", mode = TwoWay) }
                     }.lparams(width = matchParent)
                     view { backgroundResource = R.color.color_f2 }.lparams(width = matchParent, height = 1)
                     editText {

@@ -28,24 +28,24 @@ class StockColorConverter(val defaultColor: Int) : OneWayConverter<Int> {
     }
 }
 
-class StockPriceConverter : OneWayConverter<String> {
-    override fun convert(source: Any?): String {
+class StockPriceConverter : OneWayConverter<CharSequence> {
+    override fun convert(source: Any?): CharSequence {
         if(source == null || source !is Number) return ""
 
         return DecimalFormat("0.00").format(source.toFloat())
     }
 }
 
-class StockPriceChangeConverter(val positiveSign: Boolean = true) : OneWayConverter<String> {
-    override fun convert(source: Any?): String {
+class StockPriceChangeConverter(val positiveSign: Boolean = true) : OneWayConverter<CharSequence> {
+    override fun convert(source: Any?): CharSequence {
         if(source == null || source !is Number) return ""
 
         return if(positiveSign) DecimalFormat("+0.00;-0.00").format(source.toFloat()) else DecimalFormat("0.00;-0.00").format(source.toFloat())
     }
 }
 
-class StockPriceChangePercentageConverter(val positiveSign: Boolean = true) : OneWayConverter<String> {
-    override fun convert(source: Any?): String {
+class StockPriceChangePercentageConverter(val positiveSign: Boolean = true) : OneWayConverter<CharSequence> {
+    override fun convert(source: Any?): CharSequence {
         if(source == null || source !is Number) return ""
 
         return if(positiveSign) DecimalFormat("+0.00;-0.00").format(source.toFloat()) + "%" else DecimalFormat("0.00;-0.00").format(source.toFloat()) + "%"

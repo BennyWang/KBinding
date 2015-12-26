@@ -1,6 +1,7 @@
 package com.benny.app.sample.ui.fragment
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,9 +18,9 @@ import com.benny.app.sample.model.Stock
 import com.benny.app.sample.network.service.caishuo.CaishuoService
 import com.benny.app.sample.viewcomponent.StockItemView
 import com.benny.app.sample.viewmodel.StockViewModel
-import com.benny.library.kbinding.extension.adapter
+import com.benny.library.kbinding.dsl.adapter
 import com.benny.library.kbinding.dsl.bind
-import com.benny.library.kbinding.dsl.recyclerView
+import org.jetbrains.anko.recyclerview.v7.recyclerView
 
 class StockFragment : BaseFragment() {
     val selectedStocksViewModel = SelectedStocksViewModel()
@@ -29,7 +30,7 @@ class StockFragment : BaseFragment() {
         Log.d("StockFragment", "onCreateView")
 
         if(contentView == null) {
-            contentView = StockFragmentUI().createViewBinder(act, this).sBindTo(selectedStocksViewModel)
+            contentView = StockFragmentUI().createViewBinder(act, this).bindTo(selectedStocksViewModel)
             selectedStocksViewModel.fetchStocks()
         }
         return contentView
@@ -56,7 +57,8 @@ class StockFragment : BaseFragment() {
         override fun builder(): AnkoContext<StockFragment>.() -> Unit = {
             relativeLayout() {
                 recyclerView {
-                    bind { adapter(path = "stocks", converter = ListToRecyclerAdapterConverter(owner.sViewCreator(StockItemView(), ::StockViewModel))) }
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    bind { adapter(path = "stocks", converter = ListToRecyclerAdapterConverter(owner.viewCreator(StockItemView(), ::StockViewModel))) }
                 }.lparams(matchParent, matchParent)
             }
         }

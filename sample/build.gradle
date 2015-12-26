@@ -59,5 +59,6 @@ dependencies {
     compile "org.jetbrains.anko:anko-sdk15:$anko_version" // sdk19, sdk21, sdk23 are also available
     compile "org.jetbrains.anko:anko-support-v4:$anko_version" // In case you need support-v4 bindings
     compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version" // For appcompat-v7 bindings
+    compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version" // For appcompat-v7 bindings
     compile "org.jetbrains.anko:anko-design:$anko_version"
 }
