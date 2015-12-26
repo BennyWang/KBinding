@@ -4,6 +4,7 @@ import android.test.InstrumentationTestCase
 import com.benny.library.kbinding.bind.BindingAssembler
 import com.benny.library.kbinding.bind.BindingDisposer
 import com.benny.library.kbinding.bind.ViewModel
+import com.benny.library.kbinding.bind.oneWayPropertyBinding
 import rx.functions.Action1
 import kotlin.properties.Delegates
 
@@ -24,8 +25,8 @@ class OneWayBindingTest : InstrumentationTestCase() {
 
     override fun setUp() {
         super.setUp()
-        bindingAssembler.addBinding(BindingAssembler.oneWayPropertyBinding<Int, Any>("integer", Action1<Int> { integer = it }))
-        bindingAssembler.addBinding(BindingAssembler.oneWayPropertyBinding<String, Any>("string", Action1<String> { string = it }))
+        bindingAssembler.addBinding(oneWayPropertyBinding("integer", Action1<Int> { integer = it }))
+        bindingAssembler.addBinding(oneWayPropertyBinding("string", Action1<String> { string = it }))
     }
 
     override fun tearDown() {

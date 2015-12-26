@@ -7,5 +7,5 @@ import rx.functions.Action1;
  */
 
 public interface Command {
-     void execute(Action1<? super Boolean> canExecute);
+     void execute(Object param, Action1<? super Boolean> canExecute);
 }

@@ -13,7 +13,7 @@ class LoginViewModel(val delegate: LoginViewModel.LoginDelegate) : ViewModel() {
     var name: String by Delegates.bindProperty("name", "xxxxxxx@xxxxx.com")
     var password: String by Delegates.bindProperty("password", "xxxxxxxxx")
 
-    val login: Command by Delegates.bindCommand("login", Command { it ->
+    val login: Command by Delegates.bindCommand("login", Command { params, canExecute ->
         if (name.equals("wangbin")) delegate.onLoginSuccess("wangbin")
         else delegate.onLoginFailed(RuntimeException("incorrect name or password"))
     })
@@ -23,3 +23,4 @@ class LoginViewModel(val delegate: LoginViewModel.LoginDelegate) : ViewModel() {
         fun onLoginFailed(e: Throwable)
     }
 }
+

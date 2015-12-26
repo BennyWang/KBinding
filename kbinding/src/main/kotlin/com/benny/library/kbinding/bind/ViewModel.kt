@@ -40,13 +40,13 @@ abstract public class ViewModel() {
     }
 
     public fun <T> addDependOf(key: String, keys: List<String>, getter: () -> T) {
-        BindingAssembler.multiplePropertyBinding(keys, Action1 { t -> property<T>(key).observer.onNext(t) }, object : MultipleConverter<T> {
+        multiplePropertyBinding(keys, Action1 { t -> property<T>(key).observer.onNext(t) }, object : MultipleConverter<T> {
             override fun convert(params: Array<Any>): T = getter()
         }).bindTo(properties(keys))
     }
 
     public fun <T> addDependOf(key: String, path: String, getter: () -> T) {
-        BindingAssembler.oneWayPropertyBinding<T, Any>(path, Action1 { t -> property<T>(key).observer.onNext(t) }, object : OneWayConverter<T> {
+        oneWayPropertyBinding(path, Action1 { t -> property<T>(key).observer.onNext(t) }, object : OneWayConverter<T> {
             override fun convert(source: Any?): T = getter()
         }).bindTo(property(path))
     }
