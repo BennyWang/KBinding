@@ -66,6 +66,12 @@ TwoWay Property
     fun TextView.text(path: String, mode: TwoWay, converter: TwoWayConverter<String, *> = EmptyTwoWayConverter<String, String>()) : PropertyBinding = twoWayPropertyBinding(path, textChanges2(), text(), converter)
     fun TextView.text(paths: List<String>, converter: MultipleConverter<out CharSequence>) : PropertyBinding = multiplePropertyBinding(paths, text(), converter)    
 
+
+## Contribute
+
+Now is just the beginning of KBinding, so everyone interested in this library, just fork it and pull requests to me.
+Let's make it a little better.
+
 ## Discussion
 
 ###QQ Group: 516157585
