@@ -17,7 +17,10 @@ public class CommandBinding<T>(key: String, val trigger: Observable<T>, val canE
         return this
     }
 
-    fun bindTo(command: Command): Subscription {
-        return trigger.subscribe { it -> command.execute(it, canExecute) }
+    fun bindTo(command: Command<T>): Subscription {
+        return trigger
+                .doOnSubscribe { LogBind(key, "Command") }
+                .doOnUnsubscribe { LogUnbind(key, "Command") }
+                .subscribe { it -> command.execute(it, canExecute) }
     }
 }

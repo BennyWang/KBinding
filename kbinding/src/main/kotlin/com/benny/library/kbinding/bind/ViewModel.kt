@@ -1,102 +1,35 @@
 package com.benny.library.kbinding.bind;
 
-import com.benny.library.kbinding.converter.MultipleConverter
-import com.benny.library.kbinding.converter.OneWayConverter
-import rx.Observable
-import rx.functions.Action1
-import java.util.*
-import kotlin.properties.Delegates
+import rx.Subscription
 import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty
-import kotlin.reflect.KProperty
 
 /**
  * Created by benny on 11/17/15.
  */
-abstract public class ViewModel() {
-    val properties : MutableMap<String, Property<*>> = HashMap()
-    val commands : MutableMap<String, Command> = HashMap()
+public open class ViewModel() : IViewModel {
+    private val delegate: BindingDelegate = BindingDelegate()
 
-    public fun <T> property(key: String) : Property<T> {
-        val property: Property<T>? = properties[key] as Property<T>? ?: throw RuntimeException("invalid key:$key for binding")
-        return property as Property<T>;
-    }
+    override val properties: MutableMap<String, Property<*>> = delegate.properties
+    override val commands: MutableMap<String, Command<*>> = delegate.commands
 
-    public fun properties(keys: List<String>): List<Property<*>> {
-        return keys.map { it -> property<Any>(it) }
-    }
+    override fun <T, R> bind(oneWayPropertyBinding: OneWayPropertyBinding<T, R>): Subscription = delegate.bind(oneWayPropertyBinding)
 
-    public fun command(key: String) : Command {
-        val command: Command? = commands[key] ?: throw RuntimeException("invalid key:$key for binding")
-        return command as Command
-    }
+    override fun <T> bind(multiplePropertyBinding: MultiplePropertyBinding<T>): Subscription = delegate.bind(multiplePropertyBinding)
 
-    public fun addProperty(key: String, property: Property<*>) {
-        properties.put(key, property)
-    }
+    override fun <T, R> bind(twoWayPropertyBinding: TwoWayPropertyBinding<T, R>): Subscription = delegate.bind(twoWayPropertyBinding)
 
-    public fun addCommand(key: String, command: Command) {
-        commands.put(key, command)
-    }
+    override fun <T> bind(commandBinding: CommandBinding<T>): Subscription = delegate.bind(commandBinding)
 
-    public fun <T> addDependOf(key: String, keys: List<String>, getter: () -> T) {
-        multiplePropertyBinding(keys, Action1 { t -> property<T>(key).observer.onNext(t) }, object : MultipleConverter<T> {
-            override fun convert(params: Array<Any>): T = getter()
-        }).bindTo(properties(keys))
-    }
+    public fun <T> bindProperty(key: String, initialValue: T): ReadWriteProperty<Any?, T> = delegate.bindProperty(key, initialValue)
 
-    public fun <T> addDependOf(key: String, path: String, getter: () -> T) {
-        oneWayPropertyBinding(path, Action1 { t -> property<T>(key).observer.onNext(t) }, object : OneWayConverter<T> {
-            override fun convert(source: Any?): T = getter()
-        }).bindTo(property(path))
-    }
+    public fun bindProperty(key: String, initialValue: IViewModel): ReadOnlyProperty<Any?, IViewModel> = delegate.bindProperty(key, initialValue)
 
-    protected fun <T> Delegates.bindProperty(key: String, initialValue: T): ReadWriteProperty<Any?, T> {
-        this@ViewModel.addProperty(key, Property(initialValue))
-        //support for nested view model
-        if(initialValue is ViewModel) {
-            for((k, v) in initialValue.properties) this@ViewModel.addProperty("$key.$k", v)
-            for((k, v) in initialValue.commands) this@ViewModel.addCommand("$key.$k", v)
-        }
+    public fun <T> bindProperty(key: String): ReadWriteProperty<Any?, T?> = delegate.bindProperty(key)
 
-        return object : ReadWriteProperty<Any?, T> {
-            override fun getValue(thisRef: Any?, property: KProperty<*>): T = property<T>(property.name).value ?: initialValue
-            override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) { property<T>(property.name).value = value }
-        }
-    }
+    public fun <T> bindProperty(key: String, dependOf: List<String>, getter: () -> T): ReadOnlyProperty<Any?, T?> = delegate.bindProperty(key, dependOf, getter)
 
-    protected fun <T> Delegates.bindProperty(key: String): ReadWriteProperty<Any?, T?> {
-        this@ViewModel.addProperty(key, Property<T>())
+    public fun <T> bindProperty(key: String, dependOf: String, getter: () -> T): ReadOnlyProperty<Any?, T?> = delegate.bindProperty(key, dependOf, getter)
 
-        return object : ReadWriteProperty<Any?, T?> {
-            override fun getValue(thisRef: Any?, property: KProperty<*>): T? = property<T>(property.name).value
-            override fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) { property<T>(property.name).value = value }
-        }
-    }
-
-    protected fun <T> Delegates.bindProperty(key: String, keys: List<String>, getter: () -> T): ReadOnlyProperty<Any?, T?> {
-        // dose not need support nested view model
-        this@ViewModel.addProperty(key, Property<T>())
-        addDependOf(key, keys, getter)
-
-        return object : ReadOnlyProperty<Any?, T?> {
-            override fun getValue(thisRef: Any?, property: KProperty<*>): T? = property<T>(property.name).value
-        }
-    }
-
-    protected fun <T> Delegates.bindProperty(key: String, path: String, getter: () -> T): ReadOnlyProperty<Any?, T?> {
-        // dose not need support nested view model
-        this@ViewModel.addProperty(key, Property<T>())
-        addDependOf(key, path, getter)
-        return object : ReadOnlyProperty<Any?, T?> {
-            override fun getValue(thisRef: Any?, property: KProperty<*>): T? = property<T>(property.name).value
-        }
-    }
-
-    protected fun Delegates.bindCommand(key: String, initialValue: Command): ReadOnlyProperty<Any?, Command> {
-        this@ViewModel.addCommand(key, initialValue)
-        return object : ReadOnlyProperty<Any?, Command> {
-            override fun getValue(thisRef: Any?, property: KProperty<*>): Command = command(property.name)
-        }
-    }
+    public fun <T> bindCommand(key: String, initialValue: Command<T>): ReadOnlyProperty<Any?, Command<T>> = delegate.bindCommand(key, initialValue)
 }

@@ -7,15 +7,14 @@ import kotlin.properties.Delegates
 /**
  * Created by benny on 11/19/15.
  */
-class LoginViewModel(val delegate: LoginViewModel.LoginDelegate) : ViewModel() {
+class LoginViewModel(val loginDelegate: LoginViewModel.LoginDelegate) : ViewModel() {
 
-    var level: Int by Delegates.bindProperty("level", 3)
-    var name: String by Delegates.bindProperty("name", "xxxxxxx@xxxxx.com")
-    var password: String by Delegates.bindProperty("password", "xxxxxxxxx")
+    var name: String by bindProperty("name", "xxxxxxx@xxxxx.com")
+    var password: String by bindProperty("password", "xxxxxxxxx")
 
-    val login: Command by Delegates.bindCommand("login", Command { params, canExecute ->
-        if (name.equals("wangbin")) delegate.onLoginSuccess("wangbin")
-        else delegate.onLoginFailed(RuntimeException("incorrect name or password"))
+    val login: Command<Unit> by bindCommand("login", Command { params, canExecute ->
+        if (name.equals("wangbin")) loginDelegate.onLoginSuccess("wangbin")
+        else loginDelegate.onLoginFailed(RuntimeException("incorrect name or password"))
     })
 
     interface LoginDelegate {

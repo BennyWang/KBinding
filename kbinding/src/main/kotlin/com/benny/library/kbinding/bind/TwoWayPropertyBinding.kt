@@ -27,8 +27,14 @@ public class TwoWayPropertyBinding<T, R>(key: String, val observable: Observable
     public fun bindTo(property: Property<R>): Subscription {
         val cs: CompositeSubscription = CompositeSubscription()
         val breaker = CircleBreaker<T>()
-        cs.add(observable.filter(breaker).map { converter.convert(it as Any) }.subscribe(property.observer))
-        cs.add(property.observable.map{ converter.convertBack(it as Any) }.filter(breaker).subscribe(observer))
+        cs.add(observable.filter(breaker).map { converter.convert(it as Any) }
+                .doOnSubscribe { LogBind(key, "TwoWay") }
+                .doOnUnsubscribe { LogUnbind(key, "TwoWay") }
+                .subscribe(property.observer))
+        cs.add(property.observable.map{ converter.convertBack(it as Any) }.filter(breaker)
+                .doOnSubscribe { LogBind(key, "TwoWay") }
+                .doOnUnsubscribe { LogUnbind(key, "TwoWay") }
+                .subscribe(observer))
         return cs
     }
 

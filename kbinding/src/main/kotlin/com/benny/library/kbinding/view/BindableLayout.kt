@@ -3,10 +3,7 @@ package com.benny.library.kbinding.view
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import com.benny.library.kbinding.bind.BindingAssembler
-import com.benny.library.kbinding.bind.BindingDisposer
-import com.benny.library.kbinding.bind.PropertyBinding
-import com.benny.library.kbinding.bind.ViewModel
+import com.benny.library.kbinding.bind.*
 import org.jetbrains.anko.AnkoContext
 
 /**
@@ -21,7 +18,7 @@ public class BindableLayout<T>(override val ctx: Context, override val owner: T)
 
     val bindingAssembler = BindingAssembler()
 
-    public override fun bindTo(bindingDisposer: BindingDisposer, viewModel: ViewModel): View {
+    public override fun bindTo(bindingDisposer: BindingDisposer, viewModel: IViewModel): View {
         bindingAssembler.bindTo(bindingDisposer, viewModel)
         return view
     }

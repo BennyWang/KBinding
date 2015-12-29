@@ -10,7 +10,9 @@ import android.widget.EditText
 import com.benny.app.sample.R
 
 import com.benny.app.sample.viewmodel.LoginViewModel
+import com.benny.library.kbinding.bind.BindingDelegate
 import com.benny.library.kbinding.bind.BindingMode
+import com.benny.library.kbinding.bind.Command
 import com.benny.library.kbinding.converter.ArrayToBooleanConverter
 import com.benny.library.kbinding.dsl.*
 import com.benny.library.kbinding.view.ViewBinderComponent
@@ -18,7 +20,7 @@ import com.benny.library.kbinding.view.setContentView
 import org.jetbrains.anko.*
 
 class LoginActivity : BaseActivity(), LoginViewModel.LoginDelegate {
-    val viewModel = LoginViewModel(this)
+    private val bindDelegate: BindingDelegate = BindingDelegate()
 
     override fun onLoginSuccess(user: String) {
         toast("Login success with user " + user)
@@ -28,9 +30,17 @@ class LoginActivity : BaseActivity(), LoginViewModel.LoginDelegate {
         toast(e.message ?: "")
     }
 
+    var name: String by bindDelegate.bindProperty("name", "xxxxxxx@xxxxx.com")
+    var password: String by bindDelegate.bindProperty("password", "xxxxxxxxx")
+
+    val login: Command<Unit> by bindDelegate.bindCommand("login", Command { params, canExecute ->
+        if (name.equals("wangbin")) onLoginSuccess("wangbin")
+        else onLoginFailed(RuntimeException("incorrect name or password"))
+    })
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LoginFragmentUI().setContentView(this).bindTo(viewModel)
+        LoginFragmentUI().setContentView(this).bindTo(bindDelegate)
     }
 
     override fun onDestroy() {

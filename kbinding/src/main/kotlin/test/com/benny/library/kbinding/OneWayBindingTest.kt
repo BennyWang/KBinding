@@ -13,8 +13,8 @@ import kotlin.properties.Delegates
  */
 class OneWayBindingTest : InstrumentationTestCase() {
     class TestViewModel : ViewModel() {
-        var integer: Int by Delegates.bindProperty("integer", 3)
-        var string: String by Delegates.bindProperty("string", "hello")
+        var integer: Int by bindProperty("integer", 3)
+        var string: String by bindProperty("string", "hello")
     }
 
     val bindingDisposer = BindingDisposer()

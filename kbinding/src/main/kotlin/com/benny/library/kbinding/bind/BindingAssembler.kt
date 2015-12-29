@@ -1,5 +1,6 @@
 package com.benny.library.kbinding.bind
 
+import android.util.Log
 import com.benny.library.kbinding.converter.*
 import rx.Observable
 import rx.functions.Action1
@@ -62,13 +63,16 @@ open public class BindingAssembler {
         }
     }
 
-    public fun bindTo(bindingDisposer: BindingDisposer, viewModel: ViewModel): Unit {
+    public fun bindTo(bindingDisposer: BindingDisposer, viewModel: IViewModel): Unit {
         val cs: CompositeSubscription = CompositeSubscription()
-        oneWayPropertyBindings().forEach { propertyBinding -> cs.add(propertyBinding.bindTo(viewModel.property<Any>(propertyBinding.key))) }
-        twoWayPropertyBindings().forEach { propertyBinding -> cs.add(propertyBinding.bindTo(viewModel.property<Any>(propertyBinding.key))) }
-        multiplePropertyBindings().forEach { propertyBinding -> cs.add(propertyBinding.bindTo(viewModel.properties(propertyBinding.keys))) }
-        commandBindings().forEach { commandBinding: CommandBinding<*> -> cs.add(commandBinding.bindTo(viewModel.command(commandBinding.key))) }
-        bindingDisposer.add { cs.unsubscribe() }
+        oneWayPropertyBindings().forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
+        twoWayPropertyBindings().forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
+        multiplePropertyBindings().forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
+        commandBindings().forEach { commandBinding: CommandBinding<*> -> cs.add(viewModel.bind(commandBinding)) }
+        bindingDisposer.add {
+            cs.unsubscribe()
+            Log.d("BindingRecord", "is unsubscribed: " + cs.isUnsubscribed)
+        }
     }
 
     public fun merge(prefix: String, assembler: BindingAssembler) {

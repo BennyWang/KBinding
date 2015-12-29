@@ -18,20 +18,27 @@ import com.benny.app.sample.model.Stock
 import com.benny.app.sample.network.service.caishuo.CaishuoService
 import com.benny.app.sample.viewcomponent.StockItemView
 import com.benny.app.sample.viewmodel.StockViewModel
+import com.benny.library.kbinding.bind.BindingDelegate
 import com.benny.library.kbinding.dsl.adapter
 import com.benny.library.kbinding.dsl.bind
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
 class StockFragment : BaseFragment() {
-    val selectedStocksViewModel = SelectedStocksViewModel()
+    val bindingDelegate = BindingDelegate()
     var contentView: View? = null
+
+    public var stocks: List<Stock>? by bindingDelegate.bindProperty<List<Stock>>("stocks")
+
+    fun fetchStocks() {
+        CaishuoService.getInstance().followedStocks("1301").subscribe { stocks = it }
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d("StockFragment", "onCreateView")
 
         if(contentView == null) {
-            contentView = StockFragmentUI().createViewBinder(act, this).bindTo(selectedStocksViewModel)
-            selectedStocksViewModel.fetchStocks()
+            contentView = StockFragmentUI().createViewBinder(act, this).bindTo(bindingDelegate)
+            fetchStocks()
         }
         return contentView
     }
@@ -64,11 +71,5 @@ class StockFragment : BaseFragment() {
         }
     }
 
-    class SelectedStocksViewModel : ViewModel() {
-        public var stocks: List<Stock>? by Delegates.bindProperty<List<Stock>>("stocks")
 
-        fun fetchStocks() {
-            CaishuoService.getInstance().followedStocks("1301").subscribe { stocks = it }
-        }
-    }
 }

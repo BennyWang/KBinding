@@ -2,6 +2,7 @@ package com.benny.library.kbinding.view
 
 import android.view.View
 import com.benny.library.kbinding.bind.BindingDisposer
+import com.benny.library.kbinding.bind.IViewModel
 import com.benny.library.kbinding.bind.ViewModel
 
 /**
@@ -10,5 +11,5 @@ import com.benny.library.kbinding.bind.ViewModel
 
 interface ViewBinder {
     val view: View
-    fun bindTo(bindingDisposer: BindingDisposer, viewModel: ViewModel): View
+    fun bindTo(bindingDisposer: BindingDisposer, viewModel: IViewModel): View
 }

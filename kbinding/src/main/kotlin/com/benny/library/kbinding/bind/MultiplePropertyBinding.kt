@@ -16,7 +16,10 @@ public class MultiplePropertyBinding<T>(keys: List<String>, val observer: Action
     private set
 
     public fun bindTo(properties: List<Property<*>>): Subscription {
-        return Observable.combineLatest(properties.map { property -> property.observable }, { multipleConverter.convert(it) }).subscribe(observer)
+        return Observable.combineLatest(properties.map { property -> property.observable }, { multipleConverter.convert(it) })
+                .doOnSubscribe { LogBind(keys, "OneWay") }
+                .doOnUnsubscribe { LogUnbind(keys, "OneWay") }
+                .subscribe(observer)
     }
 
     public fun prefix(prefix: String) : MultiplePropertyBinding<T> {

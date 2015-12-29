@@ -2,9 +2,9 @@ package com.benny.app.sample.ui.activity
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.util.Log
 import com.benny.app.sample.SampleApplication
 
 import org.jetbrains.anko.support.v4.viewPager
@@ -19,10 +19,12 @@ import com.benny.app.sample.ui.widget.ViewPagerIndicator
 import com.benny.library.kbinding.view.ViewBinderComponent
 
 
-class MainActivity : FragmentActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.d("MainActivity", "onCreate this:" + this)
 
         MainActivityUI().setContentView(this)
     }

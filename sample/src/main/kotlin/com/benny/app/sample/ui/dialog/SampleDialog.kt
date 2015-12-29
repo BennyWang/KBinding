@@ -12,6 +12,7 @@ import android.widget.EditText
 import com.benny.app.sample.R
 import com.benny.library.kbinding.bind.BindingDisposer
 import com.benny.library.kbinding.bind.BindingMode
+import com.benny.library.kbinding.bind.IViewModel
 import com.benny.library.kbinding.bind.ViewModel
 import com.benny.library.kbinding.converter.ArrayToBooleanConverter
 import com.benny.library.kbinding.dsl.*
@@ -23,7 +24,7 @@ import org.jetbrains.anko.support.v4.act
  * Created by benny on 12/23/15.
  */
 
-class SampleDialog(val viewModel: ViewModel) : DialogFragment() {
+class SampleDialog(val viewModel: IViewModel) : DialogFragment() {
     var bindingDisposer: BindingDisposer = BindingDisposer()
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val viewBinder = LoginFragmentUI().createViewBinder(act, this)
