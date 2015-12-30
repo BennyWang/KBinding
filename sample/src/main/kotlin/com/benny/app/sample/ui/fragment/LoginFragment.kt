@@ -8,7 +8,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import android.widget.TextView
 import com.benny.app.sample.R
 import com.benny.app.sample.SampleApplication
 import com.benny.app.sample.ui.dialog.SampleDialog
@@ -75,18 +75,6 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
     }
 
     class LoginFragmentUI : ViewBinderComponent<LoginFragment> {
-        val AnkoContext<*>.editTextStyle: (View) -> Unit get() = {
-            v: View ->
-            with(this) {
-                if(v is EditText) with(v) {
-                    textSizeDimen = R.dimen.font_38
-                    verticalPadding = dip(8)
-                    horizontalPadding = 0
-                    background = null
-                }
-            }
-        }
-
         val AnkoContext<*>.bgButton: Drawable get() = with(this) {
             stateList {
                 borderRoundRect(dip(2).toFloat(), resources.getColor(R.color.color_20blue)) {
@@ -103,16 +91,24 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
 
         override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
+                val tvStyle = viewStyle<TextView> {
+                    textSizeDimen = R.dimen.font_38
+                    verticalPadding = dip(8)
+                    horizontalPadding = 0
+                    background = null
+                }
                 verticalLayout {
                     backgroundColor = Color.WHITE
                     leftPadding = dip(14)
                     editText {
                         hint = "请输入手机号或者电子邮箱地址"
+                        style = tvStyle
                         bind { text(path="name", mode = TwoWay) }
                     }.lparams(width = matchParent)
                     view { backgroundResource = R.color.color_f2 }.lparams(width = matchParent, height = 1)
                     editText {
                         hint = "请输入密码"
+                        style = tvStyle
                         bind { text(path="password", mode = BindingMode.TwoWay) }
                     }.lparams(width = matchParent)
                 }.lparams(width = matchParent)
@@ -126,7 +122,7 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
                     bind { click("login") }
                     bind { enabled(paths=listOf("name", "password"), converter = ArrayToBooleanConverter()) }
                 }.lparams(width = matchParent) { margin = dip(14) }.let { it.gravity = Gravity.CENTER }
-            }.style(editTextStyle)
+            }
         }
     }
 }
