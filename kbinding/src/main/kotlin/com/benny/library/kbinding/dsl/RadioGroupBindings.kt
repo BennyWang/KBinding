@@ -19,6 +19,6 @@ fun RadioGroup.checkedChanges(path: String) : PropertyBinding = commandBinding(p
 
 //Property
 
-fun RadioGroup.checked(path: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Int> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, checked(), converter)
-fun RadioGroup.checked(paths: List<String>, converter: MultipleConverter<Int>) : PropertyBinding = multiplePropertyBinding(paths, checked(), converter)
+fun RadioGroup.checked(path: String, mode: OneWay = BindingMode.OneWay, oneTime: Boolean = false, converter: OneWayConverter<Int> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, checked(), oneTime, converter)
+fun RadioGroup.checked(paths: List<String>, oneTime: Boolean = false, converter: MultipleConverter<Int>) : PropertyBinding = multiplePropertyBinding(paths, checked(), oneTime, converter)
 

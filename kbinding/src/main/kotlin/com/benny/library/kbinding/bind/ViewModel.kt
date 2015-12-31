@@ -78,13 +78,13 @@ public open class ViewModel() : IViewModel {
     }
 
     private fun <T> addDependOf(key: String, dependOf: List<String>, getter: () -> T) {
-        dependsOf.put(key, multiplePropertyBinding(dependOf, Action1 { t -> property<T>(key).observer.onNext(t) }, object : MultipleConverter<T> {
+        dependsOf.put(key, multiplePropertyBinding(dependOf, Action1 { t -> property<T>(key).observer.onNext(t) }, false, object : MultipleConverter<T> {
             override fun convert(params: Array<Any>): T = getter()
         }))
     }
 
     private fun <T> addDependOf(key: String, dependOf: String, getter: () -> T) {
-        dependsOf.put(key, oneWayPropertyBinding(dependOf, Action1 { t -> property<T>(key).observer.onNext(t) }, object : OneWayConverter<T> {
+        dependsOf.put(key, oneWayPropertyBinding(dependOf, Action1 { t -> property<T>(key).observer.onNext(t) }, false, object : OneWayConverter<T> {
             override fun convert(source: Any?): T = getter()
         }))
     }

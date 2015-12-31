@@ -20,5 +20,8 @@ public interface ICaishuoService {
     Observable<User> login(@Field("email_or_mobile") String identifier, @Field("password") String password);
 
     @GET(API_VERSION +"/users/{id}/following_stocks")
-    Observable<List<Stock>> followedStocks(@Path("id") String id);
+    Observable<List<Stock>> followedStocks(@Path("id") String id, @Query("per_page") int perPage);
+
+    @GET(API_VERSION +"/stocks/{id}")
+    Observable<Stock> stock(@Path("id") String id);
 }

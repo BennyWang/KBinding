@@ -29,10 +29,7 @@ fun AnkoContext<*>.bind(propertyBindingFactory: () -> PropertyBinding): Unit {
 
 public fun <T> AnkoContext<T>.inflate(viewComponent: ViewComponent<*>, parent: ViewGroup, prefix: String = "") : View = when(this) {
     is BindableLayout -> {
-        val layout = this.bindableLayout { viewComponent.builder()() }
-        merge(prefix, layout)
-        parent.addView(layout.view)
-        layout.view
+        inflate(viewComponent, parent, prefix)
     }
     else -> {
         val view = ctx.UI { viewComponent.builder()() }.view

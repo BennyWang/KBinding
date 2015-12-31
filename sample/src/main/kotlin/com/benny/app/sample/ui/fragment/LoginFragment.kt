@@ -119,9 +119,10 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
                     background = bgButton
                     verticalPadding = dip(10.4f)
                     isClickable = true
+                    gravity = Gravity.CENTER
                     bind { click("login") }
                     bind { enabled(paths=listOf("name", "password"), converter = ArrayToBooleanConverter()) }
-                }.lparams(width = matchParent) { margin = dip(14) }.let { it.gravity = Gravity.CENTER }
+                }.lparams(width = matchParent) { margin = dip(14) }
             }
         }
     }

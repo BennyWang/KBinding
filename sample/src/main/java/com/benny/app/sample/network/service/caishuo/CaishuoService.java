@@ -61,6 +61,10 @@ public class CaishuoService {
     }
 
     public Observable<List<Stock>> followedStocks(final String id) {
-        return service.followedStocks(id).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        return service.followedStocks(id, 50).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Stock> stock(final String id) {
+        return service.stock(id).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     }
 }

@@ -25,8 +25,8 @@ class OneWayBindingTest : InstrumentationTestCase() {
 
     override fun setUp() {
         super.setUp()
-        bindingAssembler.addBinding(oneWayPropertyBinding("integer", Action1<Int> { integer = it }))
-        bindingAssembler.addBinding(oneWayPropertyBinding("string", Action1<String> { string = it }))
+        bindingAssembler.addBinding(oneWayPropertyBinding("integer", Action1<Int> { integer = it }, false))
+        bindingAssembler.addBinding(oneWayPropertyBinding("string", Action1<String> { string = it }, false))
     }
 
     override fun tearDown() {

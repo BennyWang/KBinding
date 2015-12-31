@@ -12,6 +12,7 @@ import com.benny.library.kbinding.adapter.BaseRecyclerPagingAdapter
 import com.benny.library.kbinding.bind.*
 import com.benny.library.kbinding.converter.*
 import com.benny.library.kbinding.dsl.utils.AdapterViewPagingOnSubscribe
+import com.jakewharton.rxbinding.widget.itemClicks
 
 /**
  * Created by benny on 12/16/15.
@@ -45,13 +46,15 @@ fun RecyclerView.paging(): Observable<Unit> = Observable.create(AdapterViewPagin
 //Event
 
 fun ListView.paging(path: String) : PropertyBinding = commandBinding(path, paging(), Action1 {})
+fun ListView.itemClick(path: String) : PropertyBinding = commandBinding(path, itemClicks(), Action1 {})
+
 fun RecyclerView.paging(path: String) : PropertyBinding = commandBinding(path, paging(), Action1 {})
 
 //Property
 
-fun ListView.adapter(path: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<ListAdapter> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, swapAdapter(), converter)
-fun ListView.adapter(paths: List<String>, converter: MultipleConverter<ListAdapter>) : PropertyBinding = multiplePropertyBinding(paths, swapAdapter(), converter)
+fun ListView.adapter(path: String, mode: OneWay = BindingMode.OneWay, oneTime: Boolean = false, converter: OneWayConverter<ListAdapter> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, swapAdapter(), oneTime, converter)
+fun ListView.adapter(paths: List<String>, oneTime: Boolean = false, converter: MultipleConverter<ListAdapter>) : PropertyBinding = multiplePropertyBinding(paths, swapAdapter(), oneTime, converter)
 
-fun RecyclerView.adapter(path: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, swapAdapter(), converter)
-fun RecyclerView.adapter(paths: List<String>, converter: MultipleConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>>) : PropertyBinding = multiplePropertyBinding(paths, swapAdapter(), converter)
+fun RecyclerView.adapter(path: String, mode: OneWay = BindingMode.OneWay, oneTime: Boolean = false, converter: OneWayConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, swapAdapter(), oneTime, converter)
+fun RecyclerView.adapter(paths: List<String>, oneTime: Boolean = false, converter: MultipleConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>>) : PropertyBinding = multiplePropertyBinding(paths, swapAdapter(), oneTime, converter)
 

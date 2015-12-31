@@ -1,11 +1,8 @@
 package com.benny.app.sample.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
 
-public class Stock implements Parcelable {
+public class Stock {
 
     public String id;
     public String symbol;
@@ -54,6 +51,7 @@ public class Stock implements Parcelable {
 
     public float turnover;
 
+    public MarketType market;
 
     @SerializedName("previous_close")
     public float previousClose;
@@ -153,188 +151,6 @@ public class Stock implements Parcelable {
     @SerializedName("offer_sizes")
     public String offerSizes;
     public int contest;
-
-    public Stock() {}
-
-    protected Stock(Parcel in) {
-        id = in.readString();
-        symbol = in.readString();
-        name = in.readString();
-        cnName = in.readString();
-        chSpelling = in.readString();
-        screenshot = in.readString();
-        followed = in.readByte() != 0;
-        positioned = in.readByte() != 0;
-        commentsCount = in.readInt();
-        tradingStatus = in.readString();
-        tradingTime = in.readString();
-        realtimePrice = in.readFloat();
-        changePercent = in.readFloat();
-        changePrice = in.readFloat();
-        amplitude = in.readFloat();
-        nonRestrictedMarketCapitalization = in.readFloat();
-        netAssetRate = in.readFloat();
-        marketCapitalization = in.readFloat();
-        peRatio = in.readFloat();
-        volume = in.readFloat();
-        turnover = in.readFloat();
-        previousClose = in.readFloat();
-        open = in.readFloat();
-        high = in.readFloat();
-        low = in.readFloat();
-        upPrice = in.readFloat();
-        downPrice = in.readFloat();
-        high52Weeks = in.readFloat();
-        low52Weeks = in.readFloat();
-        turnoverRate = in.readFloat();
-        volumeRatio = in.readFloat();
-        bidRatio = in.readFloat();
-        existReminder = in.readByte() != 0;
-        listedState = in.readInt();
-        currencyUnit = in.readString();
-        flowCharts = in.createFloatArray();
-        boardLot = in.readInt();
-        isIndex = in.readByte() != 0;
-        eps = in.readFloat();
-        dividend = in.readFloat();
-        singlePosition = in.readFloat();
-        exchange = in.readString();
-        marketValue = in.readString();
-        industry = in.readString();
-        weight = in.readFloat();
-        averageDailyVolume = in.readString();
-        outcome = in.readString();
-        message = in.readString();
-        date = in.readString();
-        time = in.readString();
-        last = in.readFloat();
-        changeFromPreviousClose = in.readFloat();
-        percentChangeFromPreviousClose = in.readFloat();
-        bidPrices = in.readString();
-        offerPrices = in.readString();
-        tradeTime = in.readString();
-        utfOffset = in.readString();
-        bidSizes = in.readString();
-        offerSizes = in.readString();
-        contest = in.readInt();
-        isBasket = in.readByte() != 0;
-        title = in.readString();
-        totalrevenue = in.readFloat();
-        realtimeIndex = in.readFloat();
-        totalChange = in.readFloat();
-        totalChangePercent = in.readFloat();
-        count = in.readInt();
-        availableCount = in.readInt();
-        cost = in.readFloat();
-        averageCost = in.readFloat();
-        totalValue = in.readFloat();
-        stockscore = in.readInt();
-        todayChange = in.readFloat();
-        todayChangePercent = in.readFloat();
-        broker = in.readString();
-        originalId = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(symbol);
-        dest.writeString(name);
-        dest.writeString(cnName);
-        dest.writeString(chSpelling);
-        dest.writeString(screenshot);
-        dest.writeByte((byte) (followed ? 1 : 0));
-        dest.writeByte((byte) (positioned ? 1 : 0));
-        dest.writeInt(commentsCount);
-        dest.writeString(tradingStatus);
-        dest.writeString(tradingTime);
-        dest.writeFloat(realtimePrice);
-        dest.writeFloat(changePercent);
-        dest.writeFloat(changePrice);
-        dest.writeFloat(amplitude);
-        dest.writeFloat(nonRestrictedMarketCapitalization);
-        dest.writeFloat(netAssetRate);
-        dest.writeFloat(marketCapitalization);
-        dest.writeFloat(peRatio);
-        dest.writeFloat(volume);
-        dest.writeFloat(turnover);
-        dest.writeFloat(previousClose);
-        dest.writeFloat(open);
-        dest.writeFloat(high);
-        dest.writeFloat(low);
-        dest.writeFloat(upPrice);
-        dest.writeFloat(downPrice);
-        dest.writeFloat(high52Weeks);
-        dest.writeFloat(low52Weeks);
-        dest.writeFloat(turnoverRate);
-        dest.writeFloat(volumeRatio);
-        dest.writeFloat(bidRatio);
-        dest.writeByte((byte) (existReminder ? 1 : 0));
-        dest.writeInt(listedState);
-        dest.writeString(currencyUnit);
-        dest.writeFloatArray(flowCharts);
-        dest.writeInt(boardLot);
-        dest.writeByte((byte) (isIndex ? 1 : 0));
-        dest.writeFloat(eps);
-        dest.writeFloat(dividend);
-        dest.writeFloat(singlePosition);
-        dest.writeString(exchange);
-        dest.writeString(marketValue);
-        dest.writeString(industry);
-        dest.writeFloat(weight);
-        dest.writeString(averageDailyVolume);
-        dest.writeString(outcome);
-        dest.writeString(message);
-        dest.writeString(date);
-        dest.writeString(time);
-        dest.writeFloat(last);
-        dest.writeFloat(changeFromPreviousClose);
-        dest.writeFloat(percentChangeFromPreviousClose);
-        dest.writeString(bidPrices);
-        dest.writeString(offerPrices);
-        dest.writeString(tradeTime);
-        dest.writeString(utfOffset);
-        dest.writeString(bidSizes);
-        dest.writeString(offerSizes);
-        dest.writeInt(contest);
-        dest.writeByte((byte) (isBasket ? 1 : 0));
-        dest.writeString(title);
-        dest.writeFloat(totalrevenue);
-        dest.writeFloat(realtimeIndex);
-        dest.writeFloat(totalChange);
-        dest.writeFloat(totalChangePercent);
-        dest.writeInt(count);
-        dest.writeInt(availableCount);
-        dest.writeFloat(cost);
-        dest.writeFloat(averageCost);
-        dest.writeFloat(totalValue);
-        dest.writeInt(stockscore);
-        dest.writeFloat(todayChange);
-        dest.writeFloat(todayChangePercent);
-        dest.writeString(broker);
-        dest.writeString(originalId);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<Stock> CREATOR = new Creator<Stock>() {
-        @Override
-        public Stock createFromParcel(Parcel in) {
-            return new Stock(in);
-        }
-
-        @Override
-        public Stock[] newArray(int size) {
-            return new Stock[size];
-        }
-    };
-
-    public float getRealtimePrice() {
-        return isBasket ? realtimeIndex : realtimePrice;
-    }
 
     public enum Action {
         @SerializedName("0")

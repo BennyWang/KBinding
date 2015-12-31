@@ -15,12 +15,12 @@ public inline fun <T, R> oneWayPropertyBinding(key: String, observable: Observab
     return OneWayPropertyBinding(key, observable, converter)
 }
 
-public inline fun <T> oneWayPropertyBinding(key: String, observer: Action1<in T>, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : OneWayPropertyBinding<T, Any> {
-    return OneWayPropertyBinding(key, observer, backConverter)
+public inline fun <T> oneWayPropertyBinding(key: String, observer: Action1<in T>, oneTime: Boolean, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : OneWayPropertyBinding<T, Any> {
+    return OneWayPropertyBinding(key, observer, oneTime, backConverter)
 }
 
-public inline fun <T> multiplePropertyBinding(keys: List<String>, observer: Action1<in T>, multipleConverter: MultipleConverter<T>) : MultiplePropertyBinding<T> {
-    return MultiplePropertyBinding(keys, observer, multipleConverter)
+public inline fun <T> multiplePropertyBinding(keys: List<String>, observer: Action1<in T>, oneTime: Boolean, multipleConverter: MultipleConverter<T>) : MultiplePropertyBinding<T> {
+    return MultiplePropertyBinding(keys, observer, oneTime, multipleConverter)
 }
 
 public inline fun <T, R> twoWayPropertyBinding(key: String, observable: Observable<T>, observer: Action1<in T>, converter: TwoWayConverter<T, R> = EmptyTwoWayConverter<T, R>()) : TwoWayPropertyBinding<T, R> {
@@ -37,22 +37,6 @@ open public class BindingAssembler {
     private val twoWayPropertyBindings = ArrayList<TwoWayPropertyBinding<*, *>>()
     private var commandBindings = ArrayList<CommandBinding<*>>()
 
-    fun oneWayPropertyBindings(): List<OneWayPropertyBinding<*, *>> {
-        return oneWayPropertyBindings
-    }
-
-    fun twoWayPropertyBindings(): List<TwoWayPropertyBinding<*, *>> {
-        return twoWayPropertyBindings
-    }
-
-    fun multiplePropertyBindings(): List<MultiplePropertyBinding<*>> {
-        return multiplePropertyBindings
-    }
-
-    fun commandBindings(): List<CommandBinding<*>> {
-        return commandBindings
-    }
-
     public fun addBinding(propertyBinding: PropertyBinding): Unit {
         when (propertyBinding) {
             is CommandBinding<*> -> commandBindings.add(propertyBinding)
@@ -65,14 +49,12 @@ open public class BindingAssembler {
 
     public fun bindTo(bindingDisposer: BindingDisposer, viewModel: IViewModel): Unit {
         val cs: CompositeSubscription = CompositeSubscription()
-        oneWayPropertyBindings().forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
-        twoWayPropertyBindings().forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
-        multiplePropertyBindings().forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
-        commandBindings().forEach { commandBinding: CommandBinding<*> -> cs.add(viewModel.bind(commandBinding)) }
-        bindingDisposer.add {
-            cs.unsubscribe()
-            Log.d("BindingRecord", "is unsubscribed: " + cs.isUnsubscribed)
-        }
+        oneWayPropertyBindings.forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
+        twoWayPropertyBindings.forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
+        multiplePropertyBindings.forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
+        commandBindings.forEach { commandBinding: CommandBinding<*> -> cs.add(viewModel.bind(commandBinding)) }
+        bindingDisposer.add { cs.unsubscribe() }
+        clear()
     }
 
     public fun merge(prefix: String, assembler: BindingAssembler) {
@@ -80,5 +62,12 @@ open public class BindingAssembler {
         assembler.multiplePropertyBindings.forEach { it -> multiplePropertyBindings.add(it.prefix(prefix)) }
         assembler.twoWayPropertyBindings.forEach { it -> twoWayPropertyBindings.add(it.prefix(prefix)) }
         assembler.commandBindings.forEach { it -> commandBindings.add(it.prefix(prefix)) }
+    }
+
+    private fun clear() {
+        oneWayPropertyBindings.clear()
+        twoWayPropertyBindings.clear()
+        multiplePropertyBindings.clear()
+        commandBindings.clear()
     }
 }

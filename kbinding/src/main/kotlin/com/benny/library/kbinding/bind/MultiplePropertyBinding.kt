@@ -11,15 +11,15 @@ import rx.functions.Action1
  * Created by benny on 11/17/15.
  */
 
-public class MultiplePropertyBinding<T>(keys: List<String>, val observer: Action1<in T>, val multipleConverter: MultipleConverter<T>) : PropertyBinding() {
+public class MultiplePropertyBinding<T>(keys: List<String>, val observer: Action1<in T>, val oneTime: Boolean, val multipleConverter: MultipleConverter<T>) : PropertyBinding() {
     public var keys: List<String> = keys
     private set
 
     public fun bindTo(properties: List<Property<*>>): Subscription {
-        return Observable.combineLatest(properties.map { property -> property.observable }, { multipleConverter.convert(it) })
+        val ob = Observable.combineLatest(properties.map { property -> property.observable }, { multipleConverter.convert(it) })
                 .doOnSubscribe { LogBind(keys, "OneWay") }
                 .doOnUnsubscribe { LogUnbind(keys, "OneWay") }
-                .subscribe(observer)
+        return if(oneTime) ob.subscribe(observer) else ob.take(1).subscribe(observer)
     }
 
     public fun prefix(prefix: String) : MultiplePropertyBinding<T> {
