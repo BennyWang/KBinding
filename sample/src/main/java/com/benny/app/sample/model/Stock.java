@@ -96,9 +96,6 @@ public class Stock {
     @SerializedName("flow_charts")
     public float[] flowCharts;
 
-    @SerializedName("funds_flow")
-    public FundFlow[] fundsFlow = new FundFlow[0];
-
     @SerializedName("board_lot")
     public int boardLot;
 

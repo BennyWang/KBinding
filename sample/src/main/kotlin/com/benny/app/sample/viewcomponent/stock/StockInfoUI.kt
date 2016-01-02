@@ -342,7 +342,7 @@ class StockInfoUI : ViewBinderComponent<View> {
             }.lparams(matchParent, wrapContent)
 
             relativeLayout {
-                bind { raw("market", oneTime = true, action = Action1<ViewBinderComponent<*>> { inflate(it, this@verticalLayout) }, converter = viewOfMarket) }
+                wait { until("market", converter = viewOfMarket) { inflate(it, this@verticalLayout) }  }
             }.lparams { topMargin = dip(12) }
         }
     }

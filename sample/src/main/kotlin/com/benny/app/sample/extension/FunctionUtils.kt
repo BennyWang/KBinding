@@ -1,9 +1,13 @@
 package com.benny.app.sample.extension
 
+import android.content.Context
 import android.os.Build
 import android.view.View
+import android.view.ViewManager
+import android.widget.ProgressBar
 import com.google.gson.GsonBuilder
 import com.benny.app.sample.Constants
+import org.jetbrains.anko.custom.ankoView
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
@@ -33,5 +37,11 @@ fun generateViewId(): Int {
     } else {
         return View.generateViewId();
     }
+}
 
+public fun ViewManager.progressBar(style: Int): ProgressBar {
+    return ankoView({ctx: Context -> ProgressBar(ctx, null, style) }) { }
+}
+public fun ViewManager.progressBar(style: Int, init: ProgressBar.() -> Unit): ProgressBar {
+    return ankoView({ctx: Context -> ProgressBar(ctx, null, style) }) { init() }
 }

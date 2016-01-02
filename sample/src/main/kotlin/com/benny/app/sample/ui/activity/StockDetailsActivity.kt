@@ -1,6 +1,9 @@
 package com.benny.app.sample.ui.activity
 
+import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
+import com.benny.app.sample.extension.progressBar
 import com.benny.app.sample.network.service.caishuo.CaishuoService
 import com.benny.app.sample.viewcomponent.stock.StockInfoUI
 import com.benny.app.sample.viewmodel.StockViewModel
@@ -25,9 +28,17 @@ class StockDetailsActivity : BaseActivity() {
 
     class StockDetailsActivityUI : ViewBinderComponent<StockDetailsActivity> {
         override fun builder(): AnkoContext<StockDetailsActivity>.() -> Unit = {
-            relativeLayout {
-                inflate(StockInfoUI(), this@relativeLayout).lparams(matchParent)
+            frameLayout {
+                relativeLayout {
+                    wait { until("stock") { inflate(StockInfoUI(), this@relativeLayout).lparams(matchParent) } }
+                }
+                frameLayout {
+                    backgroundColor = Color.WHITE
+                    progressBar(android.R.attr.progressBarStyleSmall).lparams { gravity = Gravity.CENTER }
+                    wait { until("stock") { fadeOut() } }
+                }
             }
+
         }
     }
 }
