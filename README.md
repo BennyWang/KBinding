@@ -1,52 +1,46 @@
-# KBinding
-Android View Model binding framework write in kotlin, Simple but powerful.
+KBinding
+======================
 
-## Usage
+Android View Model binding framework write in kotlin, base on anko, simple but powerful.
 
-### compile 'com.benny.kbinding:library:0.1.0'
+## Contents
 
-UI Component
+### View Model Class
 
-    class MainActivityUI : ViewBinderComponent<MainActivity> {
-        override fun builder(): AnkoContext<*>.() -> Unit = {
-            verticalLayout {
-                verticalLayout {
-                    backgroundColor = Color.WHITE
-                    leftPadding = dip(14)
-                    editText {
-                        bind { text(path="name", mode = BindingMode.TwoWay) }
-                    }.lparams(width = matchParent)
-                    view { backgroundResource = R.color.color_f2 }.lparams(width = matchParent, height = 1)
-                    editText {
-                        bind{ text(path="password", mode = BindingMode.TwoWay) }
-                    }.lparams(width = matchParent)
-                }.lparams(width = matchParent)
-                textView {
-                    text = "Login"
-                    textSizeDimen = R.dimen.font_38
-                    textColor = Color.WHITE
-                    verticalPadding = dip(10.4f)
-                    isClickable = true
-                    bind { click("login") }
-                    bind { enabled(paths=listOf("name", "password"), converter = ArrayToBooleanConverter()) }
-                }.lparams(width = matchParent) { margin = dip(14) }.let { it.gravity = Gravity.CENTER }
-            }
-        }
+```kotlin
+class LoginViewModel() : ViewModel<String>() {
+    var name: String by Delegates.bindProperty("name", "xxxxxxx@xxxxx.com")
+    var password: String by Delegates.bindProperty("password", "xxxxxxxxx")
+    val login: Command by Delegates.bindCommand("login", Command { it ->
+        // xxx Do what you want to do
+    })
+    val hello: Command by Delegates.bindCommand("hello", Command { it ->
+        toast("Hello, ${name}!")
+    })
+}
+```
+
+### Bind
+
+```kotlin
+verticalLayout {
+    editText {
+        bind { text(path="name", mode = TwoWay) }
     }
-    
-ViewModel
-
-    class LoginViewModel() : ViewModel<String>() {
-        var name: String by Delegates.bindProperty("name", "xxxxxxx@xxxxx.com")
-        var password: String by Delegates.bindProperty("password", "xxxxxxxxx")
-        val login: Command by Delegates.bindCommand("login", Command { it ->
-            // xxx Do what you want to do
-        })
+    button {
+        bind { click("hello") }
     }
-    
-Binding
+}
+```
 
-    MainActivityUI().setContentView(activity).bindTo(LoginViewModel())
+### Wait/Until
+
+```kotlin
+relativeLayout {
+    //wait market and then decide which to inflate, just one time binding. 
+    wait { until("market", converter = viewOfMarket) { inflate(it, this@verticalLayout) }  }
+}
+```
     
 ## Extend Binding Property 
 
@@ -66,6 +60,13 @@ TwoWay Property
     fun TextView.text(path: String, mode: TwoWay, converter: TwoWayConverter<String, *> = EmptyTwoWayConverter<String, String>()) : PropertyBinding = twoWayPropertyBinding(path, textChanges2(), text(), converter)
     fun TextView.text(paths: List<String>, converter: MultipleConverter<out CharSequence>) : PropertyBinding = multiplePropertyBinding(paths, text(), converter)    
 
+## Using with Gradle
+
+```gradle
+dependencies {
+    compile 'com.benny.kbinding:library:0.1.0'
+}
+```
 
 ## Contribute
 
