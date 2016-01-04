@@ -78,13 +78,13 @@ public open class ViewModel() : IViewModel {
     }
 
     private fun <T> addDependOf(key: String, dependOf: List<String>, getter: () -> T) {
-        dependsOf.put(key, multiplePropertyBinding(dependOf, Action1 { t -> property<T>(key).observer.onNext(t) }, false, object : MultipleConverter<T> {
+        dependsOf.put(key, multiplePropertyBinding(dependOf, Action1 { t -> property<T>(key).value = t }, false, object : MultipleConverter<T> {
             override fun convert(params: Array<Any>): T = getter()
         }))
     }
 
     private fun <T> addDependOf(key: String, dependOf: String, getter: () -> T) {
-        dependsOf.put(key, oneWayPropertyBinding(dependOf, Action1 { t -> property<T>(key).observer.onNext(t) }, false, object : OneWayConverter<T> {
+        dependsOf.put(key, oneWayPropertyBinding(dependOf, Action1 { t -> property<T>(key).value = t }, false, object : OneWayConverter<T> {
             override fun convert(source: Any?): T = getter()
         }))
     }
@@ -124,22 +124,22 @@ public open class ViewModel() : IViewModel {
         }
     }
 
-    public fun <T> bindProperty(key: String, dependOf: List<String>, getter: () -> T): ReadOnlyProperty<Any?, T?> {
+    public fun <T> bindProperty(key: String, dependOf: List<String>, getter: () -> T): ReadOnlyProperty<Any?, T> {
         // dose not need support nested view model
         addProperty(key, Property<T>())
         addDependOf(key, dependOf, getter)
 
-        return object : ReadOnlyProperty<Any?, T?> {
-            override fun getValue(thisRef: Any?, property: KProperty<*>): T? = property<T>(property.name).value
+        return object : ReadOnlyProperty<Any?, T> {
+            override fun getValue(thisRef: Any?, property: KProperty<*>): T = property<T>(property.name).value ?: getter()
         }
     }
 
-    public fun <T> bindProperty(key: String, dependOf: String, getter: () -> T): ReadOnlyProperty<Any?, T?> {
+    public fun <T> bindProperty(key: String, dependOf: String, getter: () -> T): ReadOnlyProperty<Any?, T> {
         // dose not need support nested view model
         addProperty(key, Property<T>())
         addDependOf(key, dependOf, getter)
-        return object : ReadOnlyProperty<Any?, T?> {
-            override fun getValue(thisRef: Any?, property: KProperty<*>): T? = property<T>(property.name).value
+        return object : ReadOnlyProperty<Any?, T> {
+            override fun getValue(thisRef: Any?, property: KProperty<*>): T = property<T>(property.name).value ?: getter()
         }
     }
 

@@ -47,6 +47,8 @@ public class OneWayPropertyBinding<T, R> private constructor(key: String, val on
         val ob = property.observable.map { backConverter!!.convert(it as Any) }
                 .doOnSubscribe { LogBind(key, "OneWay") }
                 .doOnUnsubscribe { LogUnbind(key, "OneWay") }
-        return if(oneTime) ob.subscribe(observer) else ob.take(1).subscribe(observer)
+                .doOnNext { LogOnNext(key, it) }
+
+        return if(!oneTime) ob.subscribe(observer) else ob.take(1).subscribe(observer)
     }
 }

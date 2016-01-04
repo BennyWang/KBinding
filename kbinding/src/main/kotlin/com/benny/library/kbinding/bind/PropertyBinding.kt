@@ -29,4 +29,8 @@ open class PropertyBinding {
         --bindingCount
         Log.d("BindingRecord", "for unbind property: " + properties.joinToString(",") + " : mode: $mode --- count is $bindingCount")
     }
+
+    protected fun <T> LogOnNext(propertie: String, data: T) {
+        Log.d("BindingRecord", "for onNext property: $propertie : data: $data")
+    }
 }

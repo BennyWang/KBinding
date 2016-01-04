@@ -3,228 +3,79 @@ package com.benny.app.sample.viewcomponent.stock
 import android.graphics.Color
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.TextView
+import com.benny.app.sample.converter.StockColorConverter
+import com.benny.app.sample.converter.StockPriceChangeConverter
+import com.benny.app.sample.converter.StockPriceChangePercentageConverter
+import com.benny.app.sample.converter.StockPriceConverter
 import com.benny.app.sample.model.MarketType
+import com.benny.library.kbinding.converter.EmptyOneWayConverter
 import com.benny.library.kbinding.converter.OneWayConverter
 import com.benny.library.kbinding.dsl.*
 import com.benny.library.kbinding.view.ViewBinderComponent
 import org.jetbrains.anko.*
-import rx.functions.Action1
 
 /**
  * Created by benny on 12/31/15.
  */
 
-class StockSubInfoHSUI : ViewBinderComponent<View> {
-    override fun builder(): AnkoContext<View>.() -> Unit = {
-        gridLayout {
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "最高"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "最低"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "成交额"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
-
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "市盈率"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5); topMargin = dip(3) }
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "市净率"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "总市值"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
-
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "振幅"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5); topMargin = dip(3) }
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "每股收益"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "流通市值"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
-
+abstract class StockSubInfoUI : ViewBinderComponent<View> {
+    fun ViewGroup.cell(ankoContext: AnkoContext<*>, title: String, key: String, converter: OneWayConverter<CharSequence> = EmptyOneWayConverter()): View = with(ankoContext) {
+        this@cell.linearLayout {
+            textView {
+                textSize = 12f
+                textColor = Color.parseColor("#999999")
+                text = title
+            }
+            textView {
+                text = "--"
+                textSize = 12f
+                textColor = Color.WHITE
+                gravity = Gravity.RIGHT
+                bind{ text(key, mode = OneWay, converter = converter) }
+            }.lparams(matchParent)
         }
     }
 }
 
-class StockSubInfoHKUI : ViewBinderComponent<View> {
+class StockSubInfoHSUI : StockSubInfoUI() {
     override fun builder(): AnkoContext<View>.() -> Unit = {
+        val ankoContext = this
         gridLayout {
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "最高"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "最低"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "成交额"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
+            cell(ankoContext, "最高", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "最低", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "成交额", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
 
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "52周高"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5); topMargin = dip(3) }
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "52周低"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            linearLayout {
-                textView {
-                    textSize = 12f
-                    textColor = Color.parseColor("#999999")
-                    text = "股息"
-                }
-                textView {
-                    text = "--"
-                    textSize = 12f
-                    textColor = Color.WHITE
-                    gravity = Gravity.RIGHT
-                }.lparams(matchParent)
-            }.lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
+            space().lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { topMargin = dip(3); height = 0 }
+
+            cell(ankoContext, "市盈率", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "市净率", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "总市值", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
+
+            space().lparams(GridLayout.spec(3, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { topMargin = dip(3); height = 0 }
+
+            cell(ankoContext, "振幅", "high").lparams(GridLayout.spec(4, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "每股收益", "high").lparams(GridLayout.spec(4, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "流通市值", "high").lparams(GridLayout.spec(4, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
+        }
+    }
+}
+
+class StockSubInfoHKUI : StockSubInfoUI() {
+    override fun builder(): AnkoContext<View>.() -> Unit = {
+        val ankoContext = this
+        gridLayout {
+            cell(ankoContext, "最高", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "最低", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "成交额", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
+
+            space().lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { topMargin = dip(3); height = 0 }
+
+            cell(ankoContext, "52周高", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "52周低", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "股息", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
         }
     }
 }
@@ -246,6 +97,21 @@ class StockInfoUI : ViewBinderComponent<View> {
     }
 
     override fun builder(): AnkoContext<View>.() -> Unit = {
+        fun ViewGroup.cell(title: String, key: String): View = with(this) {
+            verticalLayout {
+                textView {
+                    textSize = 12f
+                    textColor = Color.parseColor("#999999")
+                    text = title
+                }
+                textView {
+                    text = "--"
+                    textSize = 12f
+                    textColor = Color.WHITE
+                }
+            }
+        }
+
         verticalLayout {
             horizontalPadding = dip(12)
             bottomPadding = dip(12)
@@ -256,7 +122,9 @@ class StockInfoUI : ViewBinderComponent<View> {
                         textSize = 42f
                         textColor = Color.WHITE
                         gravity = Gravity.CENTER
-                        text = "10.28"
+                        bind { text("price", mode=OneWay, converter = StockPriceConverter()) }
+                        bind { textColor("changePrice", mode=OneWay, converter = StockColorConverter()) }
+                        text = "--"
                     }
                     linearLayout {
                         val tvStyle = viewStyle<TextView> {
@@ -266,78 +134,30 @@ class StockInfoUI : ViewBinderComponent<View> {
                         }
                         textView {
                             style = tvStyle
-                            text = "+1.30"
+                            bind { text("changePrice", mode=OneWay, converter = StockPriceChangeConverter()) }
+                            bind { textColor("changePrice", mode=OneWay, converter = StockColorConverter()) }
+                            text = "--"
                         }.lparams(0, wrapContent, 1f)
                         textView {
                             style = tvStyle
-                            text = "+5.80%"
+                            bind { text("changePercent", mode=OneWay, converter = StockPriceChangePercentageConverter()) }
+                            bind { textColor("changePrice", mode=OneWay, converter = StockColorConverter()) }
+                            text = "--"
                         }.lparams(0, wrapContent, 1f)
                     }
                 }.lparams(weight = 0.6f)
 
                 gridLayout {
-                    verticalLayout {
-                        textView {
-                            textSize = 12f
-                            textColor = Color.parseColor("#999999")
-                            text = "今开"
-                        }
-                        textView {
-                            //bind { text("open", mode = OneWay) }
-                            textSize = 12f
-                            textColor = Color.WHITE
-                        }
-                    }.lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(0, GridLayout.LEFT, 1f))
-                    verticalLayout {
-                        textView {
-                            textSize = 12f
-                            textColor = Color.parseColor("#999999")
-                            text = "昨收"
-                        }
-                        textView {
-                            //bind { text("previousClose", mode = OneWay) }
-                            textSize = 12f
-                            textColor = Color.WHITE
-                        }
-                    }.lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(1, GridLayout.LEFT, 1f))
-                    verticalLayout {
-                        textView {
-                            textSize = 12f
-                            textColor = Color.parseColor("#999999")
-                            text = "换手率"
-                        }
-                        textView {
-                            //bind { text("turnOverRate", mode = OneWay) }
-                            textSize = 12f
-                            textColor = Color.WHITE
-                        }
-                    }.lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(0, GridLayout.LEFT, 1f)) { topMargin = dip(3) }
-                    verticalLayout {
+                    cell("今开", "open").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(0, GridLayout.LEFT, 1f))
+                    cell("最低", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(1, GridLayout.LEFT, 1f))
+
+                    space().lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { topMargin = dip(3); height = 0 }
+
+                    cell("换手率", "open").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(0, GridLayout.LEFT, 1f))
+                    cell("市值", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(1, GridLayout.LEFT, 1f))
+                    cell("成交量", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(1, GridLayout.LEFT, 1f)).apply {
                         visibility = View.GONE
-                        textView {
-                            textSize = 12f
-                            textColor = Color.parseColor("#999999")
-                            text = "市值"
-                        }
-                        textView {
-                            //bind { text("sz", mode = OneWay) }
-                            textSize = 12f
-                            textColor = Color.WHITE
-                        }
-                    }.lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(0, GridLayout.LEFT, 1f))
-                    verticalLayout {
-                        textView {
-                            textSize = 12f
-                            textColor = Color.parseColor("#999999")
-                            text = "成交量"
-                        }
-                        textView {
-                            //bind { text("cjl", mode = OneWay) }
-                            textSize = 12f
-                            textColor = Color.WHITE
-                            text = "--"
-                        }
-                    }.lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(1, GridLayout.LEFT, 1f))
+                    }
                 }.lparams(weight = 0.4f) { gravity = Gravity.BOTTOM; leftMargin = dip(30) }
             }.lparams(matchParent, wrapContent)
 

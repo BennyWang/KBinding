@@ -19,7 +19,7 @@ fun TextView.textChanges2(): Observable<String> = textChanges().map { it.toStrin
 fun TextView.textColor(path: String, mode: OneWay = BindingMode.OneWay, oneTime: Boolean = false, converter: OneWayConverter<Int> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, color(), oneTime, converter)
 fun TextView.textColor(paths: List<String>, oneTime: Boolean = false, converter: MultipleConverter<Int>) : PropertyBinding = multiplePropertyBinding(paths, color(), oneTime, converter)
 
-fun TextView.text(path: String, mode: OneWay, oneTime: Boolean = false, converter: OneWayConverter<CharSequence> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, text(), oneTime, converter)
+fun TextView.text(path: String, mode: OneWay, oneTime: Boolean = false, converter: OneWayConverter<out CharSequence> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, text(), oneTime, converter)
 fun TextView.text(paths: List<String>, oneTime: Boolean = false, converter: MultipleConverter<out CharSequence>) : PropertyBinding = multiplePropertyBinding(paths, text(), oneTime, converter)
 
 fun TextView.text(path: String, mode: OneWayToSource, converter: OneWayConverter<*> = EmptyOneWayConverter<String>()) : PropertyBinding = oneWayPropertyBinding(path, textChanges2(), converter)

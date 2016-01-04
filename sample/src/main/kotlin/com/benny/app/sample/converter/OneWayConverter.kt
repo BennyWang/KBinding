@@ -15,7 +15,7 @@ import java.text.DecimalFormat
  * Created by benny on 12/17/15.
  */
 
-class StockColorConverter(val defaultColor: Int) : OneWayConverter<Int> {
+class StockColorConverter(val defaultColor: Int = Color.WHITE) : OneWayConverter<Int> {
     override fun convert(source: Any?): Int {
         if(source == null || source !is Number) return defaultColor
 
