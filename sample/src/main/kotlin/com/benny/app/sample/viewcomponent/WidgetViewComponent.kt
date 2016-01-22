@@ -25,7 +25,7 @@ class TagTextWidgetView(val textSize: Float, val colorResource: Int, val horizon
             this@textView.horizontalPadding = dip(this@TagTextWidgetView.horizontalPadding)
             this@textView.verticalPadding = dip(this@TagTextWidgetView.verticalPadding)
             bind { background("tag", converter = backgroundConverter) }
-            bind { text("tag", OneWay) }
+            bind { text("tag") }
         }
     }
 }

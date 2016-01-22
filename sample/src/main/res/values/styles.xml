@@ -1,8 +1,18 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+
+        <!--<item name="colorPrimary">#393a4c</item>-->
+        <!-- 状态栏颜色 -->
+        <!--<item name="colorPrimaryDark">#393a4c</item>-->
+        <!-- 窗口的背景颜色 -->
+        <!--<item name="android:windowBackground">@android:color/white</item>-->
+
+        <item name="colorControlNormal">@android:color/white</item>
     </style>
 
 </resources>

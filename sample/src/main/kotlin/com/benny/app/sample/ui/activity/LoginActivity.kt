@@ -98,7 +98,7 @@ class LoginActivity : BaseActivity(), LoginViewModel.LoginDelegate {
                     verticalPadding = dip(10.4f)
                     isClickable = true
                     bind { click("login") }
-                    bind { enabled(paths=listOf("name", "password"), converter = ArrayToBooleanConverter()) }
+                    bind { enabled("name", "password", converter = ArrayToBooleanConverter()) }
                 }.lparams(width = matchParent) { margin = dip(14) }.let { it.gravity = Gravity.CENTER }
             }.style(editTextStyle)
         }

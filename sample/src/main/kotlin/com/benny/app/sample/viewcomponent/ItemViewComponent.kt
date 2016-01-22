@@ -70,12 +70,12 @@ class StockItemView : ViewBinderComponent<Any> {
                         singleLine = true
                         maxEms = 8
                         ellipsize = TextUtils.TruncateAt.END
-                        bind { text(path = "name", mode = OneWay) }
+                        bind { text("name", mode = OneWay) }
                     }.lparams(width = wrapContent)
                     textView {
                         textSize = 9f
                         textColorResource = R.color.color_9
-                        bind { text(path = "symbol", mode = OneWay) }
+                        bind { text("symbol", mode = OneWay) }
                     }.lparams(width = wrapContent)
                 }.lparams { leftMargin = dip(14) }
                 val v = textView {
@@ -84,8 +84,8 @@ class StockItemView : ViewBinderComponent<Any> {
                     textColor = Color.WHITE
                     textWeight = Typeface.BOLD
                     this@textView.gravity = Gravity.CENTER
-                    bind { background(paths = listOf("listedState", "changePercent"), converter = ChangePercentBackgroundConverter(ctx)) }
-                    bind { text(paths = listOf("listedState", "changePercent"), converter = ChangePercentConverter()) }
+                    bind { background("listedState", "changePercent", converter = ChangePercentBackgroundConverter(ctx)) }
+                    bind { text("listedState", "changePercent", converter = ChangePercentConverter()) }
                 }.lparams(width = dip(82), height = dip(33)) {
                     alignParentRight()
                     centerVertically()
@@ -95,7 +95,7 @@ class StockItemView : ViewBinderComponent<Any> {
                     textSize = 16f
                     textColorResource = R.color.color_3
                     this@textView.gravity = Gravity.CENTER_VERTICAL or Gravity.RIGHT
-                    bind { text(path = "price", mode = OneWay, converter = StockPriceConverter()) }
+                    bind { text("price", mode = OneWay, converter = StockPriceConverter()) }
                 }.lparams {
                     leftOf(v)
                     centerVertically()

@@ -15,6 +15,10 @@ public inline fun <T, R> oneWayPropertyBinding(key: String, observable: Observab
     return OneWayPropertyBinding(key, observable, converter)
 }
 
+public inline fun <T> oneWayPropertyBinding(observer: Action1<in T>, oneTime: Boolean, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>(), vararg keys: String) : PropertyBinding {
+    return if(keys.size == 1) OneWayPropertyBinding<T, Any>(keys[0], observer, oneTime, backConverter) else MultiplePropertyBinding(keys.toList(), observer, oneTime, backConverter as MultipleConverter<T>)
+}
+
 public inline fun <T> oneWayPropertyBinding(key: String, observer: Action1<in T>, oneTime: Boolean, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : OneWayPropertyBinding<T, Any> {
     return OneWayPropertyBinding(key, observer, oneTime, backConverter)
 }

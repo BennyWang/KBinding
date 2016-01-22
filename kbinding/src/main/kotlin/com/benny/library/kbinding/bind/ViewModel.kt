@@ -14,7 +14,7 @@ import kotlin.reflect.KProperty
  * Created by benny on 11/17/15.
  */
 public open class ViewModel() : IViewModel {
-    val emptySubscription = object : Subscription {
+    class MockSubscription : Subscription {
         override fun isUnsubscribed(): Boolean = true
         override fun unsubscribe() {}
     }
@@ -47,11 +47,11 @@ public open class ViewModel() : IViewModel {
     }
 
     private fun bindDependOf(key: String) : Subscription {
-        val dependOf = dependsOf.remove(key) ?: return emptySubscription
+        val dependOf = dependsOf.remove(key) ?: return MockSubscription()
         return when(dependOf) {
             is OneWayPropertyBinding<*, *> -> dependOf.bindTo(property<Any>(dependOf.key))
             is MultiplePropertyBinding<*> -> dependOf.bindTo(properties(dependOf.keys))
-            else -> emptySubscription
+            else -> MockSubscription()
         }
     }
 

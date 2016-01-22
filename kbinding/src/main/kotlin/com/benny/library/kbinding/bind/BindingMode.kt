@@ -9,9 +9,11 @@ open class BindingMode {
         public val OneWay: OneWay = OneWay()
         public val TwoWay: TwoWay = TwoWay()
         public val OneWayToSource: OneWayToSource = OneWayToSource()
+        public val OneTime: OneTime = OneTime()
     }
 }
 
 class OneWay : BindingMode()
 class TwoWay : BindingMode()
 class OneWayToSource : BindingMode()
+class OneTime : BindingMode()

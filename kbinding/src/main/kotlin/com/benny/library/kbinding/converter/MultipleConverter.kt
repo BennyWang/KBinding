@@ -6,8 +6,12 @@ import android.util.Log
  * Created by benny on 11/18/15.
  */
 
-public interface MultipleConverter<T> {
+public interface MultipleConverter<T> : OneWayConverter<T> {
     fun convert(params: Array<Any>): T
+
+    override fun convert(source: Any?): T {
+        throw UnsupportedOperationException()
+    }
 }
 
 class ArrayToBooleanConverter : MultipleConverter<Boolean> {

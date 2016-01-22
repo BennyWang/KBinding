@@ -121,7 +121,7 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
                     isClickable = true
                     gravity = Gravity.CENTER
                     bind { click("login") }
-                    bind { enabled(paths=listOf("name", "password"), converter = ArrayToBooleanConverter()) }
+                    bind { enabled("name", "password", converter = ArrayToBooleanConverter()) }
                 }.lparams(width = matchParent) { margin = dip(14) }
             }
         }

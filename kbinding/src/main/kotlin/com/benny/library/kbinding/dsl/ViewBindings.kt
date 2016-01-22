@@ -45,22 +45,21 @@ fun View.click(path: String) : PropertyBinding = commandBinding(path, clicks(), 
 
 // Property
 
-fun Drawable.level(path: String, mode: OneWay = BindingMode.OneWay, oneTime: Boolean = false, converter: OneWayConverter<Int> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, level(), oneTime, converter)
-fun Drawable.level(paths: List<String>, oneTime: Boolean = false, converter: MultipleConverter<Int>) : PropertyBinding = multiplePropertyBinding(paths, level(), oneTime, converter)
+fun Drawable.level(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Int> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(level(), false, converter, *paths)
+fun Drawable.level(vararg paths: String, mode: OneTime, converter: OneWayConverter<Int> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(level(), true, converter, *paths)
 
 fun View.until(path: String, action: () -> Unit): PropertyBinding = oneWayPropertyBinding(path, Action1 { action() }, true, EmptyOneWayConverter())
-fun <T> View.until(path: String, converter: OneWayConverter<out T> = EmptyOneWayConverter(), action: (T) -> Unit): PropertyBinding = oneWayPropertyBinding(path, Action1<T> { action(it) }, true, converter)
-fun <T> View.until(paths: List<String>, converter: MultipleConverter<out T> , action: (T) -> Unit): PropertyBinding = multiplePropertyBinding(paths, Action1<T> { action(it) }, true, converter)
+fun <T> View.until(vararg paths: String, converter: OneWayConverter<out T> = EmptyOneWayConverter(), action: (T) -> Unit): PropertyBinding = oneWayPropertyBinding(Action1<T> { action(it) }, true, converter, *paths)
 
-fun View.enabled(path: String, mode: OneWay = BindingMode.OneWay, oneTime: Boolean = false, converter: OneWayConverter<Boolean> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, enabled(), oneTime, converter)
-fun View.enabled(paths: List<String>, oneTime: Boolean = false, converter: MultipleConverter<Boolean>) : PropertyBinding = multiplePropertyBinding(paths, enabled(), oneTime, converter)
+fun View.enabled(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Boolean>) : PropertyBinding = oneWayPropertyBinding(enabled(), false, converter, *paths)
+fun View.enabled(vararg paths: String, mode: OneTime, converter: OneWayConverter<Boolean>) : PropertyBinding = oneWayPropertyBinding(enabled(), true, converter, *paths)
 
-fun View.visibility(path: String, mode: OneWay = BindingMode.OneWay, oneTime: Boolean = false, converter: OneWayConverter<Boolean> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, visibility(), oneTime, converter)
-fun View.visibility(paths: List<String>, oneTime: Boolean = false, converter: MultipleConverter<Boolean>) : PropertyBinding = multiplePropertyBinding(paths, visibility(), oneTime, converter)
+fun View.visibility(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Boolean> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(visibility(), false, converter, *paths)
+fun View.visibility(vararg paths: String, mode: OneTime, converter: OneWayConverter<Boolean> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(visibility(), true, converter, *paths)
 
-fun View.background(path: String, mode: OneWay = BindingMode.OneWay, oneTime: Boolean = false, converter: OneWayConverter<Drawable> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, background(), oneTime, converter)
-fun View.background(paths: List<String>, oneTime: Boolean = false, converter: MultipleConverter<Drawable>) : PropertyBinding = multiplePropertyBinding(paths, background(), oneTime, converter)
+fun View.background(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Drawable> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(background(), false, converter, *paths)
+fun View.background(vararg paths: String, mode: OneTime, converter: OneWayConverter<Drawable> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(background(), true, converter, *paths)
 
-fun View.backgroundColor(path: String, mode: OneWay = BindingMode.OneWay, oneTime: Boolean = false, converter: OneWayConverter<Int> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, backgroundColor(), oneTime, converter)
-fun View.backgroundColor(paths: List<String>, oneTime: Boolean = false, converter: MultipleConverter<Int>) : PropertyBinding = multiplePropertyBinding(paths, backgroundColor(), oneTime, converter)
+fun View.backgroundColor(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Int> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(backgroundColor(), false, converter)
+fun View.backgroundColor(vararg paths: String, mode: OneTime, converter: OneWayConverter<Int> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(backgroundColor(), true, converter)
 
