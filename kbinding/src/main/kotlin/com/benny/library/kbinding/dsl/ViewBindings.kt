@@ -51,7 +51,7 @@ fun Drawable.level(vararg paths: String, mode: OneTime, converter: OneWayConvert
 fun View.until(path: String, action: () -> Unit): PropertyBinding = oneWayPropertyBinding(path, Action1 { action() }, true, EmptyOneWayConverter())
 fun <T> View.until(vararg paths: String, converter: OneWayConverter<out T> = EmptyOneWayConverter(), action: (T) -> Unit): PropertyBinding = oneWayPropertyBinding(Action1<T> { action(it) }, true, converter, *paths)
 
-fun View.enabled(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Boolean>) : PropertyBinding = oneWayPropertyBinding(enabled(), false, converter, *paths)
+fun View.enabled(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Boolean> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(enabled(), false, converter, *paths)
 fun View.enabled(vararg paths: String, mode: OneTime, converter: OneWayConverter<Boolean>) : PropertyBinding = oneWayPropertyBinding(enabled(), true, converter, *paths)
 
 fun View.visibility(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Boolean> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(visibility(), false, converter, *paths)

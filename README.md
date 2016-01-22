@@ -5,22 +5,14 @@ Android View Model binding framework write in kotlin, base on anko, simple but p
 
 ## Contents
 
-### View Model Class
+### BindingMode
 
-```kotlin
-class LoginViewModel() : ViewModel<String>() {
-    var name: String by Delegates.bindProperty("name", "xxxxxxx@xxxxx.com")
-    var password: String by Delegates.bindProperty("password", "xxxxxxxxx")
-    val login: Command by Delegates.bindCommand("login", Command { it ->
-        // xxx Do what you want to do
-    })
-    val hello: Command by Delegates.bindCommand("hello", Command { it ->
-        toast("Hello, ${name}!")
-    })
-}
-```
+  - OneWay: Binding from model to view
+  - TwoWay: Binding from model to view and view to model
+  - OneWayToSource: Binding from view to model
+  - OneTime: Binding from model to view, and auto release after first emit
 
-### Bind
+### Simple Binding
 
 ```kotlin
 verticalLayout {
@@ -31,34 +23,75 @@ verticalLayout {
         bind { click("hello") }
     }
 }
+class SimpleViewModel() : ViewModel() {
+    var name: String by bindProperty("name", "Jason")
+    val hello: Command by bindCommand("hello", Command { params, canExecute ->
+        toast("Hello, ${name}!")
+    })
+}
+```
+
+### Multiple Binding
+
+```kotlin
+//login button enabled only when name and password not empty
+class ArrayToBooleanConverter : MultipleConverter<Boolean> {
+    override fun convert(params: Array<Any>): Boolean {
+        params.forEach {
+            if(it.toString().isEmpty()) return false
+        }
+        return true
+    }
+}
+verticalLayout {
+    editText {
+        bind { text(path="name", mode = TwoWay) }
+    }
+    editText {
+            bind { text(path="password", mode = TwoWay) }
+        }
+    button {
+        bind { enabled("name", "password", mode = OneWay, converter = ArrayToBooleanConverter()) }
+        bind { click("login") }
+    }
+}
+class LoginViewModel() : ViewModel() {
+    var name: String by bindProperty("name", "xxx@xxxx.com")
+    var password: String by bindProperty("password", "xxxxxx")
+    val login: Command by bindCommand("login", Command { params, canExecute ->
+        //login processing
+    })
+}
 ```
 
 ### Wait/Until
 
 ```kotlin
+//wait/until just like OneTime binding, but it need apply action, for example below, it wait for market from model, then decide how to display
 relativeLayout {
-    //wait market and then decide which to inflate, just one time binding. 
     wait { until("market", converter = viewOfMarket) { inflate(it, this@verticalLayout) }  }
 }
 ```
     
-## Extend Binding Property 
+## Extend Binding Property(Depend on RxBinding heavily)
 
 Event
-    
+
+```kotlin   
     fun View.click(path: String) : PropertyBinding = commandBinding(path, clicks(), enabled())
+```  
 
-OneWay Property
+Property
 
-    fun View.enabled(path: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Boolean> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, enabled(), converter)
-    fun View.enabled(paths: List<String>, converter: MultipleConverter<Boolean>) : PropertyBinding = multiplePropertyBinding(paths, enabled(), converter)
+```kotlin
+    fun View.enabled(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Boolean> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(enabled(), false, converter, *paths) 
     
-TwoWay Property
-
-    fun TextView.text(path: String, mode: OneWay, converter: OneWayConverter<CharSequence> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, text(), converter)
+    //this implements four binding mode for TextView, if just need OneWay mode, remove last three lines, some for other mode
+    fun TextView.text(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<out CharSequence> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(text(), false, converter, *paths)
+    fun TextView.text(vararg paths: String, mode: OneTime, converter: OneWayConverter<out CharSequence> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(text(), true, converter, *paths)
     fun TextView.text(path: String, mode: OneWayToSource, converter: OneWayConverter<*> = EmptyOneWayConverter<String>()) : PropertyBinding = oneWayPropertyBinding(path, textChanges2(), converter)
-    fun TextView.text(path: String, mode: TwoWay, converter: TwoWayConverter<String, *> = EmptyTwoWayConverter<String, String>()) : PropertyBinding = twoWayPropertyBinding(path, textChanges2(), text(), converter)
-    fun TextView.text(paths: List<String>, converter: MultipleConverter<out CharSequence>) : PropertyBinding = multiplePropertyBinding(paths, text(), converter)    
+    fun TextView.text(path: String, mode: TwoWay, converter: TwoWayConverter<String, *> = EmptyTwoWayConverter<String, String>()) : PropertyBinding = twoWayPropertyBinding(path, textChanges2(), text(), converter) 
+```
 
 ## Using with Gradle
 
@@ -75,4 +108,4 @@ Let's make it a little better.
 
 ## Discussion
 
-###QQ Group: 516157585
+### QQ Group: 516157585
