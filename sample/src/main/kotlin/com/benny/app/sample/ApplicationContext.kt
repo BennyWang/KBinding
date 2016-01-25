@@ -35,17 +35,9 @@ object ApplicationContext {
 
     public val deviceId: String
         get() {
-            val manager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            var deviceId: String? = manager.deviceId
-            if (deviceId.isNullOrBlank()) {
-                val pref = context.defaultSharedPreferences
-                deviceId = pref.getString(Constants.PREF_DEVICE_UUID, null)
-                if (deviceId == null) {
-                    deviceId = UUID.randomUUID().toString()
-                    pref.edit().putString(Constants.PREF_DEVICE_UUID, deviceId).apply()
-                }
-            }
-            return deviceId!!
+            var deviceId: String = UUID.randomUUID().toString()
+            context.defaultSharedPreferences.edit().putString(Constants.PREF_DEVICE_UUID, deviceId).apply()
+            return deviceId
         }
 
     fun init(context: Context) {
