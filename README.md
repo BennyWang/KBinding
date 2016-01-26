@@ -17,17 +17,17 @@ Android View Model binding framework write in kotlin, base on anko, simple but p
 ```kotlin
 verticalLayout {
     editText {
-        bind { text(path="name", mode = TwoWay) }
+        bind { text("name", mode = TwoWay) }
     }
     button {
         bind { click("hello") }
     }
 }
 class SimpleViewModel() : ViewModel() {
-    var name: String by bindProperty("name", "Jason")
-    val hello: Command by bindCommand("hello", Command { params, canExecute ->
+    var name: String by bindProperty("name") { "Jason" }
+    val hello: Command by bindCommand("hello") { params, canExecute ->
         toast("Hello, ${name}!")
-    })
+    }
 }
 ```
 
@@ -45,10 +45,10 @@ class ArrayToBooleanConverter : MultipleConverter<Boolean> {
 }
 verticalLayout {
     editText {
-        bind { text(path="name", mode = TwoWay) }
+        bind { text("name", mode = TwoWay) }
     }
     editText {
-            bind { text(path="password", mode = TwoWay) }
+            bind { text("password", mode = TwoWay) }
         }
     button {
         bind { enabled("name", "password", mode = OneWay, converter = ArrayToBooleanConverter()) }
@@ -56,11 +56,22 @@ verticalLayout {
     }
 }
 class LoginViewModel() : ViewModel() {
-    var name: String by bindProperty("name", "xxx@xxxx.com")
-    var password: String by bindProperty("password", "xxxxxx")
-    val login: Command by bindCommand("login", Command { params, canExecute ->
+    var name: String by bindProperty("name") { "xxx@xxxx.com" }
+    var password: String by bindProperty("password") { "xxxxxx" }
+    val login: Command by bindCommand("login") { params, canExecute ->
         //login processing
-    })
+    }
+}
+```
+
+### View Model property depends on other properties
+
+```kotlin
+//name and price property will be updated when new stock is set
+class StockViewModel() : ViewModel() {
+    var stock: Stock? by bindProperty("stock")
+    val name: String? by bindProperty("name", "stock") { stock!!.name }
+    val price: Float by bindProperty("price", "stock") { stock!!.price }
 }
 ```
 
