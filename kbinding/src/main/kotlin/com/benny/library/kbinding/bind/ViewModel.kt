@@ -80,7 +80,7 @@ public open class ViewModel() : IViewModel {
     private fun <T> addDependsOn(key: String, vararg dependsOn: String, getter: () -> T) {
         this.dependsOn.put(key, oneWayPropertyBinding(dependsOn, Action1<T> { t -> property<T>(key).value = t }, false, object : MultipleConverter<T> {
             override fun convert(params: Array<Any>): T = getter()
-            override fun convert(source: Any?): T = getter()
+            override fun convert(source: Any): T = getter()
         }))
     }
 

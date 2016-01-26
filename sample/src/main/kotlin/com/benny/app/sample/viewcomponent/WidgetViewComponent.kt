@@ -32,7 +32,7 @@ class TagTextWidgetView(val textSize: Float, val colorResource: Int, val horizon
 
 class StockWidgetView(val highlight: Boolean = true) : ViewBinderComponent<Activity> {
     val symbolConverter = object : OneWayConverter<CharSequence> {
-        override fun convert(source: Any?): CharSequence = if(source == null) "" else "(" + source.toString() + ")"
+        override fun convert(source: Any): CharSequence = "(" + source.toString() + ")"
     }
 
     override fun builder(): AnkoContext<*>.() -> Unit = {

@@ -9,7 +9,7 @@ import android.util.Log
 public interface MultipleConverter<T> : OneWayConverter<T> {
     fun convert(params: Array<Any>): T
 
-    override fun convert(source: Any?): T {
+    override fun convert(source: Any): T {
         throw UnsupportedOperationException()
     }
 }

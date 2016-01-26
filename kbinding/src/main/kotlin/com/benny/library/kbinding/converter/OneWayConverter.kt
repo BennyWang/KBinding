@@ -10,41 +10,41 @@ import com.benny.library.kbinding.view.IViewCreator
  */
 
 public interface OneWayConverter<T> {
-    fun convert(source: Any?): T
+    fun convert(source: Any): T
 }
 
 public class EmptyOneWayConverter<T> : OneWayConverter<T> {
-    override fun convert(source: Any?): T {
+    override fun convert(source: Any): T {
         return source as T
     }
 }
 
 public class StringConverter : OneWayConverter<String> {
-    override fun convert(source: Any?): String {
-        return if(source == null) "" else source.toString()
+    override fun convert(source: Any): String {
+        return source.toString()
     }
 }
 
 class ListToAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> AdapterItemAccessor<T> = { list -> SimpleAdapterItemAccessor(list) } ) : OneWayConverter<ListAdapter> {
-    override fun convert(source: Any?): ListAdapter {
+    override fun convert(source: Any): ListAdapter {
         return BaseListAdapter(viewCreator, itemAccessorFactory(source as List<T>))
     }
 }
 
 class ListToPagingAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> AdapterItemAccessor<T> = { list -> SimpleAdapterItemAccessor(list) } ) : OneWayConverter<ListAdapter> {
-    override fun convert(source: Any?): ListAdapter {
+    override fun convert(source: Any): ListAdapter {
         return BaseListPagingAdapter(viewCreator, itemAccessorFactory(source as List<T>))
     }
 }
 
 class ListToRecyclerAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> AdapterItemAccessor<T> = { list -> SimpleAdapterItemAccessor(list) } ) : OneWayConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>> {
-    override fun convert(source: Any?): BaseRecyclerAdapter<T> {
+    override fun convert(source: Any): BaseRecyclerAdapter<T> {
         return BaseRecyclerAdapter(viewCreator, itemAccessorFactory(source as List<T>))
     }
 }
 
 class ListToRecyclerPagingAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> AdapterItemAccessor<T> = { list -> SimpleAdapterItemAccessor(list) } ) : OneWayConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>> {
-    override fun convert(source: Any?): BaseRecyclerPagingAdapter<T> {
+    override fun convert(source: Any): BaseRecyclerPagingAdapter<T> {
         return BaseRecyclerPagingAdapter(viewCreator, itemAccessorFactory(source as List<T>))
     }
 }

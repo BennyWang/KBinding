@@ -16,8 +16,8 @@ import java.text.DecimalFormat
  */
 
 class StockColorConverter(val defaultColor: Int = Color.WHITE) : OneWayConverter<Int> {
-    override fun convert(source: Any?): Int {
-        if(source == null || source !is Number) return defaultColor
+    override fun convert(source: Any): Int {
+        if(source !is Number) return defaultColor
 
         val change = source.toFloat()
         return when {
@@ -29,33 +29,31 @@ class StockColorConverter(val defaultColor: Int = Color.WHITE) : OneWayConverter
 }
 
 class StockPriceConverter : OneWayConverter<CharSequence> {
-    override fun convert(source: Any?): CharSequence {
-        if(source == null || source !is Number) return ""
+    override fun convert(source: Any): CharSequence {
+        if(source !is Number) return ""
 
         return DecimalFormat("0.00").format(source.toFloat())
     }
 }
 
 class StockPriceChangeConverter(val positiveSign: Boolean = true) : OneWayConverter<CharSequence> {
-    override fun convert(source: Any?): CharSequence {
-        if(source == null || source !is Number) return ""
+    override fun convert(source: Any): CharSequence {
+        if(source !is Number) return ""
 
         return if(positiveSign) DecimalFormat("+0.00;-0.00").format(source.toFloat()) else DecimalFormat("0.00;-0.00").format(source.toFloat())
     }
 }
 
 class StockPriceChangePercentageConverter(val positiveSign: Boolean = true) : OneWayConverter<CharSequence> {
-    override fun convert(source: Any?): CharSequence {
-        if(source == null || source !is Number) return ""
+    override fun convert(source: Any): CharSequence {
+        if(source !is Number) return ""
 
         return if(positiveSign) DecimalFormat("+0.00;-0.00").format(source.toFloat()) + "%" else DecimalFormat("0.00;-0.00").format(source.toFloat()) + "%"
     }
 }
 
 class TagBackgroundConverter(val context: Context) : OneWayConverter<Drawable> {
-    override fun convert(source: Any?): Drawable {
-        if(source == null) return color { color = Color.TRANSPARENT }
-
+    override fun convert(source: Any): Drawable {
         return when(source.toString()) {
             "持有" -> roundRect { radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_red) }
             else -> roundRect { radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_blue) }

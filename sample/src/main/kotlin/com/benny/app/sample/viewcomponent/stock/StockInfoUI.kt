@@ -83,14 +83,14 @@ class StockSubInfoHKUI : StockSubInfoUI() {
 
 class StockInfoUI : ViewBinderComponent<View> {
     val visibility4HS = object : OneWayConverter<Boolean> {
-        override fun convert(source: Any?): Boolean {
+        override fun convert(source: Any): Boolean {
             return true
         }
     }
 
     val viewOfMarket = object : OneWayConverter<ViewBinderComponent<*>> {
-        override fun convert(source: Any?): ViewBinderComponent<*> {
-            if(source == null || source !is MarketType) return StockSubInfoHSUI()
+        override fun convert(source: Any): ViewBinderComponent<*> {
+            if(source !is MarketType) return StockSubInfoHSUI()
 
             return if(source == MarketType.SH_SZ) StockSubInfoHSUI() else StockSubInfoHKUI()
         }
