@@ -44,13 +44,13 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
         dialogFragment.show(childFragmentManager, "Sample Fragment");
     }
 
-    var name: String by bindDelegate.bindProperty("name", "xxxxxxx@xxxxx.com")
-    var password: String by bindDelegate.bindProperty("password", "xxxxxxxxx")
+    var name: String by bindDelegate.bindProperty("name") { "xxxxxxx@xxxxx.com" }
+    var password: String by bindDelegate.bindProperty("password") { "xxxxxxxxx" }
 
-    val login: Command<Unit> by bindDelegate.bindCommand("login", Command { params, canExecute ->
+    val login: Command<Unit> by bindDelegate.bindCommand("login") { params, canExecute ->
         if (name.equals("wangbin")) onLoginSuccess("wangbin")
         else onLoginFailed(RuntimeException("incorrect name or password"))
-    })
+    }
 
     override fun onLoginFailed(e: Throwable) {
         toast(e.message ?: "")

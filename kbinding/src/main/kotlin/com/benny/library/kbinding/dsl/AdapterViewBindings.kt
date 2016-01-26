@@ -52,9 +52,9 @@ fun RecyclerView.paging(path: String) : PropertyBinding = commandBinding(path, p
 
 //Property
 
-fun ListView.adapter(path: String, mode: OneWay = BindingMode.OneWay, oneTime: Boolean = false, converter: OneWayConverter<ListAdapter> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, swapAdapter(), oneTime, converter)
-fun ListView.adapter(paths: List<String>, oneTime: Boolean = false, converter: MultipleConverter<ListAdapter>) : PropertyBinding = multiplePropertyBinding(paths, swapAdapter(), oneTime, converter)
+fun ListView.adapter(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<ListAdapter> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, swapAdapter(), false, converter)
+fun ListView.adapter(vararg paths: String, mode: OneTime, converter: OneWayConverter<ListAdapter> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, swapAdapter(), true, converter)
 
-fun RecyclerView.adapter(path: String, mode: OneWay = BindingMode.OneWay, oneTime: Boolean = false, converter: OneWayConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(path, swapAdapter(), oneTime, converter)
-fun RecyclerView.adapter(paths: List<String>, oneTime: Boolean = false, converter: MultipleConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>>) : PropertyBinding = multiplePropertyBinding(paths, swapAdapter(), oneTime, converter)
+fun RecyclerView.adapter(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, swapAdapter(), false, converter)
+fun RecyclerView.adapter(vararg paths: String, mode: OneTime, converter: OneWayConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, swapAdapter(), true, converter)
 

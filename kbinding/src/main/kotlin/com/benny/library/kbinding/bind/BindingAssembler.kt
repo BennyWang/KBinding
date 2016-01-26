@@ -1,6 +1,5 @@
 package com.benny.library.kbinding.bind
 
-import android.util.Log
 import com.benny.library.kbinding.converter.*
 import rx.Observable
 import rx.functions.Action1
@@ -15,16 +14,8 @@ public inline fun <T, R> oneWayPropertyBinding(key: String, observable: Observab
     return OneWayPropertyBinding(key, observable, converter)
 }
 
-public inline fun <T> oneWayPropertyBinding(observer: Action1<in T>, oneTime: Boolean, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>(), vararg keys: String) : PropertyBinding {
+public inline fun <T> oneWayPropertyBinding(keys: Array<out String>, observer: Action1<in T>, oneTime: Boolean, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : PropertyBinding {
     return if(keys.size == 1) OneWayPropertyBinding<T, Any>(keys[0], observer, oneTime, backConverter) else MultiplePropertyBinding(keys.toList(), observer, oneTime, backConverter as MultipleConverter<T>)
-}
-
-public inline fun <T> oneWayPropertyBinding(key: String, observer: Action1<in T>, oneTime: Boolean, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : OneWayPropertyBinding<T, Any> {
-    return OneWayPropertyBinding(key, observer, oneTime, backConverter)
-}
-
-public inline fun <T> multiplePropertyBinding(keys: List<String>, observer: Action1<in T>, oneTime: Boolean, multipleConverter: MultipleConverter<T>) : MultiplePropertyBinding<T> {
-    return MultiplePropertyBinding(keys, observer, oneTime, multipleConverter)
 }
 
 public inline fun <T, R> twoWayPropertyBinding(key: String, observable: Observable<T>, observer: Action1<in T>, converter: TwoWayConverter<T, R> = EmptyTwoWayConverter<T, R>()) : TwoWayPropertyBinding<T, R> {

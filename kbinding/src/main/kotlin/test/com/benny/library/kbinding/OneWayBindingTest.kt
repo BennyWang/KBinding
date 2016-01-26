@@ -5,6 +5,7 @@ import com.benny.library.kbinding.bind.BindingAssembler
 import com.benny.library.kbinding.bind.BindingDisposer
 import com.benny.library.kbinding.bind.ViewModel
 import com.benny.library.kbinding.bind.oneWayPropertyBinding
+import com.benny.library.kbinding.converter.EmptyOneWayConverter
 import rx.functions.Action1
 import kotlin.properties.Delegates
 
@@ -13,8 +14,8 @@ import kotlin.properties.Delegates
  */
 class OneWayBindingTest : InstrumentationTestCase() {
     class TestViewModel : ViewModel() {
-        var integer: Int by bindProperty("integer", 3)
-        var string: String by bindProperty("string", "hello")
+        var integer: Int by bindProperty("integer") { 3 }
+        var string: String by bindProperty("string") { "hello" }
     }
 
     val bindingDisposer = BindingDisposer()
@@ -25,8 +26,8 @@ class OneWayBindingTest : InstrumentationTestCase() {
 
     override fun setUp() {
         super.setUp()
-        bindingAssembler.addBinding(oneWayPropertyBinding("integer", Action1<Int> { integer = it }, false))
-        bindingAssembler.addBinding(oneWayPropertyBinding("string", Action1<String> { string = it }, false))
+        bindingAssembler.addBinding(oneWayPropertyBinding(arrayOf("integer"), Action1<Int> { integer = it }, false))
+        bindingAssembler.addBinding(oneWayPropertyBinding(arrayOf("string"), Action1<String> { string = it }, false))
     }
 
     override fun tearDown() {

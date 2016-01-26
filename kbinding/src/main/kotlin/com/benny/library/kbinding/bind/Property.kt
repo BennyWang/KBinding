@@ -13,7 +13,7 @@ public class Property<T>(val defaultValue:T? = null) {
 
     public var value: T?
         get() = property.value
-        set(value) = property.onNext(value)
+        set(value) { if(value != null) property.onNext(value) }
 
     public val observable: Observable<T>
         get() {

@@ -7,7 +7,7 @@ import android.util.Log
  */
 public abstract class ItemViewModel<T> : ViewModel() {
 
-    public var position: Int by bindProperty("position", 0)
+    public var position: Int by bindProperty("position") { 0 }
 
     public fun notifyPropertyChange(t: T?, position: Int) {
         this.position = position

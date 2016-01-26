@@ -35,12 +35,12 @@ class StockFragment : BaseFragment() {
 
     public var stocks: List<Stock>? by bindingDelegate.bindProperty<List<Stock>>("stocks")
 
-    val stockDetail: Command<Int> by bindingDelegate.bindCommand("stockDetail", Command { params, canExecute ->
+    val stockDetail: Command<Int> by bindingDelegate.bindCommand("stockDetail") { params, canExecute ->
         startActivity<StockDetailsActivity>("id" to stocks!![params].id)
-    })
+    }
 
     fun fetchStocks() {
-        CaishuoService.getInstance().followedStocks("1301").subscribe { stocks = it }
+        CaishuoService.getInstance().followedStocks("1301").onErrorReturn { listOf<Stock>() }.subscribe { stocks = it }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -75,7 +75,7 @@ class StockFragment : BaseFragment() {
             relativeLayout() {
                 listView {
                     //layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                    bind { adapter(path = "stocks", converter = ListToAdapterConverter(owner.viewCreator(StockItemView(), ::StockViewModel))) }
+                    bind { adapter("stocks", converter = ListToAdapterConverter(owner.viewCreator(StockItemView(), ::StockViewModel))) }
                     dividerHeight = 0
                     bind { itemClick("stockDetail") }
                 }.lparams(matchParent, matchParent)
