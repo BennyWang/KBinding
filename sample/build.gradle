@@ -51,6 +51,7 @@ dependencies {
     compile project(':kbinding')
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:gridlayout-v7:23.1.1'
 
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.squareup.retrofit:retrofit:1.6.0'
@@ -65,5 +66,6 @@ dependencies {
     compile "org.jetbrains.anko:anko-support-v4:$anko_version" // In case you need support-v4 bindings
     compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version" // For appcompat-v7 bindings
     compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version" // For appcompat-v7 bindings
+    compile "org.jetbrains.anko:anko-gridlayout-v7:$anko_version" // For appcompat-v7 bindings
     compile "org.jetbrains.anko:anko-design:$anko_version"
 }

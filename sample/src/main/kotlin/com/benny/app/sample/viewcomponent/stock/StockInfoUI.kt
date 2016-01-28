@@ -1,10 +1,10 @@
 package com.benny.app.sample.viewcomponent.stock
 
 import android.graphics.Color
+import android.support.v7.widget.GridLayout
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
 import android.widget.TextView
 import com.benny.app.sample.converter.StockColorConverter
 import com.benny.app.sample.converter.StockPriceChangeConverter
@@ -16,6 +16,8 @@ import com.benny.library.kbinding.converter.OneWayConverter
 import com.benny.library.kbinding.dsl.*
 import com.benny.library.kbinding.view.ViewBinderComponent
 import org.jetbrains.anko.*
+import org.jetbrains.anko.gridlayout.v7.gridLayout
+import org.jetbrains.anko.gridlayout.v7.space
 
 /**
  * Created by benny on 12/31/15.
