@@ -18,6 +18,7 @@ public class TitleToolBarViewComponent(val title: String) : ViewBinderComponent<
             backgroundColor = Color.parseColor("#393a4c")
             textView {
                 text = title
+                textSize = 16f
                 textColor = Color.WHITE
             }.lparams(wrapContent, wrapContent) { gravity = Gravity.CENTER }
         }

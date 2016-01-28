@@ -36,15 +36,6 @@ class SampleFragment : BaseFragment() {
     class SampleFragmentUI() : ViewBinderComponent<Fragment> {
         override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
-                button {
-                    text = "base event"
-                    onClick { startActivity<LoginActivity>() }
-                }
-
-                button {
-                    text = "fragment event"
-                    onClick { EventBus.getDefault().post(TestEvent()) }
-                }
             }
         }
     }

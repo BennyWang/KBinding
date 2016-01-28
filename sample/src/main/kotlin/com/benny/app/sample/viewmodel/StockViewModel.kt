@@ -1,8 +1,8 @@
 package com.benny.app.sample.viewmodel
 
 import android.util.Log
-import com.benny.app.sample.model.MarketType
-import com.benny.app.sample.model.Stock
+import com.benny.app.sample.network.service.caishuo.model.MarketType
+import com.benny.app.sample.network.service.caishuo.model.Stock
 import com.benny.library.kbinding.bind.ViewModel
 import com.benny.library.kbinding.bind.Command
 import com.benny.library.kbinding.bind.ItemViewModel

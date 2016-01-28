@@ -1,5 +1,6 @@
 package com.benny.app.sample.ui.activity
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -16,6 +17,7 @@ import org.jetbrains.anko.*
 import com.benny.app.sample.extension.generateViewId
 import com.benny.app.sample.ui.extension.viewPagerIndicator
 import com.benny.app.sample.ui.fragment.LoginFragment
+import com.benny.app.sample.ui.fragment.MovieListFragment
 import com.benny.app.sample.ui.fragment.SampleFragment
 import com.benny.app.sample.ui.fragment.StockFragment
 import com.benny.app.sample.ui.widget.ViewPagerIndicator
@@ -56,7 +58,8 @@ class MainActivity : BaseActivity() {
         override fun getItem(position: Int): Fragment? {
             return when(position) {
                 0 -> LoginFragment()
-                1 -> StockFragment()
+                1 -> MovieListFragment()
+                2 -> StockFragment()
                 else -> SampleFragment()
             }
         }
@@ -66,7 +69,12 @@ class MainActivity : BaseActivity() {
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
-            return "sample $position"
+            return when(position) {
+                0 -> "登录"
+                1 -> "豆瓣"
+                2 -> "股票"
+                else -> "预留"
+            }
         }
     }
 
@@ -82,8 +90,10 @@ class MainActivity : BaseActivity() {
                 }.lparams(matchParent, 0, 1f)
 
                 viewPagerIndicator {
+                    backgroundColor = Color.parseColor("#393a4c")
                     indicatorLinePosition = ViewPagerIndicator.TOP
                     indicatorLineMargin = dip(5)
+                    indicatorLineHeight = dip(4)
                     viewPager = pager
                 }.lparams(matchParent, wrapContent)
             }

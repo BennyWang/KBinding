@@ -1,4 +1,4 @@
-package com.benny.app.sample.model;
+package com.benny.app.sample.network.service.caishuo.model;
 
 import com.google.gson.annotations.SerializedName;
 

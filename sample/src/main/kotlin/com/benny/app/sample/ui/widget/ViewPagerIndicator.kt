@@ -22,9 +22,10 @@ class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.O
     private val DEFAULT_INDICATOR = object : IndicatorFactory {
         override fun create(title: CharSequence, `object`: Any?, container: ViewGroup): View = container.context.UI {
             textView {
-                verticalPadding = dip(5)
+                verticalPadding = dip(14)
                 horizontalPadding = 0
                 text = title
+                textColor = Color.WHITE
                 this.gravity = Gravity.CENTER
             }
         }.view
@@ -53,7 +54,7 @@ class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.O
     public var indicatorLinePosition = BOTTOM
     public var indicatorLineMargin = 0
 
-    public var indicatorBackgroundColor: Int = Color.BLACK
+    public var indicatorBackgroundColor: Int = Color.WHITE
     public var indicatorBackgroundDrawable: Drawable? = null
 
     public var indicatorFactory = DEFAULT_INDICATOR

@@ -12,8 +12,10 @@ import com.benny.app.sample.converter.StockColorConverter
 import com.benny.app.sample.converter.StockPriceChangePercentageConverter
 import com.benny.app.sample.converter.StockPriceConverter
 import com.benny.app.sample.extension.generateViewId
-import com.benny.app.sample.model.Stock
+import com.benny.app.sample.network.service.caishuo.model.Stock
+import com.benny.app.sample.ui.extension.simpleDraweeView
 import com.benny.library.kbinding.converter.MultipleConverter
+import com.benny.library.kbinding.converter.StringConverter
 import com.benny.library.kbinding.dsl.*
 import org.jetbrains.anko.*
 
@@ -30,6 +32,43 @@ class LoadingItemView : ViewBinderComponent<Any> {
                 isIndeterminate = true
             }.lparams(width = dip(24), height = dip(24)) { gravity = Gravity.CENTER }
         }.layoutParams = ViewGroup.LayoutParams(matchParent, dip(50))
+    }
+}
+
+class MovieItemView : ViewBinderComponent<Any> {
+    override fun builder(): AnkoContext<Any>.() -> Unit = {
+        relativeLayout {
+            linearLayout {
+                padding = dip(14)
+                simpleDraweeView {
+                    bind { src("smallCover", mode = OneWay) }
+                }.lparams(dip(65), dip(100))
+                verticalLayout {
+                    textView {
+                        textSize = 16f
+                        textWeight = Typeface.BOLD
+                        bind { text("title", mode = OneWay) }
+                    }.lparams { bottomMargin = dip(8) }
+                    linearLayout {
+                        textView { text = "评分: " }
+                        textView {
+                            bind { text("score", mode = OneWay, converter = StringConverter()) }
+                        }
+                    }.lparams { bottomMargin = dip(8) }
+                    linearLayout {
+                        textView { text = "演员: " }
+                        textView {
+                            singleLine = true
+                            ellipsize = TextUtils.TruncateAt.END
+                            bind { text("casts", mode = OneWay) }
+                        }
+                    }
+                }.lparams(matchParent, wrapContent) {
+                    this@lparams.gravity = Gravity.CENTER_VERTICAL
+                    leftMargin = dip(14)
+                }
+            }.lparams(matchParent, wrapContent)
+        }
     }
 }
 

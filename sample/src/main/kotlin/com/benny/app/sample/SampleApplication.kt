@@ -2,6 +2,7 @@ package com.benny.app.sample
 
 import android.app.Application
 import android.content.Context
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 
@@ -16,6 +17,7 @@ class SampleApplication : Application() {
 
         ApplicationContext.init(this)
         refWatcher = LeakCanary.install(this)
+        Fresco.initialize(this);
     }
 
     public companion object {

@@ -10,7 +10,7 @@ import com.benny.app.sample.converter.StockColorConverter
 import com.benny.app.sample.converter.StockPriceChangeConverter
 import com.benny.app.sample.converter.StockPriceChangePercentageConverter
 import com.benny.app.sample.converter.StockPriceConverter
-import com.benny.app.sample.model.MarketType
+import com.benny.app.sample.network.service.caishuo.model.MarketType
 import com.benny.library.kbinding.converter.EmptyOneWayConverter
 import com.benny.library.kbinding.converter.OneWayConverter
 import com.benny.library.kbinding.dsl.*

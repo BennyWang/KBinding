@@ -1,9 +1,9 @@
 package com.benny.app.sample.network.service.caishuo;
 
-import com.benny.app.sample.model.Stock;
+import com.benny.app.sample.network.service.caishuo.model.Stock;
 import retrofit.http.*;
 
-import com.benny.app.sample.model.User;
+import com.benny.app.sample.network.service.caishuo.model.User;
 import rx.Observable;
 
 import java.util.List;
