@@ -2,11 +2,6 @@ package com.benny.library.kbinding.dsl
 
 import android.net.Uri
 import android.widget.ImageView
-import android.widget.TextView
-import com.jakewharton.rxbinding.widget.color
-import com.jakewharton.rxbinding.widget.text
-import com.jakewharton.rxbinding.widget.textChanges
-import rx.Observable
 import com.benny.library.kbinding.bind.*
 import com.benny.library.kbinding.converter.*
 import rx.functions.Action1

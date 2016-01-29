@@ -12,7 +12,7 @@ import com.benny.library.kbinding.adapter.BaseRecyclerPagingAdapter
 import com.benny.library.kbinding.bind.*
 import com.benny.library.kbinding.converter.*
 import com.benny.library.kbinding.dsl.utils.AdapterViewPagingOnSubscribe
-import com.jakewharton.rxbinding.widget.itemClicks
+import com.jakewharton.rxbinding.widget.RxAdapterView
 
 /**
  * Created by benny on 12/16/15.
@@ -46,7 +46,7 @@ fun RecyclerView.paging(): Observable<Unit> = Observable.create(AdapterViewPagin
 //Event
 
 fun ListView.paging(path: String) : PropertyBinding = commandBinding(path, paging(), Action1 {})
-fun ListView.itemClick(path: String) : PropertyBinding = commandBinding(path, itemClicks(), Action1 {})
+fun ListView.itemClick(path: String) : PropertyBinding = commandBinding(path, RxAdapterView.itemClicks(this), Action1 {})
 
 fun RecyclerView.paging(path: String) : PropertyBinding = commandBinding(path, paging(), Action1 {})
 

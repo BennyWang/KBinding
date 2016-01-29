@@ -10,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.benny.app.sample.R
-import com.benny.app.sample.SampleApplication
-import com.benny.app.sample.ui.dialog.SampleDialog
 import org.jetbrains.anko.*
 
 import com.benny.app.sample.viewmodel.LoginViewModel
@@ -39,9 +37,6 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
 
     override fun onLoginSuccess(user: String) {
         toast("Login success with user " + user)
-
-        val dialogFragment: SampleDialog = SampleDialog(bindDelegate);
-        dialogFragment.show(childFragmentManager, "Sample Fragment");
     }
 
     var name: String by bindDelegate.bindProperty("name") { "xxxxxxx@xxxxx.com" }
@@ -59,13 +54,6 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("LoginFragment", "onCreate")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        bindingDisposer.unbind()
-        Log.d("LoginFragment", "onDestroy")
-        SampleApplication.getRefWatcher(context).watch(this)
     }
 
     override fun onDestroyView() {

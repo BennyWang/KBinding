@@ -1,11 +1,8 @@
 buildscript {
-    ext.kotlin_version = '1.0.0-beta-4584'
-    ext.anko_version = '0.8.1'
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -46,8 +43,7 @@ dependencies {
 
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'io.reactivex:rxkotlin:0.24.100'
-    compile 'com.jakewharton.rxbinding:rxbinding-kotlin:0.3.0'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.anko:anko-common:$anko_version"

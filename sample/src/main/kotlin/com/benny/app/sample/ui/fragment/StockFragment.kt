@@ -52,18 +52,6 @@ class StockFragment : BaseFragment() {
         Log.d("StockFragment", "onCreate")
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("StockFragment", "onDestroy")
-        SampleApplication.getRefWatcher(context).watch(this)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("StockFragment", "onDestroyView")
-
-    }
-
     inner class StockFragmentUI() : ViewBinderComponent<StockFragment> {
         override fun builder(): AnkoContext<StockFragment>.() -> Unit = {
             relativeLayout() {
@@ -77,6 +65,4 @@ class StockFragment : BaseFragment() {
             }
         }
     }
-
-
 }
