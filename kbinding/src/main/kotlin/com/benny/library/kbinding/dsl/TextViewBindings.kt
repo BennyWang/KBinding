@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package com.benny.library.kbinding.dsl
 
 import android.widget.TextView

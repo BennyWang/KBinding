@@ -39,9 +39,9 @@ fun generateViewId(): Int {
     }
 }
 
-public fun ViewManager.progressBar(style: Int): ProgressBar {
+fun ViewManager.progressBar(style: Int): ProgressBar {
     return ankoView({ctx: Context -> ProgressBar(ctx, null, style) }) { }
 }
-public fun ViewManager.progressBar(style: Int, init: ProgressBar.() -> Unit): ProgressBar {
+fun ViewManager.progressBar(style: Int, init: ProgressBar.() -> Unit): ProgressBar {
     return ankoView({ctx: Context -> ProgressBar(ctx, null, style) }) { init() }
 }

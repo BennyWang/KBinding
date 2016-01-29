@@ -13,8 +13,9 @@ class BaseRecyclerPagingAdapter<T> (viewCreator: IViewCreator<T>, itemAccessor: 
     private var hasNextPage = true
     private var loading = false
 
-    public var pagingListener: AdapterPagingListener? = null
+    var pagingListener: AdapterPagingListener? = null
 
+    @Suppress("UNCHECKED_CAST")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as? ViewHolder<T>)?.notifyPropertyChange(itemAccessor.get(position), position)
 

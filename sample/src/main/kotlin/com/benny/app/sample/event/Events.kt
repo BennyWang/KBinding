@@ -6,6 +6,6 @@ package com.benny.app.sample.event
 
 open class BusEvent
 
-public class BaseEvent : BusEvent()
-public class TestEvent : BusEvent()
+class BaseEvent : BusEvent()
+class TestEvent : BusEvent()
 

@@ -15,6 +15,7 @@ class BaseListPagingAdapter<T>(viewCreator: IViewCreator<T>, itemAccessor: Adapt
 
     var pagingListener: AdapterPagingListener? = null
 
+    @Suppress("UNCHECKED_CAST")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         var itemView = convertView
         if(itemView == null) {

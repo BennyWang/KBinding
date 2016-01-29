@@ -6,7 +6,7 @@ import android.util.Log
  * Created by benny on 11/18/15.
  */
 
-public interface MultipleConverter<T> : OneWayConverter<T> {
+interface MultipleConverter<T> : OneWayConverter<T> {
     fun convert(params: Array<Any>): T
 
     override fun convert(source: Any): T {

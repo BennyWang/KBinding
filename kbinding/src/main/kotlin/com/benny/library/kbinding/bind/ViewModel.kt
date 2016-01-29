@@ -14,7 +14,9 @@ import java.security.InvalidParameterException
 /**
  * Created by benny on 11/17/15.
  */
-public open class ViewModel() : IViewModel {
+
+@Suppress("UNCHECKED_CAST")
+open class ViewModel() : IViewModel {
     class MockSubscription : Subscription {
         override fun isUnsubscribed(): Boolean = true
         override fun unsubscribe() {}
@@ -50,7 +52,7 @@ public open class ViewModel() : IViewModel {
     private fun bindDependsOn(key: String) : Subscription {
         val dependsOn = dependsOn.remove(key) ?: return MockSubscription()
         return when(dependsOn) {
-            is OneWayPropertyBinding<*, *> -> dependsOn.bindTo(property<Any>(dependsOn.key))
+            is OneWayPropertyBinding<*, *> -> (dependsOn as OneWayPropertyBinding<Any, Any>).bindTo(property<Any>(dependsOn.key))
             is MultiplePropertyBinding<*> -> dependsOn.bindTo(properties(dependsOn.keys))
             else -> MockSubscription()
         }
@@ -85,7 +87,7 @@ public open class ViewModel() : IViewModel {
         }))
     }
 
-    public fun <T> bindProperty(key: String): ReadWriteProperty<Any, T?> {
+    fun <T> bindProperty(key: String): ReadWriteProperty<Any, T?> {
         addProperty(key, Property<T>())
 
         return object : ReadWriteProperty<Any, T?> {
@@ -94,7 +96,7 @@ public open class ViewModel() : IViewModel {
         }
     }
 
-    public fun <T> bindProperty(vararg keys: String, getter: () -> T): ReadWriteProperty<Any, T> {
+    fun <T> bindProperty(vararg keys: String, getter: () -> T): ReadWriteProperty<Any, T> {
         if(keys.size == 0) throw InvalidParameterException("at least one key")
 
         val key = keys[0]
@@ -123,7 +125,7 @@ public open class ViewModel() : IViewModel {
         }
     }
 
-    public fun <T> bindCommand(key: String, cmdAction: (T, Action1<in Boolean>) -> Unit): ReadOnlyProperty<Any, Command<T>> {
+    fun <T> bindCommand(key: String, cmdAction: (T, Action1<in Boolean>) -> Unit): ReadOnlyProperty<Any, Command<T>> {
         addCommand(key, Command<T> { t, action -> cmdAction(t, action) })
         return object : ReadOnlyProperty<Any, Command<T>> {
             override fun getValue(thisRef: Any, property: KProperty<*>): Command<T> = command(property.name)

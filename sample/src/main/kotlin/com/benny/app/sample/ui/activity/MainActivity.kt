@@ -38,9 +38,9 @@ class MainActivity : BaseActivity() {
         setTheme(R.style.AppTheme)
         MainActivityUI().setContentView(this)
         setSupportActionBar(toolBar)
-        supportActionBar.setDisplayHomeAsUpEnabled(true);
-        supportActionBar.setDisplayShowHomeEnabled(true);
-        supportActionBar.title = "";
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setDisplayShowHomeEnabled(true);
+        supportActionBar?.title = "";
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -74,14 +74,14 @@ class MainActivity : BaseActivity() {
     }
 
     inner class MainActivityUI : ViewBinderComponent<MainActivity> {
-        override fun builder(): AnkoContext<MainActivity>.() -> Unit = {
+        override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
                 appBarLayout {
                     toolBar = inflate(TitleToolBarViewComponent("主页"), this@appBarLayout) as Toolbar
                 }
                 val pager = viewPager {
                     id = generateViewId()
-                    adapter = MainFragmentPagerAdapter(owner.supportFragmentManager)
+                    adapter = MainFragmentPagerAdapter((owner as MainActivity).supportFragmentManager)
                 }.lparams(matchParent, 0, 1f)
 
                 viewPagerIndicator {

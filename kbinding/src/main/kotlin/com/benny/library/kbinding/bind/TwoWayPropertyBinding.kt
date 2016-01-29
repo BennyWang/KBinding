@@ -13,18 +13,18 @@ import rx.subscriptions.CompositeSubscription
  * Created by benny on 11/17/15.
  */
 
-public class TwoWayPropertyBinding<T, R>(key: String, val observable: Observable<T>, val observer: Action1<in T>, converter: TwoWayConverter<T, R> = EmptyTwoWayConverter()) : PropertyBinding() {
-    public var key: String = key
+class TwoWayPropertyBinding<T, R>(key: String, val observable: Observable<T>, val observer: Action1<in T>, converter: TwoWayConverter<T, R> = EmptyTwoWayConverter()) : PropertyBinding() {
+    var key: String = key
         private set
 
     val converter: TwoWayConverter<T, R> = converter
 
-    public fun prefix(prefix: String): TwoWayPropertyBinding<T, R> {
+    fun prefix(prefix: String): TwoWayPropertyBinding<T, R> {
         if(!prefix.isEmpty()) key = "$prefix.$key"
         return this
     }
 
-    public fun bindTo(property: Property<R>): Subscription {
+    fun bindTo(property: Property<R>): Subscription {
         val cs: CompositeSubscription = CompositeSubscription()
         val breaker = CircleBreaker<T>()
         cs.add(observable.filter(breaker).map { converter.convert(it as Any) }

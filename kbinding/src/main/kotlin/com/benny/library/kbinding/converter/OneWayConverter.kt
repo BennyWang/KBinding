@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.benny.library.kbinding.converter
 
 import android.support.v7.widget.RecyclerView
@@ -9,17 +11,17 @@ import com.benny.library.kbinding.view.IViewCreator
  * Created by benny on 11/18/15.
  */
 
-public interface OneWayConverter<T> {
+interface OneWayConverter<T> {
     fun convert(source: Any): T
 }
 
-public class EmptyOneWayConverter<T> : OneWayConverter<T> {
+class EmptyOneWayConverter<T> : OneWayConverter<T> {
     override fun convert(source: Any): T {
         return source as T
     }
 }
 
-public class StringConverter : OneWayConverter<String> {
+class StringConverter : OneWayConverter<String> {
     override fun convert(source: Any): String {
         return source.toString()
     }

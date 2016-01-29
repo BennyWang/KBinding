@@ -13,6 +13,7 @@ import com.benny.library.kbinding.view.IViewCreator
 
 open class BaseRecyclerAdapter<T> (val viewCreator: IViewCreator<T>, val itemAccessor: AdapterItemAccessor<T>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     protected class ViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @Suppress("UNCHECKED_CAST")
         fun notifyPropertyChange(data: T?, position: Int) {
             ((itemView.tag) as? ItemViewModel<T>)?.notifyPropertyChange(data, position)
         }
@@ -27,6 +28,7 @@ open class BaseRecyclerAdapter<T> (val viewCreator: IViewCreator<T>, val itemAcc
         return createViewHolder(viewCreator.view(parent))
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         Log.d("BaseRecyclerAdapter", "onBindViewHolder position is " + position)
         (holder as ViewHolder<T>).notifyPropertyChange(itemAccessor.get(position), position)

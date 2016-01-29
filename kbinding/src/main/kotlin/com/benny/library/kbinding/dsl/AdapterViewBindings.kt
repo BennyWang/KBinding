@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package com.benny.library.kbinding.dsl
 
 import android.support.v7.widget.RecyclerView
@@ -18,7 +20,7 @@ import com.jakewharton.rxbinding.widget.RxAdapterView
  * Created by benny on 12/16/15.
  */
 
-public fun RecyclerView.swapAdapter() : Action1<RecyclerView.Adapter<RecyclerView.ViewHolder>> {
+fun RecyclerView.swapAdapter() : Action1<RecyclerView.Adapter<RecyclerView.ViewHolder>> {
     return Action1 { it ->
         this.swapAdapter(it, false)
         if (adapter is BaseRecyclerPagingAdapter<*> && this.tag is AdapterPagingListener)
@@ -26,11 +28,11 @@ public fun RecyclerView.swapAdapter() : Action1<RecyclerView.Adapter<RecyclerVie
     }
 }
 
-public fun ListView.swapAdapter(): Action1<ListAdapter> {
+@Suppress("UNCHECKED_CAST") fun ListView.swapAdapter(): Action1<ListAdapter> {
     return Action1 { it ->
         val adapter = this.adapter
         if (adapter != null && adapter is BaseListAdapter<*> && it is BaseListAdapter<*>) {
-            adapter.swap(it)
+            (adapter as BaseListAdapter<Any>).swap(it as BaseListAdapter<Any>)
         } else {
             this.adapter = it
         }

@@ -22,6 +22,7 @@ interface DrawableProvider<T: Drawable> {
     var drawableLevel: Int
 }
 
+@Suppress("UNCHECKED_CAST")
 interface RawDrawableProvider<T: Drawable> : DrawableProvider<T> {
     override val drawable: T
         get() = this as T
@@ -183,13 +184,13 @@ abstract class _ShapeManager() : DrawableProvider<ShapeDrawable> {
     override var drawableState: IntArray = intArrayOf()
     override var drawableLevel: Int = 0
 
-    public var color: Int = Color.TRANSPARENT
+    var color: Int = Color.TRANSPARENT
 
-    public var leftPadding: Int = 0
-    public var topPadding: Int = 0
-    public var rightPadding: Int = 0
-    public var bottomPadding: Int = 0
-    public var padding: Int = 0
+    var leftPadding: Int = 0
+    var topPadding: Int = 0
+    var rightPadding: Int = 0
+    var bottomPadding: Int = 0
+    var padding: Int = 0
         set(value) {
             leftPadding = value
             rightPadding = value
@@ -201,11 +202,11 @@ abstract class _ShapeManager() : DrawableProvider<ShapeDrawable> {
 class _RoundRectManager() : _ShapeManager() {
     override var drawableState: IntArray = intArrayOf()
 
-    public var radius: Float = 0f
-    public var bottomLeftRadius: Float = 0f
-    public var bottomRightRadius: Float = 0f
-    public var topLeftRadius: Float = 0f
-    public var topRightRadius: Float = 0f
+    var radius: Float = 0f
+    var bottomLeftRadius: Float = 0f
+    var bottomRightRadius: Float = 0f
+    var topLeftRadius: Float = 0f
+    var topRightRadius: Float = 0f
 
     override val drawable: ShapeDrawable
         get() {
@@ -244,8 +245,8 @@ class _OvalManager() : _ShapeManager() {
 }
 
 class _ArcManager() : _ShapeManager() {
-    public var start: Float = 0f
-    public var sweep: Float = 360f
+    var start: Float = 0f
+    var sweep: Float = 360f
 
     override val drawable: ShapeDrawable
         get() {

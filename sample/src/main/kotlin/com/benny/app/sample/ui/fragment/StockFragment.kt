@@ -27,7 +27,7 @@ class StockFragment : BaseFragment() {
     val bindingDelegate = BindingDelegate()
     var contentView: View? = null
 
-    public var stocks: List<Stock>? by bindingDelegate.bindProperty<List<Stock>>("stocks")
+    var stocks: List<Stock>? by bindingDelegate.bindProperty<List<Stock>>("stocks")
 
     val stockDetail: Command<Int> by bindingDelegate.bindCommand("stockDetail") { params, canExecute ->
         startActivity<StockDetailsActivity>("id" to stocks!![params].id)
@@ -53,12 +53,12 @@ class StockFragment : BaseFragment() {
     }
 
     inner class StockFragmentUI() : ViewBinderComponent<StockFragment> {
-        override fun builder(): AnkoContext<StockFragment>.() -> Unit = {
+        override fun builder(): AnkoContext<*>.() -> Unit = {
             relativeLayout() {
                 backgroundColor = Color.WHITE
                 listView {
                     //layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                    bind { adapter("stocks", converter = ListToAdapterConverter(owner.viewCreator(StockItemView(), ::StockViewModel))) }
+                    bind { adapter("stocks", converter = ListToAdapterConverter((owner as StockFragment).viewCreator(StockItemView(), ::StockViewModel))) }
                     dividerHeight = 0
                     bind { itemClick("stockDetail") }
                 }.lparams(matchParent, matchParent)

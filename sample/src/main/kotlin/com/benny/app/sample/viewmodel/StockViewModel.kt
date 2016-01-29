@@ -12,7 +12,7 @@ import kotlin.properties.Delegates
  * Created by benny on 11/19/15.
  */
 class StockViewModel() : ItemViewModel<Stock>() {
-    public var stock: Stock? by bindProperty("stock")
+    var stock: Stock? by bindProperty("stock")
 
     val name: String? by bindProperty("name", "stock") { stock!!.cnName }
     val symbol: String? by bindProperty("symbol", "stock") { stock!!.symbol }

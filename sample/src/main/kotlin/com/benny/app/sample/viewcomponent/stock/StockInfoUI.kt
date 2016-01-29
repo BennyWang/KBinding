@@ -43,7 +43,7 @@ abstract class StockSubInfoUI : ViewBinderComponent<View> {
 }
 
 class StockSubInfoHSUI : StockSubInfoUI() {
-    override fun builder(): AnkoContext<View>.() -> Unit = {
+    override fun builder(): AnkoContext<*>.() -> Unit = {
         val ankoContext = this
         gridLayout {
             cell(ankoContext, "最高", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
@@ -66,7 +66,7 @@ class StockSubInfoHSUI : StockSubInfoUI() {
 }
 
 class StockSubInfoHKUI : StockSubInfoUI() {
-    override fun builder(): AnkoContext<View>.() -> Unit = {
+    override fun builder(): AnkoContext<*>.() -> Unit = {
         val ankoContext = this
         gridLayout {
             cell(ankoContext, "最高", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
@@ -83,7 +83,7 @@ class StockSubInfoHKUI : StockSubInfoUI() {
 }
 
 
-class StockInfoUI : ViewBinderComponent<View> {
+class StockInfoUI : ViewBinderComponent<ViewGroup> {
     val visibility4HS = object : OneWayConverter<Boolean> {
         override fun convert(source: Any): Boolean {
             return true
@@ -98,7 +98,7 @@ class StockInfoUI : ViewBinderComponent<View> {
         }
     }
 
-    override fun builder(): AnkoContext<View>.() -> Unit = {
+    override fun builder(): AnkoContext<*>.() -> Unit = {
         fun ViewGroup.cell(title: String, key: String): View = with(this) {
             verticalLayout {
                 textView {

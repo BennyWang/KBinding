@@ -8,7 +8,7 @@ import org.jetbrains.anko.AnkoException
  * Created by benny on 12/30/15.
  */
 class Style<T : View>(val style: T.() -> Unit) {
-    public fun perform(view: T) {
+    fun perform(view: T) {
         view.style()
     }
 }

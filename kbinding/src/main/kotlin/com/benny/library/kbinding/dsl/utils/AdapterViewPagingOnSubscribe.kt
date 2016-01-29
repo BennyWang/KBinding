@@ -20,7 +20,7 @@ class AdapterViewPagingOnSubscribe(val view: View) : Observable.OnSubscribe<Void
         }
         view.tag = pagingListener
         subscriber.add(object : MainThreadSubscription() {
-            override protected fun onUnsubscribe() {
+            override fun onUnsubscribe() {
                 view.tag = null;
             }
         });

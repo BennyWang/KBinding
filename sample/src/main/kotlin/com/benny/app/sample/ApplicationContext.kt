@@ -27,13 +27,13 @@ object ApplicationContext {
     val accessToken: String?
         get() = user?.accessToken ?: null
 
-    public val hasLogin: Boolean
+    val hasLogin: Boolean
         get() = user != null
 
-    public val version: String
+    val version: String
         get() = context.packageManager.getPackageInfo(context.packageName, 0).versionName
 
-    public val deviceId: String
+    val deviceId: String
         get() {
             var deviceId: String = UUID.randomUUID().toString()
             context.defaultSharedPreferences.edit().putString(Constants.PREF_DEVICE_UUID, deviceId).apply()

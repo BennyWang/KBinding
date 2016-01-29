@@ -29,7 +29,7 @@ class MovieListFragment : BaseFragment() {
     var contentView: View? = null
     val bindingDelegate = BindingDelegate()
 
-    public var movies: List<Movie>? by bindingDelegate.bindProperty("movies")
+    var movies: List<Movie>? by bindingDelegate.bindProperty("movies")
     val movieDetail: Command<Int> by bindingDelegate.bindCommand("movieDetail") { params, canExecute ->
         startActivity<MovieDetailsActivity>("id" to movies!![params].id)
     }
@@ -47,12 +47,12 @@ class MovieListFragment : BaseFragment() {
     }
 
     class MovieListFragmentUI() : ViewBinderComponent<MovieListFragment> {
-        override fun builder(): AnkoContext<MovieListFragment>.() -> Unit = {
+        override fun builder(): AnkoContext<*>.() -> Unit = {
            relativeLayout() {
                backgroundColor = Color.WHITE
                listView {
                    dividerHeight = 1
-                   bind { adapter("movies", converter = ListToAdapterConverter(owner.viewCreator(MovieItemView(), ::MovieViewModel))) }
+                   bind { adapter("movies", converter = ListToAdapterConverter((owner as MovieListFragment).viewCreator(MovieItemView(), ::MovieViewModel))) }
                    bind { itemClick("movieDetail") }
                }.lparams(matchParent, matchParent)
                frameLayout {

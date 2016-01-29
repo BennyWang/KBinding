@@ -10,29 +10,29 @@ import java.util.*
  * Created by benny on 11/18/15.
  */
 
-public inline fun <T, R> oneWayPropertyBinding(key: String, observable: Observable<T>, converter: OneWayConverter<R> = EmptyOneWayConverter<R>()) : OneWayPropertyBinding<T, R> {
+fun <T, R> oneWayPropertyBinding(key: String, observable: Observable<T>, converter: OneWayConverter<R> = EmptyOneWayConverter<R>()) : OneWayPropertyBinding<T, R> {
     return OneWayPropertyBinding(key, observable, converter)
 }
 
-public inline fun <T> oneWayPropertyBinding(keys: Array<out String>, observer: Action1<in T>, oneTime: Boolean, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : PropertyBinding {
+fun <T> oneWayPropertyBinding(keys: Array<out String>, observer: Action1<in T>, oneTime: Boolean, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : PropertyBinding {
     return if(keys.size == 1) OneWayPropertyBinding<T, Any>(keys[0], observer, oneTime, backConverter) else MultiplePropertyBinding(keys.toList(), observer, oneTime, backConverter as MultipleConverter<T>)
 }
 
-public inline fun <T, R> twoWayPropertyBinding(key: String, observable: Observable<T>, observer: Action1<in T>, converter: TwoWayConverter<T, R> = EmptyTwoWayConverter<T, R>()) : TwoWayPropertyBinding<T, R> {
+fun <T, R> twoWayPropertyBinding(key: String, observable: Observable<T>, observer: Action1<in T>, converter: TwoWayConverter<T, R> = EmptyTwoWayConverter<T, R>()) : TwoWayPropertyBinding<T, R> {
     return TwoWayPropertyBinding(key, observable, observer, converter)
 }
 
-public inline fun <T> commandBinding(key: String, trigger: Observable<T>, canExecute: Action1<in Boolean> = Action1 {}) : CommandBinding<T> {
+fun <T> commandBinding(key: String, trigger: Observable<T>, canExecute: Action1<in Boolean> = Action1 {}) : CommandBinding<T> {
     return CommandBinding(key, trigger, canExecute)
 }
 
-open public class BindingAssembler {
+open class BindingAssembler {
     private val oneWayPropertyBindings = ArrayList<OneWayPropertyBinding<*, *>>()
     private val multiplePropertyBindings = ArrayList<MultiplePropertyBinding<*>>()
     private val twoWayPropertyBindings = ArrayList<TwoWayPropertyBinding<*, *>>()
     private var commandBindings = ArrayList<CommandBinding<*>>()
 
-    public fun addBinding(propertyBinding: PropertyBinding): Unit {
+    fun addBinding(propertyBinding: PropertyBinding): Unit {
         when (propertyBinding) {
             is CommandBinding<*> -> commandBindings.add(propertyBinding)
             is OneWayPropertyBinding<*, *> -> oneWayPropertyBindings.add(propertyBinding)
@@ -42,7 +42,7 @@ open public class BindingAssembler {
         }
     }
 
-    public fun bindTo(bindingDisposer: BindingDisposer, viewModel: IViewModel): Unit {
+    fun bindTo(bindingDisposer: BindingDisposer, viewModel: IViewModel): Unit {
         val cs: CompositeSubscription = CompositeSubscription()
         oneWayPropertyBindings.forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
         twoWayPropertyBindings.forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
@@ -52,7 +52,7 @@ open public class BindingAssembler {
         clear()
     }
 
-    public fun merge(prefix: String, assembler: BindingAssembler) {
+    fun merge(prefix: String, assembler: BindingAssembler) {
         assembler.oneWayPropertyBindings.forEach { it -> oneWayPropertyBindings.add(it.prefix(prefix)) }
         assembler.multiplePropertyBindings.forEach { it -> multiplePropertyBindings.add(it.prefix(prefix)) }
         assembler.twoWayPropertyBindings.forEach { it -> twoWayPropertyBindings.add(it.prefix(prefix)) }

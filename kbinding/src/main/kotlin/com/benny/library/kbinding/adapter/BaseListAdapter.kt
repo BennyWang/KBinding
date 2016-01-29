@@ -11,6 +11,7 @@ import com.benny.library.kbinding.view.IViewCreator
  * Created by benny on 12/18/15.
  */
 open class BaseListAdapter<T>(val viewCreator: IViewCreator<T>, val itemAccessor: AdapterItemAccessor<T>) : BaseAdapter() {
+    @Suppress("UNCHECKED_CAST")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         var itemView = convertView
         if(itemView == null) {

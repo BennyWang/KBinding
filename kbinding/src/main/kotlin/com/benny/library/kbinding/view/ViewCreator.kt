@@ -12,10 +12,10 @@ import java.util.*
  * Created by benny on 11/18/15.
  */
 
-public open class ViewCreator(val bindingDisposer: BindingDisposer, val viewBinderComponent: ViewBinderComponent<*>, val viewModelFactory: () -> ItemViewModel<*>) : IViewCreator<Any> {
+open class ViewCreator(val bindingDisposer: BindingDisposer, val itemViewBinderComponent: ItemViewBinderComponent, val viewModelFactory: () -> ItemViewModel<*>) : IViewCreator<Any> {
 
     override fun view(container: ViewGroup): View {
-        val viewBinder = viewBinderComponent.createViewBinder(AnkoContext.create(container.context))
+        val viewBinder = itemViewBinderComponent.createViewBinder(container.context, container)
         val viewModel = viewModelFactory()
         viewBinder.bindTo(bindingDisposer, viewModel)
         viewBinder.view.tag = viewModel

@@ -11,8 +11,8 @@ import rx.functions.Action1
  * Created by benny on 11/17/15.
  */
 
-public class OneWayPropertyBinding<T, R> private constructor(key: String, val oneTime: Boolean) : PropertyBinding() {
-    public var key:String = key
+class OneWayPropertyBinding<T, R> private constructor(key: String, val oneTime: Boolean) : PropertyBinding() {
+    var key:String = key
         private set
 
     var converter: OneWayConverter<R>? = null
@@ -31,12 +31,12 @@ public class OneWayPropertyBinding<T, R> private constructor(key: String, val on
         this.backConverter = backConverter
     }
 
-    public fun prefix(prefix: String) : OneWayPropertyBinding<T, R> {
+    fun prefix(prefix: String) : OneWayPropertyBinding<T, R> {
         if(!prefix.isEmpty()) key = "$prefix.$key"
         return this
     }
 
-    public fun bindTo(property: Property<R>): Subscription {
+    fun bindTo(property: Property<R>): Subscription {
         if (observable != null) {
             return observable!!.map { (converter!!).convert(it as Any) }
                     .doOnSubscribe { LogBind(key, "OneWay") }

@@ -44,7 +44,7 @@ class OneWayBindingTest  {
     }
 
     @Test
-    public fun test() {
+    fun test() {
         bindingAssembler.bindTo(bindingDisposer, testModel)
         testModel.integer = 3
         Assert.assertEquals(3, integer)

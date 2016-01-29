@@ -28,17 +28,17 @@ class StockDetailsActivity : BaseActivity() {
         StockDetailsActivityUI().setContentView(this).bindTo(viewModel)
 
         setSupportActionBar(toolBar)
-        supportActionBar.setDisplayHomeAsUpEnabled(true)
-        supportActionBar.setDisplayShowHomeEnabled(true)
-        supportActionBar.setHomeButtonEnabled(true)
-        supportActionBar.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.title = ""
 
         CaishuoService.getInstance().stock(intent.getStringExtra("id")).subscribe { viewModel.updateData(it) }
     }
 
 
     inner class StockDetailsActivityUI : ViewBinderComponent<StockDetailsActivity> {
-        override fun builder(): AnkoContext<StockDetailsActivity>.() -> Unit = {
+        override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
                 toolBar = toolbar {
                     backgroundColor = Color.parseColor("#393a4c")

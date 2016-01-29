@@ -5,11 +5,11 @@ package com.benny.library.kbinding.bind
  */
 
 open class BindingMode {
-    public companion object {
-        public val OneWay: OneWay = OneWay()
-        public val TwoWay: TwoWay = TwoWay()
-        public val OneWayToSource: OneWayToSource = OneWayToSource()
-        public val OneTime: OneTime = OneTime()
+    companion object {
+        val OneWay: OneWay = OneWay()
+        val TwoWay: TwoWay = TwoWay()
+        val OneWayToSource: OneWayToSource = OneWayToSource()
+        val OneTime: OneTime = OneTime()
     }
 }
 

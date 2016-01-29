@@ -34,7 +34,7 @@ class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.O
     lateinit var indicatorLine: View
     lateinit var tabsContainer: LinearLayout
 
-    public var viewPager: ViewPager? = null
+    var viewPager: ViewPager? = null
         set(value) {
             if(value == null) return
             field = value
@@ -47,17 +47,17 @@ class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.O
             if (value.adapter != null) setupView()
         }
 
-    public var divideEqually = true
+    var divideEqually = true
 
-    public var showIndicatorLine = true
-    public var indicatorLineHeight = 2
-    public var indicatorLinePosition = BOTTOM
-    public var indicatorLineMargin = 0
+    var showIndicatorLine = true
+    var indicatorLineHeight = 2
+    var indicatorLinePosition = BOTTOM
+    var indicatorLineMargin = 0
 
-    public var indicatorBackgroundColor: Int = Color.WHITE
-    public var indicatorBackgroundDrawable: Drawable? = null
+    var indicatorBackgroundColor: Int = Color.WHITE
+    var indicatorBackgroundDrawable: Drawable? = null
 
-    public var indicatorFactory = DEFAULT_INDICATOR
+    var indicatorFactory = DEFAULT_INDICATOR
 
     fun ensureLayoutInitialized() {
         if(childCount != 0) return
@@ -171,9 +171,9 @@ class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.O
         }
     }
 
-    public companion object {
-        public val TOP = 0
-        public val BOTTOM = 1
+    companion object {
+        val TOP = 0
+        val BOTTOM = 1
 
         private lateinit var setOnAdapterChangeListenerMethod: Method
         private lateinit var onAdapterChangeListenerInterface: Class<*>

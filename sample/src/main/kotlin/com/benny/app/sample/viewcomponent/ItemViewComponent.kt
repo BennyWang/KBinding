@@ -17,6 +17,7 @@ import com.benny.app.sample.ui.extension.simpleDraweeView
 import com.benny.library.kbinding.converter.MultipleConverter
 import com.benny.library.kbinding.converter.StringConverter
 import com.benny.library.kbinding.dsl.*
+import com.benny.library.kbinding.view.ItemViewBinderComponent
 import org.jetbrains.anko.*
 
 import com.benny.library.kbinding.view.ViewBinderComponent
@@ -25,8 +26,8 @@ import com.benny.library.kbinding.view.ViewBinderComponent
  * Created by benny on 12/16/15.
  */
 
-class LoadingItemView : ViewBinderComponent<Any> {
-    override fun builder(): AnkoContext<Any>.() -> Unit = {
+class LoadingItemView : ItemViewBinderComponent {
+    override fun builder(): AnkoContext<*>.() -> Unit = {
         frameLayout {
             progressBar () {
                 isIndeterminate = true
@@ -35,8 +36,8 @@ class LoadingItemView : ViewBinderComponent<Any> {
     }
 }
 
-class MovieItemView : ViewBinderComponent<Any> {
-    override fun builder(): AnkoContext<Any>.() -> Unit = {
+class MovieItemView : ItemViewBinderComponent {
+    override fun builder(): AnkoContext<*>.() -> Unit = {
         relativeLayout {
             linearLayout {
                 padding = dip(14)
@@ -72,7 +73,7 @@ class MovieItemView : ViewBinderComponent<Any> {
     }
 }
 
-class StockItemView : ViewBinderComponent<Any> {
+class StockItemView : ItemViewBinderComponent {
     class ChangePercentBackgroundConverter(val context: Context) : MultipleConverter<Drawable> {
         override fun convert(params: Array<Any>): Drawable {
             if(params.size < 2) return roundRect { radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_9) }
@@ -99,7 +100,7 @@ class StockItemView : ViewBinderComponent<Any> {
         }
     }
 
-    override fun builder(): AnkoContext<Any>.() -> Unit = {
+    override fun builder(): AnkoContext<*>.() -> Unit = {
             relativeLayout {
                 verticalLayout {
                     verticalPadding = dip(7)

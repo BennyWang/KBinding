@@ -36,17 +36,17 @@ class MovieDetailsActivity : BaseActivity() {
         MovieDetailsActivityUI().setContentView(this).bindTo(viewModel)
 
         setSupportActionBar(toolBar)
-        supportActionBar.setDisplayHomeAsUpEnabled(true)
-        supportActionBar.setDisplayShowHomeEnabled(true)
-        supportActionBar.setHomeButtonEnabled(true)
-        supportActionBar.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.title = ""
 
         DoubanService.getInstance().movie(intent.getStringExtra("id")).subscribe { viewModel.updateData(it) }
     }
 
 
     inner class MovieDetailsActivityUI : ViewBinderComponent<MovieDetailsActivity> {
-        override fun builder(): AnkoContext<MovieDetailsActivity>.() -> Unit = {
+        override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
                 appBarLayout {
                     toolBar = inflate(TitleToolBarViewComponent("影片详情"), this@appBarLayout) as Toolbar

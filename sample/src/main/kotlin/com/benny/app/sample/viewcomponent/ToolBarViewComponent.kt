@@ -11,9 +11,8 @@ import org.jetbrains.anko.appcompat.v7.toolbar
  * Created by benny on 1/15/16.
  */
 
-public class TitleToolBarViewComponent(val title: String) : ViewBinderComponent<Activity> {
-
-    override fun builder(): AnkoContext<Activity>.() -> Unit = {
+class TitleToolBarViewComponent(val title: String) : ViewBinderComponent<Activity> {
+    override fun builder(): AnkoContext<*>.() -> Unit = {
         toolbar {
             backgroundColor = Color.parseColor("#393a4c")
             textView {

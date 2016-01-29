@@ -12,7 +12,7 @@ import org.jetbrains.anko.AnkoContext
  * Created by benny on 12/12/15.
  */
 
-public class BindableLayout<T>(override val ctx: Context, override val owner: T) : AnkoContext<T>, ViewBinder {
+class BindableLayout<T>(override val ctx: Context, override val owner: T) : AnkoContext<T>, ViewBinder {
     var childView: View? = null
     var bindingDisposer: BindingDisposer? = null
     var viewModel: IViewModel? = null
@@ -22,7 +22,7 @@ public class BindableLayout<T>(override val ctx: Context, override val owner: T)
 
     val bindingAssembler = BindingAssembler()
 
-    public override fun bindTo(bindingDisposer: BindingDisposer, viewModel: IViewModel): View {
+    override fun bindTo(bindingDisposer: BindingDisposer, viewModel: IViewModel): View {
         if(this.viewModel != null) throw UnsupportedOperationException("can only bind to one view model")
 
         this.bindingDisposer = bindingDisposer
@@ -31,18 +31,18 @@ public class BindableLayout<T>(override val ctx: Context, override val owner: T)
         return view
     }
 
-    public fun bind(propertyBinding: PropertyBinding): Unit {
+    fun bind(propertyBinding: PropertyBinding): Unit {
         bindingAssembler.addBinding(propertyBinding)
     }
 
-    public fun inflate(viewComponent: ViewComponent<*>, parent: ViewGroup, prefix: String = "") : View {
-        val layout = AnkoContext.create(ctx).bindableLayout { viewComponent.builder()() }
+    fun inflate(viewComponent: ViewComponent, parent: ViewGroup, prefix: String = "") : View {
+        val layout = AnkoContext.create(ctx, owner).bindableLayout { viewComponent.builder()() }
         merge(prefix, layout)
         parent.addView(layout.view)
         return layout.view
     }
 
-    public fun merge(prefix: String, layout: BindableLayout<*>) {
+    fun merge(prefix: String, layout: BindableLayout<*>) {
         bindingAssembler.merge(prefix, layout.bindingAssembler)
         if(viewModel != null) bindingAssembler.bindTo(bindingDisposer!!, viewModel!!)
     }

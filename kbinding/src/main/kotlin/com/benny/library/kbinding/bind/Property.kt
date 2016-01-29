@@ -8,20 +8,20 @@ import rx.subjects.BehaviorSubject
  * Created by benny on 11/17/15.
  */
 
-public class Property<T>(val defaultValue:T? = null) {
+class Property<T>(val defaultValue:T? = null) {
     private var property: BehaviorSubject<T> = if(defaultValue == null) BehaviorSubject.create() else BehaviorSubject.create(defaultValue)
 
-    public var value: T?
+    var value: T?
         get() = property.value
         set(value) { if(value != null) property.onNext(value) }
 
-    public val observable: Observable<T>
+    val observable: Observable<T>
         get() {
             ensurePropertyInitialized()
             return property
         }
 
-    public val observer: Observer<T>
+    val observer: Observer<T>
         get() {
             ensurePropertyInitialized()
             return property
