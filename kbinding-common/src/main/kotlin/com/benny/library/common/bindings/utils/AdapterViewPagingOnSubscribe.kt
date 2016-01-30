@@ -1,4 +1,4 @@
-package com.benny.library.kbinding.dsl.utils
+package com.benny.library.common.bindings.utils
 
 import android.view.View
 import com.benny.library.kbinding.adapter.AdapterPagingListener

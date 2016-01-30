@@ -1,6 +1,6 @@
 @file:Suppress("UNUSED_PARAMETER")
 
-package com.benny.library.kbinding.dsl
+package com.benny.library.common.bindings
 
 import android.widget.RadioGroup
 import com.benny.library.kbinding.bind.*

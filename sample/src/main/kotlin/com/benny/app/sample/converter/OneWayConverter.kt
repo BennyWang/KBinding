@@ -4,10 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import com.benny.app.sample.R
+import com.benny.library.common.roundRect
 import com.benny.library.kbinding.converter.OneWayConverter
-import com.benny.library.kbinding.dsl.borderRoundRect
-import com.benny.library.kbinding.dsl.color
-import com.benny.library.kbinding.dsl.roundRect
 import org.jetbrains.anko.dip
 import java.text.DecimalFormat
 

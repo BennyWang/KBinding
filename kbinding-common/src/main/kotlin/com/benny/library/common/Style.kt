@@ -1,4 +1,4 @@
-package com.benny.library.kbinding.dsl
+package com.benny.library.common
 
 import android.view.View
 import android.view.ViewManager

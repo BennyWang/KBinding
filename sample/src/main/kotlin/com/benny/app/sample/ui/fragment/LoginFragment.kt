@@ -13,6 +13,12 @@ import com.benny.app.sample.R
 import org.jetbrains.anko.*
 
 import com.benny.app.sample.viewmodel.LoginViewModel
+import com.benny.library.common.bindings.*
+import com.benny.library.common.borderRoundRect
+import com.benny.library.common.stateList
+import com.benny.library.common.viewStyle
+import com.benny.library.common.style
+
 import com.benny.library.kbinding.bind.BindingDelegate
 import com.benny.library.kbinding.bind.BindingMode
 import com.benny.library.kbinding.bind.Command

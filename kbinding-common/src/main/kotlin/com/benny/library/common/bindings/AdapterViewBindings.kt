@@ -1,6 +1,6 @@
 @file:Suppress("UNUSED_PARAMETER")
 
-package com.benny.library.kbinding.dsl
+package com.benny.library.common.bindings
 
 import android.support.v7.widget.RecyclerView
 import android.widget.ListAdapter
@@ -8,12 +8,12 @@ import android.widget.ListView
 import rx.Observable
 import rx.functions.Action1
 
+import com.benny.library.kbinding.bind.*
+import com.benny.library.kbinding.converter.*
+import com.benny.library.common.bindings.utils.AdapterViewPagingOnSubscribe
 import com.benny.library.kbinding.adapter.AdapterPagingListener
 import com.benny.library.kbinding.adapter.BaseListAdapter
 import com.benny.library.kbinding.adapter.BaseRecyclerPagingAdapter
-import com.benny.library.kbinding.bind.*
-import com.benny.library.kbinding.converter.*
-import com.benny.library.kbinding.dsl.utils.AdapterViewPagingOnSubscribe
 import com.jakewharton.rxbinding.widget.RxAdapterView
 
 /**

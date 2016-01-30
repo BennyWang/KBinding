@@ -1,1 +1,1 @@
-include ':kbinding', ':sample'
+include ':kbinding', ':kbinding-common', ':sample'

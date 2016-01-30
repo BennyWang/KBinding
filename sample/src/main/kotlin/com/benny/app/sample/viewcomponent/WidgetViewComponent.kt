@@ -7,6 +7,7 @@ import com.benny.app.sample.R
 import com.benny.app.sample.converter.StockPriceChangeConverter
 import com.benny.app.sample.converter.StockPriceConverter
 import com.benny.app.sample.converter.TagBackgroundConverter
+import com.benny.library.common.bindings.*
 import org.jetbrains.anko.*
 
 import com.benny.library.kbinding.view.ViewBinderComponent

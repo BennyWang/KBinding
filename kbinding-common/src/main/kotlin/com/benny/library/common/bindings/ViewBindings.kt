@@ -1,6 +1,6 @@
 @file:Suppress("UNUSED_PARAMETER")
 
-package com.benny.library.kbinding.dsl
+package com.benny.library.common.bindings
 
 import android.graphics.drawable.Drawable
 import android.view.View

@@ -1,16 +1,25 @@
 @file:Suppress("UNUSED_PARAMETER")
 
-package com.benny.library.kbinding.dsl
+package com.benny.library.common.bindings
 
 import android.widget.TextView
 import rx.Observable
 import com.benny.library.kbinding.bind.*
 import com.benny.library.kbinding.converter.*
 import com.jakewharton.rxbinding.widget.RxTextView
+import org.jetbrains.anko.AnkoException
 
 /**
  * Created by benny on 12/16/15.
  */
+var TextView.textWeight: Int
+    get() = throw AnkoException("'android.widget.TextView.textWeight' property does not have a getter")
+    set(v) = setTypeface(typeface, v)
+
+var TextView.textColorResource: Int
+    get() = throw AnkoException("'android.widget.TextView.textWeight' property does not have a getter")
+    set(v) = setTextColor(context.resources.getColor(v))
+
 fun TextView.textChanges(): Observable<String> = RxTextView.textChanges(this).map { it.toString() }.skip(1)
 
 //For TextView

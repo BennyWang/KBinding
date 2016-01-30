@@ -4,11 +4,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.Gravity
-import com.benny.app.sample.R
 import com.benny.app.sample.extension.progressBar
 import com.benny.app.sample.network.service.caishuo.CaishuoService
 import com.benny.app.sample.viewcomponent.stock.StockInfoUI
 import com.benny.app.sample.viewmodel.StockViewModel
+import com.benny.library.common.bindings.fadeOut
+import com.benny.library.common.bindings.until
 import com.benny.library.kbinding.dsl.*
 import com.benny.library.kbinding.view.ViewBinderComponent
 import com.benny.library.kbinding.view.setContentView

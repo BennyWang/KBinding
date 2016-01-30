@@ -14,6 +14,8 @@ import com.benny.app.sample.converter.StockPriceConverter
 import com.benny.app.sample.extension.generateViewId
 import com.benny.app.sample.network.service.caishuo.model.Stock
 import com.benny.app.sample.ui.extension.simpleDraweeView
+import com.benny.library.common.bindings.*
+import com.benny.library.common.roundRect
 import com.benny.library.kbinding.converter.MultipleConverter
 import com.benny.library.kbinding.converter.StringConverter
 import com.benny.library.kbinding.dsl.*

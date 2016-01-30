@@ -6,23 +6,19 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.view.Gravity
-import com.benny.app.sample.R
-import com.benny.app.sample.extension.progressBar
-import com.benny.app.sample.network.service.caishuo.CaishuoService
-import com.benny.app.sample.network.service.douban.DoubanService
-import com.benny.app.sample.ui.extension.simpleDraweeView
-import com.benny.app.sample.viewcomponent.TitleToolBarViewComponent
-import com.benny.app.sample.viewcomponent.stock.StockInfoUI
-import com.benny.app.sample.viewmodel.MovieViewModel
-import com.benny.app.sample.viewmodel.StockViewModel
+import org.jetbrains.anko.*
+import org.jetbrains.anko.design.appBarLayout
 import com.benny.library.kbinding.converter.StringConverter
 import com.benny.library.kbinding.dsl.*
 import com.benny.library.kbinding.view.ViewBinderComponent
 import com.benny.library.kbinding.view.setContentView
-import org.jetbrains.anko.*
-import org.jetbrains.anko.appcompat.v7.toolbar
-import org.jetbrains.anko.design.appBarLayout
+import com.benny.library.common.bindings.*
 
+import com.benny.app.sample.extension.progressBar
+import com.benny.app.sample.network.service.douban.DoubanService
+import com.benny.app.sample.ui.extension.simpleDraweeView
+import com.benny.app.sample.viewcomponent.TitleToolBarViewComponent
+import com.benny.app.sample.viewmodel.MovieViewModel
 /**
  * Created by benny on 12/30/15.
  */

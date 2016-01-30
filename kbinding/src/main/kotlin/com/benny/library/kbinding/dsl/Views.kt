@@ -41,11 +41,3 @@ fun <T> AnkoContext<T>.inflate(viewComponent: ViewComponent, parent: ViewGroup, 
         view
     }
 }
-
-var TextView.textWeight: Int
-    get() = throw AnkoException("'android.widget.TextView.textWeight' property does not have a getter")
-    set(v) = setTypeface(typeface, v)
-
-var TextView.textColorResource: Int
-    get() = throw AnkoException("'android.widget.TextView.textWeight' property does not have a getter")
-    set(v) = setTextColor(context.resources.getColor(v))

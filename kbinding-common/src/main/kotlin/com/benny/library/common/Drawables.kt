@@ -1,6 +1,5 @@
-package com.benny.library.kbinding.dsl
+package com.benny.library.common
 
-import android.content.Context
 import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.*
