@@ -6,21 +6,28 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.benny.app.sample.network.service.douban.DoubanService
-import com.benny.app.sample.network.service.douban.model.Movie
-import com.benny.app.sample.ui.activity.MovieDetailsActivity
-import com.benny.app.sample.viewcomponent.MovieItemView
-import com.benny.app.sample.viewmodel.MovieViewModel
-import com.benny.library.kbinding.view.ViewBinderComponent
-import com.benny.library.common.bindings.*
-import com.benny.library.kbinding.bind.BindingDelegate
-import com.benny.library.kbinding.bind.Command
-import com.benny.library.kbinding.converter.ListToAdapterConverter
-import com.benny.library.kbinding.dsl.*
+
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.act
 import org.jetbrains.anko.support.v4.startActivity
-import com.benny.app.sample.extension.progressBar
+
+import com.benny.library.kbinding.view.ViewBinderComponent
+import com.benny.library.kbinding.bind.BindingDelegate
+import com.benny.library.kbinding.bind.Command
+import com.benny.library.kbinding.dsl.*
+import com.benny.library.kbinding.common.bindings.adapter
+import com.benny.library.kbinding.common.bindings.fadeOut
+import com.benny.library.kbinding.common.bindings.itemClick
+import com.benny.library.kbinding.common.bindings.until
+import com.benny.library.kbinding.common.converter.ListToAdapterConverter
+
+import com.benny.app.sample.network.service.douban.DoubanService
+import com.benny.app.sample.network.service.douban.model.Movie
+import com.benny.app.sample.ui.activity.MovieDetailsActivity
+import com.benny.app.sample.ui.layout.item.MovieItemView
+import com.benny.app.sample.ui.extension.progressBar
+import com.benny.app.sample.viewmodel.MovieViewModel
+
 /**
  * Created by benny on 1/28/16.
  */

@@ -8,23 +8,23 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
-import com.benny.app.sample.R
-import com.benny.app.sample.SampleApplication
 
+import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.support.v4.viewPager
 import org.jetbrains.anko.*
 
-import com.benny.app.sample.extension.generateViewId
+import com.benny.library.kbinding.dsl.inflate
+import com.benny.library.kbinding.view.ViewBinderComponent
+
+import com.benny.app.sample.R
+import com.benny.app.sample.utils.generateViewId
 import com.benny.app.sample.ui.extension.viewPagerIndicator
 import com.benny.app.sample.ui.fragment.LoginFragment
 import com.benny.app.sample.ui.fragment.MovieListFragment
 import com.benny.app.sample.ui.fragment.SampleFragment
 import com.benny.app.sample.ui.fragment.StockFragment
 import com.benny.app.sample.ui.widget.ViewPagerIndicator
-import com.benny.app.sample.viewcomponent.TitleToolBarViewComponent
-import com.benny.library.kbinding.dsl.inflate
-import com.benny.library.kbinding.view.ViewBinderComponent
-import org.jetbrains.anko.design.appBarLayout
+import com.benny.app.sample.ui.layout.TitleToolBarView
 
 
 class MainActivity : BaseActivity() {
@@ -77,7 +77,7 @@ class MainActivity : BaseActivity() {
         override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
                 appBarLayout {
-                    toolBar = inflate(TitleToolBarViewComponent("主页"), this@appBarLayout) as Toolbar
+                    toolBar = inflate(TitleToolBarView("主页"), this@appBarLayout) as Toolbar
                 }
                 val pager = viewPager {
                     id = generateViewId()

@@ -1,1 +1,1 @@
-include ':kbinding', ':kbinding-common', ':sample'
+include ':kbinding', ':kbinding-common', ':kbinding-recyclerview-v7', ':sample'

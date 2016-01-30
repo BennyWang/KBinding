@@ -12,13 +12,15 @@ import com.benny.library.kbinding.converter.StringConverter
 import com.benny.library.kbinding.dsl.*
 import com.benny.library.kbinding.view.ViewBinderComponent
 import com.benny.library.kbinding.view.setContentView
-import com.benny.library.common.bindings.*
+import com.benny.library.kbinding.common.bindings.*
 
-import com.benny.app.sample.extension.progressBar
+import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.network.service.douban.DoubanService
 import com.benny.app.sample.ui.extension.simpleDraweeView
-import com.benny.app.sample.viewcomponent.TitleToolBarViewComponent
+import com.benny.app.sample.ui.layout.TitleToolBarView
 import com.benny.app.sample.viewmodel.MovieViewModel
+import com.benny.library.kbinding.common.bindings.*
+
 /**
  * Created by benny on 12/30/15.
  */
@@ -45,7 +47,7 @@ class MovieDetailsActivity : BaseActivity() {
         override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
                 appBarLayout {
-                    toolBar = inflate(TitleToolBarViewComponent("影片详情"), this@appBarLayout) as Toolbar
+                    toolBar = inflate(TitleToolBarView("影片详情"), this@appBarLayout) as Toolbar
                 }
                 frameLayout {
                     scrollView {

@@ -2,8 +2,8 @@ package com.benny.app.sample
 
 import android.content.Context
 import android.telephony.TelephonyManager
-import com.benny.app.sample.extension.fromJson
-import com.benny.app.sample.extension.toJson
+import com.benny.app.sample.utils.fromJson
+import com.benny.app.sample.utils.toJson
 import com.benny.app.sample.network.service.caishuo.model.User
 import org.jetbrains.anko.defaultSharedPreferences
 import java.util.*

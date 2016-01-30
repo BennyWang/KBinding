@@ -6,9 +6,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.benny.library.kbinding.view.ViewBinderComponent
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.UI
+
+import com.benny.library.kbinding.view.ViewBinderComponent
 
 /**
  * Created by benny on 12/21/15.

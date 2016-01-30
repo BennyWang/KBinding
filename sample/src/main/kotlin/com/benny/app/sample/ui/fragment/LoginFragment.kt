@@ -9,15 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.benny.app.sample.R
 import org.jetbrains.anko.*
-
-import com.benny.app.sample.viewmodel.LoginViewModel
-import com.benny.library.common.bindings.*
-import com.benny.library.common.borderRoundRect
-import com.benny.library.common.stateList
-import com.benny.library.common.viewStyle
-import com.benny.library.common.style
+import org.jetbrains.anko.support.v4.act
+import org.jetbrains.anko.support.v4.toast
 
 import com.benny.library.kbinding.bind.BindingDelegate
 import com.benny.library.kbinding.bind.BindingMode
@@ -25,8 +19,16 @@ import com.benny.library.kbinding.bind.Command
 import com.benny.library.kbinding.converter.ArrayToBooleanConverter
 import com.benny.library.kbinding.dsl.*
 import com.benny.library.kbinding.view.ViewBinderComponent
-import org.jetbrains.anko.support.v4.act
-import org.jetbrains.anko.support.v4.toast
+import com.benny.library.kbinding.common.borderRoundRect
+import com.benny.library.kbinding.common.stateList
+import com.benny.library.kbinding.common.viewStyle
+import com.benny.library.kbinding.common.style
+import com.benny.library.kbinding.common.bindings.click
+import com.benny.library.kbinding.common.bindings.enabled
+import com.benny.library.kbinding.common.bindings.text
+
+import com.benny.app.sample.R
+import com.benny.app.sample.viewmodel.LoginViewModel
 
 class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
     private val bindDelegate: BindingDelegate = BindingDelegate()

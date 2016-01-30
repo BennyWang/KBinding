@@ -8,18 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.act
+import org.jetbrains.anko.support.v4.startActivity
+
+import com.benny.library.kbinding.bind.BindingDelegate
+import com.benny.library.kbinding.bind.Command
+import com.benny.library.kbinding.dsl.bind
 import com.benny.library.kbinding.view.ViewBinderComponent
+import com.benny.library.kbinding.common.bindings.adapter
+import com.benny.library.kbinding.common.bindings.itemClick
+import com.benny.library.kbinding.common.converter.ListToAdapterConverter
+
 import com.benny.app.sample.network.service.caishuo.model.Stock
 import com.benny.app.sample.network.service.caishuo.CaishuoService
 import com.benny.app.sample.ui.activity.StockDetailsActivity
-import com.benny.app.sample.viewcomponent.StockItemView
+import com.benny.app.sample.ui.layout.item.StockItemView
 import com.benny.app.sample.viewmodel.StockViewModel
-import com.benny.library.common.bindings.*
-import com.benny.library.kbinding.bind.BindingDelegate
-import com.benny.library.kbinding.bind.Command
-import com.benny.library.kbinding.converter.ListToAdapterConverter
-import com.benny.library.kbinding.dsl.bind
-import org.jetbrains.anko.support.v4.startActivity
 
 class StockFragment : BaseFragment() {
     val bindingDelegate = BindingDelegate()

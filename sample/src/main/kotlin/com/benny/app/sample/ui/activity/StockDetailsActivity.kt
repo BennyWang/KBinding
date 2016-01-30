@@ -4,17 +4,20 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.Gravity
-import com.benny.app.sample.extension.progressBar
-import com.benny.app.sample.network.service.caishuo.CaishuoService
-import com.benny.app.sample.viewcomponent.stock.StockInfoUI
-import com.benny.app.sample.viewmodel.StockViewModel
-import com.benny.library.common.bindings.fadeOut
-import com.benny.library.common.bindings.until
+
+import org.jetbrains.anko.*
+import org.jetbrains.anko.appcompat.v7.toolbar
+
 import com.benny.library.kbinding.dsl.*
 import com.benny.library.kbinding.view.ViewBinderComponent
 import com.benny.library.kbinding.view.setContentView
-import org.jetbrains.anko.*
-import org.jetbrains.anko.appcompat.v7.toolbar
+import com.benny.library.kbinding.common.bindings.fadeOut
+import com.benny.library.kbinding.common.bindings.until
+
+import com.benny.app.sample.ui.extension.progressBar
+import com.benny.app.sample.network.service.caishuo.CaishuoService
+import com.benny.app.sample.ui.layout.stock.StockInfoUI
+import com.benny.app.sample.viewmodel.StockViewModel
 
 /**
  * Created by benny on 12/30/15.
@@ -55,7 +58,6 @@ class StockDetailsActivity : BaseActivity() {
                     }
                 }.lparams(matchParent, matchParent)
             }
-
         }
     }
 }
