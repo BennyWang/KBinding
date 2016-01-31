@@ -41,10 +41,10 @@ class StockDetailsActivity : BaseActivity() {
     }
 
 
-    inner class StockDetailsActivityUI : ViewBinderComponent<StockDetailsActivity> {
+    class StockDetailsActivityUI : ViewBinderComponent<StockDetailsActivity> {
         override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
-                toolBar = toolbar {
+                (owner as StockDetailsActivity).toolBar = toolbar {
                     backgroundColor = Color.parseColor("#393a4c")
                 }
                 frameLayout {

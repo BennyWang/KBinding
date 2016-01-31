@@ -43,11 +43,11 @@ class MovieDetailsActivity : BaseActivity() {
     }
 
 
-    inner class MovieDetailsActivityUI : ViewBinderComponent<MovieDetailsActivity> {
+    class MovieDetailsActivityUI : ViewBinderComponent<MovieDetailsActivity> {
         override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
                 appBarLayout {
-                    toolBar = inflate(TitleToolBarView("影片详情"), this@appBarLayout) as Toolbar
+                    (owner as MovieDetailsActivity).toolBar = inflate(TitleToolBarView("影片详情"), this@appBarLayout) as Toolbar
                 }
                 frameLayout {
                     scrollView {

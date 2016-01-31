@@ -9,7 +9,7 @@ import java.util.*
  * Created by benny on 11/18/15.
  */
 
-class ViewCreatorCollection<T> : IViewCreator<T> {
+open class ViewCreatorCollection<T> : IViewCreator<T> {
 
     private var viewTypeBegin = 0
     internal var lastViewType = -1

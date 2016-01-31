@@ -7,6 +7,7 @@ import kotlin.properties.Delegates
 /**
  * Created by benny on 11/19/15.
  */
+
 class LoginViewModel(val loginDelegate: LoginViewModel.LoginDelegate) : ViewModel() {
 
     var name: String by bindProperty("name") { "xxxxxxx@xxxxx.com" }

@@ -19,6 +19,6 @@ class LoadingItemView : ItemViewBinderComponent {
             progressBar (android.R.attr.progressBarStyleSmall) {
                 isIndeterminate = true
             }.lparams(width = dip(24), height = dip(24)) { gravity = Gravity.CENTER }
-        }.layoutParams = ViewGroup.LayoutParams(matchParent, dip(50))
+        }
     }
 }

@@ -53,21 +53,21 @@ class StockSubInfoHSUI : StockSubInfoUI() {
     override fun builder(): AnkoContext<*>.() -> Unit = {
         val ankoContext = this
         gridLayout {
-            cell(ankoContext, "最高", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            cell(ankoContext, "最低", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            cell(ankoContext, "成交额", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
+            cell(ankoContext, "最高", "high").lparams(GridLayout.spec(0, GridLayout.TOP), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "最低", "high").lparams(GridLayout.spec(0, GridLayout.TOP), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "成交额", "high").lparams(GridLayout.spec(0, GridLayout.TOP), GridLayout.spec(2, GridLayout.FILL, 1f))
 
             space().lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { topMargin = dip(3); height = 0 }
 
-            cell(ankoContext, "市盈率", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            cell(ankoContext, "市净率", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            cell(ankoContext, "总市值", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
+            cell(ankoContext, "市盈率", "high").lparams(GridLayout.spec(2, GridLayout.TOP), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "市净率", "high").lparams(GridLayout.spec(2, GridLayout.TOP), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "总市值", "high").lparams(GridLayout.spec(2, GridLayout.TOP), GridLayout.spec(2, GridLayout.FILL, 1f))
 
             space().lparams(GridLayout.spec(3, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { topMargin = dip(3); height = 0 }
 
-            cell(ankoContext, "振幅", "high").lparams(GridLayout.spec(4, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            cell(ankoContext, "每股收益", "high").lparams(GridLayout.spec(4, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            cell(ankoContext, "流通市值", "high").lparams(GridLayout.spec(4, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
+            cell(ankoContext, "振幅", "high").lparams(GridLayout.spec(4, GridLayout.TOP), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "每股收益", "high").lparams(GridLayout.spec(4, GridLayout.TOP), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "流通市值", "high").lparams(GridLayout.spec(4, GridLayout.TOP), GridLayout.spec(2, GridLayout.FILL, 1f))
         }
     }
 }
@@ -76,15 +76,15 @@ class StockSubInfoHKUI : StockSubInfoUI() {
     override fun builder(): AnkoContext<*>.() -> Unit = {
         val ankoContext = this
         gridLayout {
-            cell(ankoContext, "最高", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            cell(ankoContext, "最低", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            cell(ankoContext, "成交额", "high").lparams(GridLayout.spec(0, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
+            cell(ankoContext, "最高", "high").lparams(GridLayout.spec(0, GridLayout.TOP), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "最低", "high").lparams(GridLayout.spec(0, GridLayout.TOP), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "成交额", "high").lparams(GridLayout.spec(0, GridLayout.TOP), GridLayout.spec(2, GridLayout.FILL, 1f))
 
             space().lparams(GridLayout.spec(1, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { topMargin = dip(3); height = 0 }
 
-            cell(ankoContext, "52周高", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            cell(ankoContext, "52周低", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
-            cell(ankoContext, "股息", "high").lparams(GridLayout.spec(2, GridLayout.CENTER), GridLayout.spec(2, GridLayout.FILL, 1f))
+            cell(ankoContext, "52周高", "high").lparams(GridLayout.spec(2, GridLayout.TOP), GridLayout.spec(0, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "52周低", "high").lparams(GridLayout.spec(2, GridLayout.TOP), GridLayout.spec(1, GridLayout.FILL, 1f)) { rightMargin = dip(5)}
+            cell(ankoContext, "股息", "high").lparams(GridLayout.spec(2, GridLayout.TOP), GridLayout.spec(2, GridLayout.FILL, 1f))
         }
     }
 }

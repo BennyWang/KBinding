@@ -10,13 +10,13 @@ import rx.Subscriber
  * Created by benny on 12/26/15.
  */
 
-class AdapterViewPagingOnSubscribe(val view: View) : Observable.OnSubscribe<Unit> {
-    override fun call(subscriber: Subscriber<in Unit>) {
+class AdapterViewPagingOnSubscribe(val view: View) : Observable.OnSubscribe<Pair<Int, Any?>> {
+    override fun call(subscriber: Subscriber<in Pair<Int, Any?>>) {
         val pagingListener = object : AdapterPagingListener {
             override fun onLoadPage(previous: Any?, position: Int) {
                 if (subscriber.isUnsubscribed) return
 
-                subscriber.onNext(Unit);
+                subscriber.onNext(Pair(position, previous));
             }
         }
         view.tag = pagingListener

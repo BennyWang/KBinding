@@ -125,8 +125,8 @@ open class ViewModel() : IViewModel {
         }
     }
 
-    fun <T> bindCommand(key: String, cmdAction: (T, Action1<in Boolean>) -> Unit): ReadOnlyProperty<Any, Command<T>> {
-        addCommand(key, Command<T> { t, action -> cmdAction(t, action) })
+    fun <T> bindCommand(key: String, cmdAction: (T, (Boolean) -> Unit) -> Unit): ReadOnlyProperty<Any, Command<T>> {
+        addCommand(key, Command<T> { t, action -> cmdAction(t, { action.call(it) }) })
         return object : ReadOnlyProperty<Any, Command<T>> {
             override fun getValue(thisRef: Any, property: KProperty<*>): Command<T> = command(property.name)
         }

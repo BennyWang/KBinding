@@ -8,9 +8,11 @@ import rx.Observable
 import rx.functions.Action1
 
 import com.benny.library.kbinding.bind.*
+import com.benny.library.kbinding.common.adapter.AdapterPagingListener
 import com.benny.library.kbinding.converter.*
 import com.benny.library.kbinding.common.bindings.utils.AdapterViewPagingOnSubscribe
 import com.benny.library.kbinding.common.adapter.BaseListAdapter
+import com.benny.library.kbinding.common.adapter.BaseListPagingAdapter
 import com.jakewharton.rxbinding.widget.RxAdapterView
 
 /**
@@ -20,19 +22,23 @@ import com.jakewharton.rxbinding.widget.RxAdapterView
 @Suppress("UNCHECKED_CAST") fun ListView.swapAdapter(): Action1<ListAdapter> {
     return Action1 { it ->
         val adapter = this.adapter
-        if (adapter != null && adapter is BaseListAdapter<*> && it is BaseListAdapter<*>) {
+        if (adapter is BaseListAdapter<*> && it is BaseListAdapter<*>) {
             (adapter as BaseListAdapter<Any>).swap(it as BaseListAdapter<Any>)
-        } else {
+        }
+        else {
+            if(it is BaseListPagingAdapter<*>) {
+                it.pagingListener = this.tag as? AdapterPagingListener
+            }
             this.adapter = it
         }
     }
 }
 
-fun ListView.paging(): Observable<Unit> = Observable.create(AdapterViewPagingOnSubscribe(this)).map { Unit }
+fun ListView.paging(): Observable<Pair<Int, Any?> > = Observable.create(AdapterViewPagingOnSubscribe(this))
 
 //Event
 
-fun ListView.paging(path: String) : PropertyBinding = commandBinding(path, paging(), Action1 {})
+fun ListView.paging(path: String) : PropertyBinding = commandBinding(path, paging(), Action1 { (this.adapter as? BaseListPagingAdapter<*>)?.loadComplete(!it) })
 fun ListView.itemClick(path: String) : PropertyBinding = commandBinding(path, RxAdapterView.itemClicks(this), Action1 {})
 
 //Property

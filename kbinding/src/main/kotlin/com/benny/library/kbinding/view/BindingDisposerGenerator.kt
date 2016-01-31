@@ -12,6 +12,7 @@ interface BindingDisposerGenerator {
     val bindingDisposer: BindingDisposer
 
     fun viewCreator(viewBinderComponent: ItemViewBinderComponent, viewModelFactory: () -> ItemViewModel<*>): ViewCreator = ViewCreator(bindingDisposer, viewBinderComponent, viewModelFactory)
+    fun pagingViewCreator(loadingViewBinderComponent: ItemViewBinderComponent, viewBinderComponent: ItemViewBinderComponent, viewModelFactory: () -> ItemViewModel<*>): PagingViewCreator = PagingViewCreator(bindingDisposer, loadingViewBinderComponent, viewBinderComponent, viewModelFactory)
     fun ViewBinder.bindTo(viewModel: IViewModel) = this.bindTo(bindingDisposer, viewModel)
 
 }

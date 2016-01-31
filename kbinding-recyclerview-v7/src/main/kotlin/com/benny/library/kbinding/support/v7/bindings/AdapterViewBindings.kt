@@ -10,6 +10,8 @@ import com.benny.library.kbinding.bind.*
 import com.benny.library.kbinding.converter.*
 import com.benny.library.kbinding.common.bindings.utils.AdapterViewPagingOnSubscribe
 import com.benny.library.kbinding.common.adapter.AdapterPagingListener
+import com.benny.library.kbinding.common.adapter.BaseListPagingAdapter
+import com.benny.library.kbinding.common.bindings.paging
 import com.benny.library.kbinding.support.v7.adapter.BaseRecyclerPagingAdapter
 
 /**
@@ -19,16 +21,15 @@ import com.benny.library.kbinding.support.v7.adapter.BaseRecyclerPagingAdapter
 fun RecyclerView.swapAdapter() : Action1<RecyclerView.Adapter<RecyclerView.ViewHolder>> {
     return Action1 { it ->
         this.swapAdapter(it, false)
-        if (adapter is BaseRecyclerPagingAdapter<*> && this.tag is AdapterPagingListener)
-            (adapter as BaseRecyclerPagingAdapter<*>).pagingListener = this.tag as AdapterPagingListener
+        (adapter as? BaseRecyclerPagingAdapter<*>)?.pagingListener = this.tag as? AdapterPagingListener
     }
 }
 
-fun RecyclerView.paging(): Observable<Unit> = Observable.create(AdapterViewPagingOnSubscribe(this)).map { Unit }
+fun RecyclerView.paging(): Observable<Pair<Int, Any?>> = Observable.create(AdapterViewPagingOnSubscribe(this))
 
 //Event
 
-fun RecyclerView.paging(path: String) : PropertyBinding = commandBinding(path, paging(), Action1 {})
+fun RecyclerView.paging(path: String) : PropertyBinding = commandBinding(path, paging(), Action1 { (this.adapter as? BaseRecyclerPagingAdapter<*>)?.loadComplete(!it) })
 
 //Property
 
