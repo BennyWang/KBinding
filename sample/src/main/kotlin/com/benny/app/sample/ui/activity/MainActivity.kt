@@ -3,15 +3,12 @@ package com.benny.app.sample.ui.activity
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 
 import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.support.v4.viewPager
-import org.jetbrains.anko.*
 
 import com.benny.library.kbinding.dsl.inflate
 import com.benny.library.kbinding.view.ViewBinderComponent
@@ -25,10 +22,20 @@ import com.benny.app.sample.ui.fragment.SampleFragment
 import com.benny.app.sample.ui.fragment.StockFragment
 import com.benny.app.sample.ui.widget.ViewPagerIndicator
 import com.benny.app.sample.ui.layout.TitleToolBarView
+import com.benny.library.kbinding.bind.BindingDelegate
+import com.benny.library.kbinding.dsl.bind
+import com.benny.library.kbinding.support.v4.adapter.SimplePagerAdapterItemAccessor
+import com.benny.library.kbinding.support.v4.bindings.fragmentAdapter
+import com.benny.library.kbinding.support.v4.converter.ListToFragmentPagerAdapterConverter
+import com.benny.library.kbinding.view.setContentView
+import org.jetbrains.anko.*
 
 
 class MainActivity : BaseActivity() {
     lateinit var toolBar: Toolbar
+    val bindingDelegate = BindingDelegate()
+
+    val fragments: List<Fragment> by bindingDelegate.bindProperty("fragments") { listOf(LoginFragment(), MovieListFragment(), StockFragment(), SampleFragment()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +43,8 @@ class MainActivity : BaseActivity() {
         Log.d("MainActivity", "onCreate this:" + this)
 
         setTheme(R.style.AppTheme)
-        MainActivityUI().setContentView(this)
+        MainActivityUI().setContentView(this).bindTo(bindingDelegate)
+
         setSupportActionBar(toolBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setDisplayShowHomeEnabled(true);
@@ -49,27 +57,12 @@ class MainActivity : BaseActivity() {
         return true
     }
 
-    class MainFragmentPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-        override fun getItem(position: Int): Fragment? {
-            return when(position) {
-                0 -> LoginFragment()
-                1 -> MovieListFragment()
-                2 -> StockFragment()
-                else -> SampleFragment()
-            }
-        }
-
-        override fun getCount(): Int {
-            return 4;
-        }
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            return when(position) {
-                0 -> "登录"
-                1 -> "豆瓣"
-                2 -> "股票"
-                else -> "预留"
-            }
+    class PagerAdapterAccessor(list: List<Fragment>) : SimplePagerAdapterItemAccessor<Fragment>(list) {
+        override fun getTitle(position: Int): String = when(position) {
+            0 -> "登录"
+            1 -> "豆瓣"
+            2 -> "股票"
+            else -> "预留"
         }
     }
 
@@ -81,7 +74,7 @@ class MainActivity : BaseActivity() {
                 }
                 val pager = viewPager {
                     id = generateViewId()
-                    adapter = MainFragmentPagerAdapter((owner as MainActivity).supportFragmentManager)
+                    bind { fragmentAdapter("fragments", converter = ListToFragmentPagerAdapterConverter((owner as MainActivity).supportFragmentManager, { PagerAdapterAccessor(it) })) }
                 }.lparams(matchParent, 0, 1f)
 
                 viewPagerIndicator {

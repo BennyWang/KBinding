@@ -33,4 +33,8 @@ open class PropertyBinding {
     protected fun <T> LogOnNext(propertie: String, data: T) {
         Log.d("BindingRecord", "for onNext property: $propertie : data: $data")
     }
+
+    protected fun LogError(error: Throwable) {
+        Log.d("BindingRecord", "for onError: $error")
+    }
 }

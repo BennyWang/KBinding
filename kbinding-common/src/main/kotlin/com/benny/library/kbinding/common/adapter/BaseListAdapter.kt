@@ -19,8 +19,6 @@ open class BaseListAdapter<T>(val viewCreator: IViewCreator<T>, val itemAccessor
             itemView = viewCreator.view(parent)
         }
         ((itemView.tag) as? ItemViewModel<T>)?.notifyPropertyChange(getItem(position), position)
-
-        Log.d("BaseListAdapter", "getview is " + itemView)
         return itemView
     }
 
@@ -33,7 +31,6 @@ open class BaseListAdapter<T>(val viewCreator: IViewCreator<T>, val itemAccessor
     }
 
     override fun getCount(): Int {
-        Log.d("BaseListAdapter", "get count is " + itemAccessor.size())
         return itemAccessor.size()
     }
 

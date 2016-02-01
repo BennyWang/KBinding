@@ -123,7 +123,7 @@ class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.O
         }
     }
 
-    internal fun onAdapterChanged(old: PagerAdapter, adapter: PagerAdapter) {
+    internal fun onAdapterChanged(old: PagerAdapter?, adapter: PagerAdapter) {
         setupView()
     }
 
@@ -161,7 +161,7 @@ class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.O
         override fun invoke(proxy: Any, m: Method, args: Array<Any>): Any? {
             try {
                 if (m.name == "onAdapterChanged") {
-                    onAdapterChanged(args[0] as PagerAdapter, args[1] as PagerAdapter)
+                    onAdapterChanged(args[0] as? PagerAdapter, args[1] as PagerAdapter)
                 }
             } catch (e: Exception) {
                 throw RuntimeException("unexpected invocation exception: " + e.message)

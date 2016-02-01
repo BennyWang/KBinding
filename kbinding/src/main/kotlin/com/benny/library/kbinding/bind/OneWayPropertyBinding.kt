@@ -48,6 +48,7 @@ class OneWayPropertyBinding<T, R> private constructor(key: String, val oneTime: 
                 .doOnSubscribe { LogBind(key, "OneWay") }
                 .doOnUnsubscribe { LogUnbind(key, "OneWay") }
                 .doOnNext { LogOnNext(key, it) }
+                .doOnError { LogError(it) }
 
         return if(!oneTime) ob.subscribe(observer) else ob.take(1).subscribe(observer)
     }

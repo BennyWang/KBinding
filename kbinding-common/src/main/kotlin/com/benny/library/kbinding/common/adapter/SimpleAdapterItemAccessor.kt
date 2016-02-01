@@ -5,7 +5,7 @@ import com.benny.library.kbinding.common.adapter.AdapterItemAccessor
 /**
  * Created by benny on 9/18/15
  */
-class SimpleAdapterItemAccessor<T> (private var list: List<T>) : AdapterItemAccessor<T> {
+open class SimpleAdapterItemAccessor<T> (private var list: List<T>) : AdapterItemAccessor<T> {
     override fun size(): Int {
         return list.size
     }
