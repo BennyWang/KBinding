@@ -10,7 +10,6 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.act
 import org.jetbrains.anko.support.v4.startActivity
 
-import com.benny.library.kbinding.bind.BindingDelegate
 import com.benny.library.kbinding.bind.Command
 import com.benny.library.kbinding.dsl.bind
 import com.benny.library.kbinding.view.ViewBinderComponent
@@ -25,12 +24,11 @@ import com.benny.app.sample.ui.layout.item.StockItemView
 import com.benny.app.sample.viewmodel.StockViewModel
 
 class StockFragment : BaseFragment() {
-    val bindingDelegate = BindingDelegate()
     var contentView: View? = null
 
-    var stocks: List<Stock>? by bindingDelegate.bindProperty<List<Stock>>("stocks")
+    var stocks: List<Stock>? by bindProperty<List<Stock>>("stocks")
 
-    val stockDetail: Command<Int> by bindingDelegate.bindCommand("stockDetail") { params, canExecute ->
+    val stockDetail: Command<Int> by bindCommand("stockDetail") { params, canExecute ->
         startActivity<StockDetailsActivity>("id" to stocks!![params].id)
     }
 
@@ -42,7 +40,7 @@ class StockFragment : BaseFragment() {
         Log.d("StockFragment", "onCreateView")
 
         if(contentView == null) {
-            contentView = StockFragmentUI().createViewBinder(act, this).bindTo(bindingDelegate)
+            contentView = StockFragmentUI().createViewBinder(act, this).bindTo(this)
             fetchStocks()
         }
         return contentView

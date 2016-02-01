@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import org.jetbrains.anko.*
 
 import com.benny.library.kbinding.view.ViewBinderComponent
-import com.benny.library.kbinding.bind.BindingDelegate
 import com.benny.library.kbinding.bind.Command
 import com.benny.library.kbinding.dsl.*
 import com.benny.library.kbinding.common.converter.ListToPagingAdapterConverter
@@ -32,19 +31,18 @@ import org.jetbrains.anko.support.v4.*
 
 class MovieListFragment : BaseFragment() {
     var contentView: View? = null
-    val bindingDelegate = BindingDelegate()
 
-    var movies: List<Movie>? by bindingDelegate.bindProperty("movies")
-    val movieDetail: Command<Int> by bindingDelegate.bindCommand("movieDetail") { params, canExecute ->
+    var movies: List<Movie>? by bindProperty("movies")
+    val movieDetail: Command<Int> by bindCommand("movieDetail") { params, canExecute ->
         startActivity<MovieDetailsActivity>("id" to movies!![params].id)
     }
 
-    val reloadMovies: Command<Unit> by bindingDelegate.bindCommand("reloadMovies") { params, canExecute ->
+    val reloadMovies: Command<Unit> by bindCommand("reloadMovies") { params, canExecute ->
         toast("reload movie finished")
         canExecute(true)
     }
 
-    val loadMoreMovies: Command<Pair<Int, Any?> > by bindingDelegate.bindCommand("loadMoreMovies") { params, canExecute ->
+    val loadMoreMovies: Command<Pair<Int, Any?> > by bindCommand("loadMoreMovies") { params, canExecute ->
         longToast("load more movie position: " + params.first + "   data: " + params.second)
         contentView?.postDelayed( { canExecute(true) } , 2000)
     }
@@ -55,7 +53,7 @@ class MovieListFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if(contentView == null) {
-            contentView = MovieListFragmentUI().createViewBinder(act, this).bindTo(bindingDelegate)
+            contentView = MovieListFragmentUI().createViewBinder(act, this).bindTo(this)
             fetchMovies()
         }
         return contentView

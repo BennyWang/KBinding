@@ -13,7 +13,6 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.act
 import org.jetbrains.anko.support.v4.toast
 
-import com.benny.library.kbinding.bind.BindingDelegate
 import com.benny.library.kbinding.bind.BindingMode
 import com.benny.library.kbinding.bind.Command
 import com.benny.library.kbinding.converter.ArrayToBooleanConverter
@@ -31,14 +30,13 @@ import com.benny.app.sample.R
 import com.benny.app.sample.viewmodel.LoginViewModel
 
 class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
-    private val bindDelegate: BindingDelegate = BindingDelegate()
     var contentView: View? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d("LoginFragment", "onCreateView this:" + this)
 
         if(contentView == null) {
-            contentView = LoginFragmentUI().createViewBinder(act, this).bindTo(bindDelegate)
+            contentView = LoginFragmentUI().createViewBinder(act, this).bindTo(this)
         }
         return contentView
     }
@@ -47,10 +45,10 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
         toast("Login success with user " + user)
     }
 
-    var name: String by bindDelegate.bindProperty("name") { "xxxxxxx@xxxxx.com" }
-    var password: String by bindDelegate.bindProperty("password") { "xxxxxxxxx" }
+    var name: String by bindProperty("name") { "xxxxxxx@xxxxx.com" }
+    var password: String by bindProperty("password") { "xxxxxxxxx" }
 
-    val login: Command<Unit> by bindDelegate.bindCommand("login") { params, canExecute ->
+    val login: Command<Unit> by bindCommand("login") { params, canExecute ->
         if (name.equals("wangbin")) onLoginSuccess("wangbin")
         else onLoginFailed(RuntimeException("incorrect name or password"))
     }

@@ -19,7 +19,6 @@ import com.benny.app.sample.network.service.douban.DoubanService
 import com.benny.app.sample.ui.extension.simpleDraweeView
 import com.benny.app.sample.ui.layout.TitleToolBarView
 import com.benny.app.sample.viewmodel.MovieViewModel
-import com.benny.library.kbinding.common.bindings.*
 
 /**
  * Created by benny on 12/30/15.
@@ -27,11 +26,11 @@ import com.benny.library.kbinding.common.bindings.*
 
 class MovieDetailsActivity : BaseActivity() {
     lateinit var toolBar: Toolbar
-    val viewModel: MovieViewModel = MovieViewModel()
+    val movieViewModel: MovieViewModel = MovieViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MovieDetailsActivityUI().setContentView(this).bindTo(viewModel)
+        MovieDetailsActivityUI().setContentView(this).bindTo(movieViewModel)
 
         setSupportActionBar(toolBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -39,7 +38,7 @@ class MovieDetailsActivity : BaseActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.title = ""
 
-        DoubanService.getInstance().movie(intent.getStringExtra("id")).subscribe { viewModel.updateData(it) }
+        DoubanService.getInstance().movie(intent.getStringExtra("id")).subscribe { movieViewModel.updateData(it) }
     }
 
 

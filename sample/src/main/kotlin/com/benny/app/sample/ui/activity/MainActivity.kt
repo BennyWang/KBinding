@@ -22,7 +22,6 @@ import com.benny.app.sample.ui.fragment.SampleFragment
 import com.benny.app.sample.ui.fragment.StockFragment
 import com.benny.app.sample.ui.widget.ViewPagerIndicator
 import com.benny.app.sample.ui.layout.TitleToolBarView
-import com.benny.library.kbinding.bind.BindingDelegate
 import com.benny.library.kbinding.dsl.bind
 import com.benny.library.kbinding.support.v4.adapter.SimplePagerAdapterItemAccessor
 import com.benny.library.kbinding.support.v4.bindings.fragmentAdapter
@@ -33,9 +32,8 @@ import org.jetbrains.anko.*
 
 class MainActivity : BaseActivity() {
     lateinit var toolBar: Toolbar
-    val bindingDelegate = BindingDelegate()
 
-    val fragments: List<Fragment> by bindingDelegate.bindProperty("fragments") { listOf(LoginFragment(), MovieListFragment(), StockFragment(), SampleFragment()) }
+    val fragments: List<Fragment> by bindProperty("fragments") { listOf(LoginFragment(), MovieListFragment(), StockFragment(), SampleFragment()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +41,7 @@ class MainActivity : BaseActivity() {
         Log.d("MainActivity", "onCreate this:" + this)
 
         setTheme(R.style.AppTheme)
-        MainActivityUI().setContentView(this).bindTo(bindingDelegate)
+        MainActivityUI().setContentView(this).bindTo(this)
 
         setSupportActionBar(toolBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true);

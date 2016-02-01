@@ -25,11 +25,11 @@ import com.benny.app.sample.viewmodel.StockViewModel
 
 class StockDetailsActivity : BaseActivity() {
     lateinit var toolBar: Toolbar
-    val viewModel: StockViewModel = StockViewModel()
+    val stockViewModel: StockViewModel = StockViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        StockDetailsActivityUI().setContentView(this).bindTo(viewModel)
+        StockDetailsActivityUI().setContentView(this).bindTo(stockViewModel)
 
         setSupportActionBar(toolBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -37,7 +37,7 @@ class StockDetailsActivity : BaseActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.title = ""
 
-        CaishuoService.getInstance().stock(intent.getStringExtra("id")).subscribe { viewModel.updateData(it) }
+        CaishuoService.getInstance().stock(intent.getStringExtra("id")).subscribe { stockViewModel.updateData(it) }
     }
 
 

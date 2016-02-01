@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.PagerAdapter
-import android.util.Log
 import com.benny.library.kbinding.converter.OneWayConverter
 import com.benny.library.kbinding.support.v4.adapter.*
 import com.benny.library.kbinding.view.IViewCreator
