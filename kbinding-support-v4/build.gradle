@@ -44,9 +44,9 @@ repositories {
     mavenCentral()
 }
 
-ext.projectName         = "KBinding-Common"
-ext.projectDescription  = "Common Bindings for KBinding"
+ext.projectName         = "KBinding-Support-v4"
+ext.projectDescription  = "Support v4 Bindings for KBinding"
 ext.projectGroupId      = "com.benny.library"
-ext.projectArtifactId   = "KBinding"
+ext.projectArtifactId   = "KBinding-Support-v4"
 
 apply from: rootProject.file('gradle/bintrayUpload.gradle')
