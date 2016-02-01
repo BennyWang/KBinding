@@ -21,8 +21,6 @@ class ListToPagerAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemA
 
 class ListToFragmentPagerAdapterConverter(val FragmentManager: FragmentManager, val itemAccessorFactory: (List<Fragment>) -> PagerAdapterItemAccessor<Fragment> = { list -> SimplePagerAdapterItemAccessor(list) } ) : OneWayConverter<FragmentPagerAdapter> {
     override fun convert(source: Any): FragmentPagerAdapter {
-        val fpa = BaseFragmentPagerAdapter(FragmentManager, itemAccessorFactory(source as List<Fragment>))
-        Log.d("FragmentPagerAdapter", "convert is " + fpa);
-        return fpa
+        return BaseFragmentPagerAdapter(FragmentManager, itemAccessorFactory(source as List<Fragment>))
     }
 }
