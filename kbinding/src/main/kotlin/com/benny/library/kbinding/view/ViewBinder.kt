@@ -4,7 +4,6 @@ import android.view.View
 import com.benny.library.kbinding.bind.BindingDelegate
 import com.benny.library.kbinding.bind.BindingDisposer
 import com.benny.library.kbinding.bind.IViewModel
-import com.benny.library.kbinding.bind.ViewModel
 
 /**
  * Created by benny on 12/14/15.

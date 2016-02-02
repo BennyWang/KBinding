@@ -1,7 +1,8 @@
 package com.benny.library.kbinding.support.v7.converter
 
 import android.support.v7.widget.RecyclerView
-import com.benny.library.kbinding.common.adapter.*
+import com.benny.library.kbinding.common.adapter.AdapterItemAccessor
+import com.benny.library.kbinding.common.adapter.SimpleAdapterItemAccessor
 import com.benny.library.kbinding.converter.OneWayConverter
 import com.benny.library.kbinding.support.v7.adapter.BaseRecyclerAdapter
 import com.benny.library.kbinding.support.v7.adapter.BaseRecyclerPagingAdapter

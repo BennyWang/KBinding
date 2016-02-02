@@ -1,17 +1,15 @@
 package com.benny.app.sample.network.service.caishuo;
 
 import com.benny.app.sample.Constants;
+import com.benny.app.sample.network.service.ErrorHandler;
 import com.benny.app.sample.network.service.caishuo.model.Stock;
 import com.benny.app.sample.network.service.caishuo.model.User;
-import com.benny.app.sample.network.service.ErrorHandler;
 import com.google.gson.GsonBuilder;
-
+import java.util.List;
 import retrofit.RestAdapter;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import java.util.List;
 
 /**
  * Created by benny on 9/5/15.

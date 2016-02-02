@@ -3,16 +3,14 @@
 package com.benny.library.kbinding.support.v7.bindings
 
 import android.support.v7.widget.RecyclerView
+import com.benny.library.kbinding.bind.*
+import com.benny.library.kbinding.common.adapter.AdapterPagingListener
+import com.benny.library.kbinding.common.bindings.utils.AdapterViewPagingOnSubscribe
+import com.benny.library.kbinding.converter.EmptyOneWayConverter
+import com.benny.library.kbinding.converter.OneWayConverter
+import com.benny.library.kbinding.support.v7.adapter.BaseRecyclerPagingAdapter
 import rx.Observable
 import rx.functions.Action1
-
-import com.benny.library.kbinding.bind.*
-import com.benny.library.kbinding.converter.*
-import com.benny.library.kbinding.common.bindings.utils.AdapterViewPagingOnSubscribe
-import com.benny.library.kbinding.common.adapter.AdapterPagingListener
-import com.benny.library.kbinding.common.adapter.BaseListPagingAdapter
-import com.benny.library.kbinding.common.bindings.paging
-import com.benny.library.kbinding.support.v7.adapter.BaseRecyclerPagingAdapter
 
 /**
  * Created by benny on 12/16/15.

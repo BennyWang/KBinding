@@ -5,7 +5,8 @@ package com.benny.library.kbinding.common.bindings
 import android.net.Uri
 import android.widget.ImageView
 import com.benny.library.kbinding.bind.*
-import com.benny.library.kbinding.converter.*
+import com.benny.library.kbinding.converter.EmptyOneWayConverter
+import com.benny.library.kbinding.converter.OneWayConverter
 import rx.functions.Action1
 
 /**

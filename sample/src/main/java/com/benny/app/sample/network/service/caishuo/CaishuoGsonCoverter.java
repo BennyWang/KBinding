@@ -4,13 +4,11 @@ import com.benny.app.sample.Constants;
 import com.benny.app.sample.network.service.ServiceException;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-
 import retrofit.converter.ConversionException;
 import retrofit.converter.Converter;
 import retrofit.mime.MimeUtil;

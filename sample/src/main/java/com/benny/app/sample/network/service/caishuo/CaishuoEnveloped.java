@@ -1,7 +1,7 @@
 package com.benny.app.sample.network.service.caishuo;
 
-import com.google.gson.JsonElement;
 import com.benny.app.sample.model.Error;
+import com.google.gson.JsonElement;
 
 /**
  * Created by benny on 9/5/15.

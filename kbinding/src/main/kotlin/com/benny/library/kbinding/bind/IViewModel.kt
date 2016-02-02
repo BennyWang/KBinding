@@ -1,7 +1,6 @@
 package com.benny.library.kbinding.bind
 
 import rx.Subscription
-import java.util.*
 
 /**
  * Created by benny on 12/29/15.

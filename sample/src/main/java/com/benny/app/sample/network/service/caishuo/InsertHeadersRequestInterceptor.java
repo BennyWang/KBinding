@@ -1,7 +1,6 @@
 package com.benny.app.sample.network.service.caishuo;
 
 import com.benny.app.sample.ApplicationContext;
-
 import retrofit.RequestInterceptor;
 
 /**

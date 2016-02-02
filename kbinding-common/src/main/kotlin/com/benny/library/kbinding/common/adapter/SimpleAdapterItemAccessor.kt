@@ -1,7 +1,5 @@
 package com.benny.library.kbinding.common.adapter
 
-import com.benny.library.kbinding.common.adapter.AdapterItemAccessor
-
 /**
  * Created by benny on 9/18/15
  */

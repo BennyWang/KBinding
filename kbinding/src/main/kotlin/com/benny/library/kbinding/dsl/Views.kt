@@ -2,11 +2,11 @@ package com.benny.library.kbinding.dsl
 
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.benny.library.kbinding.bind.*
 import com.benny.library.kbinding.view.BindableLayout
 import com.benny.library.kbinding.view.ViewComponent
-import org.jetbrains.anko.*
+import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.UI
 import org.jetbrains.anko.internals.AnkoInternals
 
 /**

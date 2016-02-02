@@ -4,16 +4,16 @@ package com.benny.library.kbinding.common.bindings
 
 import android.widget.ListAdapter
 import android.widget.ListView
-import rx.Observable
-import rx.functions.Action1
-
 import com.benny.library.kbinding.bind.*
 import com.benny.library.kbinding.common.adapter.AdapterPagingListener
-import com.benny.library.kbinding.converter.*
-import com.benny.library.kbinding.common.bindings.utils.AdapterViewPagingOnSubscribe
 import com.benny.library.kbinding.common.adapter.BaseListAdapter
 import com.benny.library.kbinding.common.adapter.BaseListPagingAdapter
+import com.benny.library.kbinding.common.bindings.utils.AdapterViewPagingOnSubscribe
+import com.benny.library.kbinding.converter.EmptyOneWayConverter
+import com.benny.library.kbinding.converter.OneWayConverter
 import com.jakewharton.rxbinding.widget.RxAdapterView
+import rx.Observable
+import rx.functions.Action1
 
 /**
  * Created by benny on 12/16/15.

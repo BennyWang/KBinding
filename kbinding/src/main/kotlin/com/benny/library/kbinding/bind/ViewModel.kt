@@ -1,15 +1,14 @@
 package com.benny.library.kbinding.bind;
 
+import com.benny.library.kbinding.converter.MultipleConverter
 import rx.Subscription
 import rx.functions.Action1
 import rx.subscriptions.CompositeSubscription
+import java.security.InvalidParameterException
 import java.util.*
 import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
-
-import com.benny.library.kbinding.converter.MultipleConverter
-import java.security.InvalidParameterException
 
 /**
  * Created by benny on 11/17/15.

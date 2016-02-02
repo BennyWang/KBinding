@@ -1,12 +1,15 @@
 package com.benny.app.sample.network.service.caishuo;
 
 import com.benny.app.sample.network.service.caishuo.model.Stock;
-import retrofit.http.*;
-
 import com.benny.app.sample.network.service.caishuo.model.User;
-import rx.Observable;
-
 import java.util.List;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
+import retrofit.http.POST;
+import retrofit.http.Path;
+import retrofit.http.Query;
+import rx.Observable;
 
 /**
  * Created by benny on 9/6/15.

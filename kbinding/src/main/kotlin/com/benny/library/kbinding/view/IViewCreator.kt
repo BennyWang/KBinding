@@ -2,7 +2,6 @@ package com.benny.library.kbinding.view
 
 import android.view.View
 import android.view.ViewGroup
-import com.benny.library.kbinding.bind.BindingDisposer
 
 /**
  * Created by benny on 11/19/15.

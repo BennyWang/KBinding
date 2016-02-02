@@ -1,12 +1,11 @@
 package com.benny.app.sample.network.service.douban;
 
+import com.benny.app.sample.network.service.douban.model.Category;
+import com.benny.app.sample.network.service.douban.model.Movie;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
-
-import com.benny.app.sample.network.service.douban.model.Category;
-import com.benny.app.sample.network.service.douban.model.Movie;
 
 /**
  * Created by benny on 1/28/16.
