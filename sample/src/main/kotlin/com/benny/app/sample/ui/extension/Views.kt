@@ -1,6 +1,7 @@
 package com.benny.app.sample.ui.extension
 
 import android.content.Context
+import android.support.v7.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewManager
 import android.widget.ProgressBar
@@ -11,6 +12,9 @@ import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.custom.ankoView
 
 import com.benny.app.sample.ui.widget.ViewPagerIndicator
+import org.jetbrains.anko.appcompat.v7._Toolbar
+import org.jetbrains.anko.appcompat.v7.`$$Anko$Factories$AppcompatV7ViewGroup`
+import org.jetbrains.anko.internals.AnkoInternals
 
 /**
  * Created by benny on 12/21/15.
@@ -33,4 +37,16 @@ fun ViewManager.progressBar(style: Int): ProgressBar {
 }
 fun ViewManager.progressBar(style: Int, init: ProgressBar.() -> Unit): ProgressBar {
     return ankoView({ctx: Context -> ProgressBar(ctx, null, style) }) { init() }
+}
+
+inline fun <T : View> ViewManager.ankoView(theme: Int, factory: (ctx: Context) -> T, init: T.() -> Unit): T {
+    val ctx = AnkoInternals.getContext(this)
+    val view = factory(ContextThemeWrapper(ctx, theme))
+    view.init()
+    AnkoInternals.addView(this, view)
+    return view
+}
+
+inline fun ViewManager.toolbar(theme: Int, init: _Toolbar.() -> Unit): android.support.v7.widget.Toolbar {
+    return ankoView(theme, `$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR) { init() }
 }

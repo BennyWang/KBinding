@@ -15,4 +15,5 @@
         <item name="colorControlNormal">@android:color/white</item>
     </style>
 
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 </resources>
