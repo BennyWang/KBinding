@@ -1,7 +1,7 @@
 KBinding
 ======================
 
-Android View Model binding framework write in kotlin, base on anko, simple but powerful.
+Android MVVM framework write in kotlin, base on anko, simple but powerful.
 
 ## Contents
 
