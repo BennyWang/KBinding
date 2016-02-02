@@ -3,8 +3,10 @@ package com.benny.app.sample.ui.activity
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Gravity
 import com.benny.app.sample.network.service.caishuo.CaishuoService
+import com.benny.app.sample.network.service.caishuo.model.Stock
 import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.layout.stock.StockInfoUI
 import com.benny.app.sample.viewmodel.StockViewModel
@@ -35,7 +37,13 @@ class StockDetailsActivity : BaseActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.title = ""
 
-        CaishuoService.getInstance().stock(intent.getStringExtra("id")).subscribe { stockViewModel.updateData(it) }
+        CaishuoService.getInstance().stock(intent.getStringExtra("id"))
+            .subscribe({
+                stockViewModel.updateData(it)
+            }, {
+                Log.e("StockDetailsActivity", "error : $it")
+                stockViewModel.updateData(Stock())
+            })
     }
 
 
