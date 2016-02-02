@@ -6,25 +6,26 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import org.jetbrains.anko.*
-import org.jetbrains.anko.gridlayout.v7.gridLayout
-import org.jetbrains.anko.gridlayout.v7.space
-
-import com.benny.library.kbinding.converter.EmptyOneWayConverter
-import com.benny.library.kbinding.converter.OneWayConverter
-import com.benny.library.kbinding.dsl.*
-import com.benny.library.kbinding.view.ViewBinderComponent
-import com.benny.library.kbinding.common.viewStyle
-import com.benny.library.kbinding.common.style
-import com.benny.library.kbinding.common.bindings.text
-import com.benny.library.kbinding.common.bindings.textColor
-import com.benny.library.kbinding.common.bindings.until
-
 import com.benny.app.sample.converter.StockColorConverter
 import com.benny.app.sample.converter.StockPriceChangeConverter
 import com.benny.app.sample.converter.StockPriceChangePercentageConverter
 import com.benny.app.sample.converter.StockPriceConverter
 import com.benny.app.sample.network.service.caishuo.model.MarketType
+import com.benny.library.kbinding.common.bindings.text
+import com.benny.library.kbinding.common.bindings.textColor
+import com.benny.library.kbinding.common.bindings.until
+import com.benny.library.kbinding.common.style
+import com.benny.library.kbinding.common.viewStyle
+import com.benny.library.kbinding.converter.EmptyOneWayConverter
+import com.benny.library.kbinding.converter.OneWayConverter
+import com.benny.library.kbinding.dsl.OneWay
+import com.benny.library.kbinding.dsl.bind
+import com.benny.library.kbinding.dsl.inflate
+import com.benny.library.kbinding.dsl.wait
+import com.benny.library.kbinding.view.ViewBinderComponent
+import org.jetbrains.anko.*
+import org.jetbrains.anko.gridlayout.v7.gridLayout
+import org.jetbrains.anko.gridlayout.v7.space
 
 /**
  * Created by benny on 12/31/15.

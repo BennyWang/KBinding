@@ -5,15 +5,12 @@ import android.support.v7.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewManager
 import android.widget.ProgressBar
-
-import com.facebook.drawee.view.SimpleDraweeView
-
-import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.custom.ankoView
-
 import com.benny.app.sample.ui.widget.ViewPagerIndicator
+import com.facebook.drawee.view.SimpleDraweeView
 import org.jetbrains.anko.appcompat.v7._Toolbar
 import org.jetbrains.anko.appcompat.v7.`$$Anko$Factories$AppcompatV7ViewGroup`
+import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.internals.AnkoInternals
 
 /**

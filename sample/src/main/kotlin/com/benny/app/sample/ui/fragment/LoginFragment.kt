@@ -9,25 +9,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import org.jetbrains.anko.*
-import org.jetbrains.anko.support.v4.act
-import org.jetbrains.anko.support.v4.toast
-
+import com.benny.app.sample.R
+import com.benny.app.sample.viewmodel.LoginViewModel
 import com.benny.library.kbinding.bind.BindingMode
 import com.benny.library.kbinding.bind.Command
-import com.benny.library.kbinding.converter.ArrayToBooleanConverter
-import com.benny.library.kbinding.dsl.*
-import com.benny.library.kbinding.view.ViewBinderComponent
-import com.benny.library.kbinding.common.borderRoundRect
-import com.benny.library.kbinding.common.stateList
-import com.benny.library.kbinding.common.viewStyle
-import com.benny.library.kbinding.common.style
 import com.benny.library.kbinding.common.bindings.click
 import com.benny.library.kbinding.common.bindings.enabled
 import com.benny.library.kbinding.common.bindings.text
-
-import com.benny.app.sample.R
-import com.benny.app.sample.viewmodel.LoginViewModel
+import com.benny.library.kbinding.common.borderRoundRect
+import com.benny.library.kbinding.common.stateList
+import com.benny.library.kbinding.common.style
+import com.benny.library.kbinding.common.viewStyle
+import com.benny.library.kbinding.converter.ArrayToBooleanConverter
+import com.benny.library.kbinding.dsl.TwoWay
+import com.benny.library.kbinding.dsl.bind
+import com.benny.library.kbinding.view.ViewBinderComponent
+import org.jetbrains.anko.*
+import org.jetbrains.anko.support.v4.act
+import org.jetbrains.anko.support.v4.toast
 
 class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
     var contentView: View? = null

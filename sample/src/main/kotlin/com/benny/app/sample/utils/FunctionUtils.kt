@@ -1,13 +1,9 @@
 package com.benny.app.sample.utils
 
-import android.content.Context
 import android.os.Build
 import android.view.View
-import android.view.ViewManager
-import android.widget.ProgressBar
-import com.google.gson.GsonBuilder
 import com.benny.app.sample.Constants
-import org.jetbrains.anko.custom.ankoView
+import com.google.gson.GsonBuilder
 import java.util.concurrent.atomic.AtomicInteger
 
 /**

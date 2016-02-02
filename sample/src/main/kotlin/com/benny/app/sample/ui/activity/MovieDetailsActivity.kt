@@ -6,19 +6,21 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.view.Gravity
-import org.jetbrains.anko.*
-import org.jetbrains.anko.design.appBarLayout
-import com.benny.library.kbinding.converter.StringConverter
-import com.benny.library.kbinding.dsl.*
-import com.benny.library.kbinding.view.ViewBinderComponent
-import com.benny.library.kbinding.view.setContentView
-import com.benny.library.kbinding.common.bindings.*
-
-import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.network.service.douban.DoubanService
+import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.extension.simpleDraweeView
 import com.benny.app.sample.ui.layout.TitleToolBarView
 import com.benny.app.sample.viewmodel.MovieViewModel
+import com.benny.library.kbinding.common.bindings.*
+import com.benny.library.kbinding.converter.StringConverter
+import com.benny.library.kbinding.dsl.OneWay
+import com.benny.library.kbinding.dsl.bind
+import com.benny.library.kbinding.dsl.inflate
+import com.benny.library.kbinding.dsl.wait
+import com.benny.library.kbinding.view.ViewBinderComponent
+import com.benny.library.kbinding.view.setContentView
+import org.jetbrains.anko.*
+import org.jetbrains.anko.design.appBarLayout
 
 /**
  * Created by benny on 12/30/15.

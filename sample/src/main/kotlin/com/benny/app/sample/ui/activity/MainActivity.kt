@@ -6,28 +6,25 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
-
-import org.jetbrains.anko.design.appBarLayout
-import org.jetbrains.anko.support.v4.viewPager
-
-import com.benny.library.kbinding.dsl.inflate
-import com.benny.library.kbinding.view.ViewBinderComponent
-
 import com.benny.app.sample.R
-import com.benny.app.sample.utils.generateViewId
 import com.benny.app.sample.ui.extension.viewPagerIndicator
 import com.benny.app.sample.ui.fragment.LoginFragment
 import com.benny.app.sample.ui.fragment.MovieListFragment
 import com.benny.app.sample.ui.fragment.SampleFragment
 import com.benny.app.sample.ui.fragment.StockFragment
-import com.benny.app.sample.ui.widget.ViewPagerIndicator
 import com.benny.app.sample.ui.layout.TitleToolBarView
+import com.benny.app.sample.ui.widget.ViewPagerIndicator
+import com.benny.app.sample.utils.generateViewId
 import com.benny.library.kbinding.dsl.bind
+import com.benny.library.kbinding.dsl.inflate
 import com.benny.library.kbinding.support.v4.adapter.SimplePagerAdapterItemAccessor
 import com.benny.library.kbinding.support.v4.bindings.fragmentAdapter
 import com.benny.library.kbinding.support.v4.converter.ListToFragmentPagerAdapterConverter
+import com.benny.library.kbinding.view.ViewBinderComponent
 import com.benny.library.kbinding.view.setContentView
 import org.jetbrains.anko.*
+import org.jetbrains.anko.design.appBarLayout
+import org.jetbrains.anko.support.v4.viewPager
 
 
 class MainActivity : BaseActivity() {
