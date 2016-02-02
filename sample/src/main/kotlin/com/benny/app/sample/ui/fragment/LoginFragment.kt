@@ -94,19 +94,19 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
                     backgroundColor = Color.WHITE
                     leftPadding = dip(14)
                     editText {
-                        hint = "请输入手机号或者电子邮箱地址"
+                        hintResource = R.string.name_hint
                         style = tvStyle
                         bind { text(path="name", mode = TwoWay) }
                     }.lparams(width = matchParent)
                     view { backgroundResource = R.color.color_f2 }.lparams(width = matchParent, height = 1)
                     editText {
-                        hint = "请输入密码"
+                        hintResource = R.string.password_hint
                         style = tvStyle
                         bind { text(path="password", mode = BindingMode.TwoWay) }
                     }.lparams(width = matchParent)
                 }.lparams(width = matchParent)
                 textView {
-                    text = "登录"
+                    textResource = R.string.log_in
                     textSizeDimen = R.dimen.font_38
                     textColor = Color.WHITE
                     background = bgButton

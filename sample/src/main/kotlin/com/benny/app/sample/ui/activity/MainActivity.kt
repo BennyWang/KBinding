@@ -52,12 +52,12 @@ class MainActivity : BaseActivity() {
         return true
     }
 
-    class PagerAdapterAccessor(list: List<Fragment>) : SimplePagerAdapterItemAccessor<Fragment>(list) {
+    inner class PagerAdapterAccessor(list: List<Fragment>) : SimplePagerAdapterItemAccessor<Fragment>(list) {
         override fun getTitle(position: Int): String = when(position) {
-            0 -> "登录"
-            1 -> "豆瓣"
-            2 -> "股票"
-            else -> "预留"
+            0 -> ctx.resources.getString(R.string.log_in)
+            1 -> ctx.resources.getString(R.string.douban)
+            2 -> ctx.resources.getString(R.string.stock)
+            else -> ctx.resources.getString(R.string.reserved)
         }
     }
 
@@ -65,7 +65,7 @@ class MainActivity : BaseActivity() {
         override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
                 appBarLayout {
-                    toolBar = inflate(TitleToolBarView("主页"), this@appBarLayout) as Toolbar
+                    toolBar = inflate(TitleToolBarView(ctx.resources.getString(R.string.home)), this@appBarLayout) as Toolbar
                 }
                 val pager = viewPager {
                     id = generateViewId()

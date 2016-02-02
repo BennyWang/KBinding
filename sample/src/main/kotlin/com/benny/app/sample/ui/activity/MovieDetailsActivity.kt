@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.view.Gravity
+import com.benny.app.sample.R
 import com.benny.app.sample.network.service.douban.DoubanService
 import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.extension.simpleDraweeView
@@ -48,7 +49,7 @@ class MovieDetailsActivity : BaseActivity() {
         override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
                 appBarLayout {
-                    (owner as MovieDetailsActivity).toolBar = inflate(TitleToolBarView("影片详情"), this@appBarLayout) as Toolbar
+                    (owner as MovieDetailsActivity).toolBar = inflate(TitleToolBarView(ctx.resources.getString(R.string.movie_details)), this@appBarLayout) as Toolbar
                 }
                 frameLayout {
                     scrollView {
@@ -72,12 +73,12 @@ class MovieDetailsActivity : BaseActivity() {
                                 textView {
                                     bind { text("score", mode = OneWay, converter = StringConverter()) }
                                 }
-                                textView { text = "分" }.lparams { rightMargin = dip(14) }
+                                textView { textResource = R.string.score }.lparams { rightMargin = dip(14) }
 
                                 textView {
                                     bind { text("ratingsCount", mode = OneWay, converter = StringConverter()) }
                                 }
-                                textView { text = "人评分" }
+                                textView { textResource = R.string.votes }
                             }.lparams { bottomMargin = dip(8); leftMargin = dip(14) }
 
                             textView {
@@ -96,7 +97,7 @@ class MovieDetailsActivity : BaseActivity() {
                                 backgroundColor = Color.BLACK
                             }.lparams(matchParent, 1) { bottomMargin = dip(8); leftMargin = dip(14) }
 
-                            textView { text = "剧情简介" }.lparams { bottomMargin = dip(8); leftMargin = dip(14) }
+                            textView { textResource = R.string.synopsis }.lparams { bottomMargin = dip(8); leftMargin = dip(14) }
 
                             textView {
                                 bind { text("summary", mode = OneWay, converter = StringConverter()) }
