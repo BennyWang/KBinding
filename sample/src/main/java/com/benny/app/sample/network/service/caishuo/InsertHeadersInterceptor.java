@@ -4,8 +4,6 @@ package com.benny.app.sample.network.service.caishuo;
 //import com.squareup.okhttp.Request;
 //import com.squareup.okhttp.Response;
 
-import java.io.IOException;
-
 /**
  * Created by benny on 9/6/15.
  */

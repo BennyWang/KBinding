@@ -3,9 +3,11 @@ package com.benny.library.kbinding.view
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import com.benny.library.kbinding.bind.*
+import com.benny.library.kbinding.bind.BindingAssembler
+import com.benny.library.kbinding.bind.BindingDisposer
+import com.benny.library.kbinding.bind.IViewModel
+import com.benny.library.kbinding.bind.PropertyBinding
 import com.benny.library.kbinding.dsl.bindableLayout
-import com.benny.library.kbinding.dsl.inflate
 import org.jetbrains.anko.AnkoContext
 
 /**

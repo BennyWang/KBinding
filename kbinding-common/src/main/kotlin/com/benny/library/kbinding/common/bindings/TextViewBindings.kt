@@ -3,11 +3,14 @@
 package com.benny.library.kbinding.common.bindings
 
 import android.widget.TextView
-import rx.Observable
 import com.benny.library.kbinding.bind.*
-import com.benny.library.kbinding.converter.*
+import com.benny.library.kbinding.converter.EmptyOneWayConverter
+import com.benny.library.kbinding.converter.EmptyTwoWayConverter
+import com.benny.library.kbinding.converter.OneWayConverter
+import com.benny.library.kbinding.converter.TwoWayConverter
 import com.jakewharton.rxbinding.widget.RxTextView
 import org.jetbrains.anko.AnkoException
+import rx.Observable
 
 /**
  * Created by benny on 12/16/15.

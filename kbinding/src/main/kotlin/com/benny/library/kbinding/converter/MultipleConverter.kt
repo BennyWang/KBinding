@@ -1,7 +1,5 @@
 package com.benny.library.kbinding.converter
 
-import android.util.Log
-
 /**
  * Created by benny on 11/18/15.
  */

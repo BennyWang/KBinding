@@ -1,6 +1,5 @@
 package com.benny.library.kbinding.bind
 
-import android.util.Log
 import com.benny.library.kbinding.converter.EmptyTwoWayConverter
 import com.benny.library.kbinding.converter.TwoWayConverter
 import rx.Observable

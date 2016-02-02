@@ -5,14 +5,7 @@ package com.benny.library.kbinding.support.v4.bindings
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
-import android.support.v4.widget.SwipeRefreshLayout
-import android.util.Log
-import android.widget.ListAdapter
-import android.widget.ListView
 import com.benny.library.kbinding.bind.*
-import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout
-
-import com.benny.library.kbinding.common.bindings.swapAdapter
 import com.benny.library.kbinding.converter.EmptyOneWayConverter
 import com.benny.library.kbinding.converter.OneWayConverter
 import rx.functions.Action1

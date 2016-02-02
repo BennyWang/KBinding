@@ -7,11 +7,11 @@ import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import rx.functions.Action1
-
 import com.benny.library.kbinding.bind.*
-import com.benny.library.kbinding.converter.*
+import com.benny.library.kbinding.converter.EmptyOneWayConverter
+import com.benny.library.kbinding.converter.OneWayConverter
 import com.jakewharton.rxbinding.view.RxView
+import rx.functions.Action1
 
 /**
  * Created by benny on 12/16/15.
