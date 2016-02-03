@@ -3,8 +3,8 @@ package com.benny.app.sample.ui.layout.item
 import android.graphics.Typeface
 import android.text.TextUtils
 import android.view.Gravity
-import org.jetbrains.anko.*
-
+import com.benny.app.sample.R
+import com.benny.app.sample.ui.extension.simpleDraweeView
 import com.benny.library.kbinding.common.bindings.src
 import com.benny.library.kbinding.common.bindings.text
 import com.benny.library.kbinding.common.bindings.textWeight
@@ -12,8 +12,7 @@ import com.benny.library.kbinding.converter.StringConverter
 import com.benny.library.kbinding.dsl.OneWay
 import com.benny.library.kbinding.dsl.bind
 import com.benny.library.kbinding.view.ItemViewBinderComponent
-
-import com.benny.app.sample.ui.extension.simpleDraweeView
+import org.jetbrains.anko.*
 
 /**
  * Created by benny on 1/30/16.
@@ -34,13 +33,13 @@ class MovieItemView : ItemViewBinderComponent {
                         bind { text("title", mode = OneWay) }
                     }.lparams { bottomMargin = dip(8) }
                     linearLayout {
-                        textView { text = "评分: " }
+                        textView { textResource = R.string.score_label }
                         textView {
                             bind { text("score", mode = OneWay, converter = StringConverter()) }
                         }
                     }.lparams { bottomMargin = dip(8) }
                     linearLayout {
-                        textView { text = "演员: " }
+                        textView { textResource = R.string.cast_label }
                         textView {
                             singleLine = true
                             ellipsize = TextUtils.TruncateAt.END

@@ -6,28 +6,25 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
-
-import org.jetbrains.anko.design.appBarLayout
-import org.jetbrains.anko.support.v4.viewPager
-
-import com.benny.library.kbinding.dsl.inflate
-import com.benny.library.kbinding.view.ViewBinderComponent
-
 import com.benny.app.sample.R
-import com.benny.app.sample.utils.generateViewId
 import com.benny.app.sample.ui.extension.viewPagerIndicator
 import com.benny.app.sample.ui.fragment.LoginFragment
 import com.benny.app.sample.ui.fragment.MovieListFragment
 import com.benny.app.sample.ui.fragment.SampleFragment
 import com.benny.app.sample.ui.fragment.StockFragment
-import com.benny.app.sample.ui.widget.ViewPagerIndicator
 import com.benny.app.sample.ui.layout.TitleToolBarView
+import com.benny.app.sample.ui.widget.ViewPagerIndicator
+import com.benny.app.sample.utils.generateViewId
 import com.benny.library.kbinding.dsl.bind
+import com.benny.library.kbinding.dsl.inflate
 import com.benny.library.kbinding.support.v4.adapter.SimplePagerAdapterItemAccessor
 import com.benny.library.kbinding.support.v4.bindings.fragmentAdapter
 import com.benny.library.kbinding.support.v4.converter.ListToFragmentPagerAdapterConverter
+import com.benny.library.kbinding.view.ViewBinderComponent
 import com.benny.library.kbinding.view.setContentView
 import org.jetbrains.anko.*
+import org.jetbrains.anko.design.appBarLayout
+import org.jetbrains.anko.support.v4.viewPager
 
 
 class MainActivity : BaseActivity() {
@@ -55,12 +52,12 @@ class MainActivity : BaseActivity() {
         return true
     }
 
-    class PagerAdapterAccessor(list: List<Fragment>) : SimplePagerAdapterItemAccessor<Fragment>(list) {
+    inner class PagerAdapterAccessor(list: List<Fragment>) : SimplePagerAdapterItemAccessor<Fragment>(list) {
         override fun getTitle(position: Int): String = when(position) {
-            0 -> "登录"
-            1 -> "豆瓣"
-            2 -> "股票"
-            else -> "预留"
+            0 -> ctx.resources.getString(R.string.log_in)
+            1 -> ctx.resources.getString(R.string.douban)
+            2 -> ctx.resources.getString(R.string.stock)
+            else -> ctx.resources.getString(R.string.reserved)
         }
     }
 
@@ -68,7 +65,7 @@ class MainActivity : BaseActivity() {
         override fun builder(): AnkoContext<*>.() -> Unit = {
             verticalLayout {
                 appBarLayout {
-                    toolBar = inflate(TitleToolBarView("主页"), this@appBarLayout) as Toolbar
+                    toolBar = inflate(TitleToolBarView(ctx.resources.getString(R.string.home)), this@appBarLayout) as Toolbar
                 }
                 val pager = viewPager {
                     id = generateViewId()

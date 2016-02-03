@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="log_in">Log In</string>
+  <string name="douban">Douban</string>
+  <string name="stock">Stock</string>
+  <string name="reserved">Reserved</string>
+  <string name="home">Home</string>
+  <string name="movie_details">Movie Details</string>
+  <string name="minute">minutes</string>
+  <string name="score">points</string>
+  <string name="score_label">Score: </string>
+  <string name="cast_label">Cast: </string>
+  <string name="votes">votes</string>
+  <string name="synopsis">Synopsis</string>
+  <string name="name_hint">Phone number or e-mail address</string>
+  <string name="password_hint">Password</string>
+</resources>

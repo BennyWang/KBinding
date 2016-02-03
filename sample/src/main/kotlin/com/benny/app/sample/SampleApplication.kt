@@ -1,7 +1,6 @@
 package com.benny.app.sample
 
 import android.app.Application
-import android.content.Context
 import com.facebook.drawee.backends.pipeline.Fresco
 
 /**

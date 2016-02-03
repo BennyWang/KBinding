@@ -3,10 +3,7 @@ package com.benny.app.sample.viewmodel
 import android.util.Log
 import com.benny.app.sample.network.service.caishuo.model.MarketType
 import com.benny.app.sample.network.service.caishuo.model.Stock
-import com.benny.library.kbinding.bind.ViewModel
-import com.benny.library.kbinding.bind.Command
 import com.benny.library.kbinding.bind.ItemViewModel
-import kotlin.properties.Delegates
 
 /**
  * Created by benny on 11/19/15.

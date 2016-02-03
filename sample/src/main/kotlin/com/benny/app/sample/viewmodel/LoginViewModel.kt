@@ -1,8 +1,7 @@
 package com.benny.app.sample.viewmodel
 
-import com.benny.library.kbinding.bind.ViewModel
 import com.benny.library.kbinding.bind.Command
-import kotlin.properties.Delegates
+import com.benny.library.kbinding.bind.ViewModel
 
 /**
  * Created by benny on 11/19/15.

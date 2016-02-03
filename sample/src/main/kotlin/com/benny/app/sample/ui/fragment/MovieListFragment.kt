@@ -6,23 +6,21 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import org.jetbrains.anko.*
-
-import com.benny.library.kbinding.view.ViewBinderComponent
-import com.benny.library.kbinding.bind.Command
-import com.benny.library.kbinding.dsl.*
-import com.benny.library.kbinding.common.converter.ListToPagingAdapterConverter
-import com.benny.library.kbinding.support.v4.bindings.refresh
-
 import com.benny.app.sample.network.service.douban.DoubanService
 import com.benny.app.sample.network.service.douban.model.Movie
 import com.benny.app.sample.ui.activity.MovieDetailsActivity
-import com.benny.app.sample.ui.layout.item.MovieItemView
 import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.layout.item.LoadingItemView
+import com.benny.app.sample.ui.layout.item.MovieItemView
 import com.benny.app.sample.viewmodel.MovieViewModel
+import com.benny.library.kbinding.bind.Command
 import com.benny.library.kbinding.common.bindings.*
+import com.benny.library.kbinding.common.converter.ListToPagingAdapterConverter
+import com.benny.library.kbinding.dsl.bind
+import com.benny.library.kbinding.dsl.wait
+import com.benny.library.kbinding.support.v4.bindings.refresh
+import com.benny.library.kbinding.view.ViewBinderComponent
+import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.*
 
 /**
