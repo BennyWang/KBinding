@@ -20,6 +20,7 @@ import com.benny.library.kbinding.common.roundRect
 import com.benny.library.kbinding.converter.MultipleConverter
 import com.benny.library.kbinding.dsl.OneWay
 import com.benny.library.kbinding.dsl.bind
+import com.benny.library.kbinding.dsl.resolveAttribute
 import com.benny.library.kbinding.view.ItemViewBinderComponent
 import org.jetbrains.anko.*
 
@@ -57,6 +58,7 @@ class StockItemView : ItemViewBinderComponent {
 
     override fun builder(): AnkoContext<*>.() -> Unit = {
         relativeLayout {
+            backgroundResource = resolveAttribute(android.R.attr.selectableItemBackground)
             verticalLayout {
                 verticalPadding = dip(7)
                 textView {

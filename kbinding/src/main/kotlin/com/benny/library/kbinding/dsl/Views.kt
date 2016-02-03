@@ -1,5 +1,6 @@
 package com.benny.library.kbinding.dsl
 
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import com.benny.library.kbinding.bind.*
@@ -40,4 +41,10 @@ fun <T> AnkoContext<T>.inflate(viewComponent: ViewComponent, parent: ViewGroup, 
         parent.addView(view)
         view
     }
+}
+
+fun AnkoContext<*>.resolveAttribute(attrId: Int): Int {
+    val outValue: TypedValue = TypedValue();
+    ctx.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
+    return outValue.resourceId
 }

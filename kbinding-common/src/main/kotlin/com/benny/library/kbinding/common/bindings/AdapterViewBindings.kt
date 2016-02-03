@@ -19,17 +19,25 @@ import rx.functions.Action1
  * Created by benny on 12/16/15.
  */
 
-@Suppress("UNCHECKED_CAST") fun ListView.swapAdapter(): Action1<ListAdapter> {
+@Suppress("UNCHECKED_CAST")
+fun ListView.setPagingListener(pagingListener: AdapterPagingListener?) {
+    tag = pagingListener
+    if(pagingListener != null) (adapter as? BaseListPagingAdapter<*>)?.pagingListener = pagingListener
+}
+
+@Suppress("UNCHECKED_CAST")
+fun ListView.swapAdapter(): Action1<ListAdapter> {
     return Action1 { it ->
         val adapter = this.adapter
         if (adapter is BaseListAdapter<*> && it is BaseListAdapter<*>) {
             (adapter as BaseListAdapter<Any>).swap(it as BaseListAdapter<Any>)
         }
         else {
-            if(it is BaseListPagingAdapter<*>) {
-                it.pagingListener = this.tag as? AdapterPagingListener
-            }
             this.adapter = it
+        }
+
+        if(it is BaseListPagingAdapter<*>) {
+            it.pagingListener = this.tag as? AdapterPagingListener
         }
     }
 }

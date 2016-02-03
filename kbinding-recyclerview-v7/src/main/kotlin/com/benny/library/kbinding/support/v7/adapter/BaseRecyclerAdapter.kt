@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import com.benny.library.kbinding.bind.ItemViewModel
 import com.benny.library.kbinding.common.adapter.AdapterItemAccessor
 import com.benny.library.kbinding.view.IViewCreator
@@ -13,7 +14,15 @@ import com.benny.library.kbinding.view.IViewCreator
  */
 
 open class BaseRecyclerAdapter<T> (val viewCreator: IViewCreator<T>, val itemAccessor: AdapterItemAccessor<T>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var onItemClickListener: AdapterView.OnItemClickListener? = null
+
     protected class ViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var onItemClickListener: AdapterView.OnItemClickListener? = null
+
+        init {
+            itemView.setOnClickListener { onItemClickListener?.onItemClick(null, itemView, layoutPosition, 0) }
+        }
+
         @Suppress("UNCHECKED_CAST")
         fun notifyPropertyChange(data: T?, position: Int) {
             ((itemView.tag) as? ItemViewModel<T>)?.notifyPropertyChange(data, position)
@@ -21,7 +30,9 @@ open class BaseRecyclerAdapter<T> (val viewCreator: IViewCreator<T>, val itemAcc
     }
 
     protected fun createViewHolder(itemView: View) : RecyclerView.ViewHolder {
-        return ViewHolder<T>(itemView)
+        val viewHolder:ViewHolder<T> = ViewHolder(itemView)
+        viewHolder.onItemClickListener = onItemClickListener
+        return viewHolder
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
