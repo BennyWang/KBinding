@@ -1,11 +1,10 @@
 package com.benny.app.sample.ui.layout.item
 
+import android.graphics.Color
 import android.view.Gravity
 import com.benny.app.sample.ui.extension.progressBar
 import com.benny.library.kbinding.view.ItemViewBinderComponent
-import org.jetbrains.anko.AnkoContext
-import org.jetbrains.anko.dip
-import org.jetbrains.anko.frameLayout
+import org.jetbrains.anko.*
 
 /**
  * Created by benny on 1/30/16.
@@ -13,10 +12,12 @@ import org.jetbrains.anko.frameLayout
 
 class LoadingItemView : ItemViewBinderComponent {
     override fun builder(): AnkoContext<*>.() -> Unit = {
-        frameLayout {
-            progressBar (android.R.attr.progressBarStyleSmall) {
-                isIndeterminate = true
-            }.lparams(width = dip(24), height = dip(24)) { gravity = Gravity.CENTER }
+        relativeLayout {
+            frameLayout {
+                progressBar (android.R.attr.progressBarStyleSmall) {
+                    isIndeterminate = true
+                }.lparams(width = dip(24), height = dip(24)) { gravity = Gravity.CENTER }
+            }.lparams(matchParent, wrapContent)
         }
     }
 }

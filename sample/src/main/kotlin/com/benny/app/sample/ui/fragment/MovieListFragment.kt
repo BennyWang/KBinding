@@ -2,6 +2,7 @@ package com.benny.app.sample.ui.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.benny.app.sample.ui.activity.MovieDetailsActivity
 import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.layout.item.LoadingItemView
 import com.benny.app.sample.ui.layout.item.MovieItemView
+import com.benny.app.sample.utils.generateViewId
 import com.benny.app.sample.viewmodel.MovieViewModel
 import com.benny.library.kbinding.bind.Command
 import com.benny.library.kbinding.common.bindings.*
@@ -19,8 +21,14 @@ import com.benny.library.kbinding.common.converter.ListToPagingAdapterConverter
 import com.benny.library.kbinding.dsl.bind
 import com.benny.library.kbinding.dsl.wait
 import com.benny.library.kbinding.support.v4.bindings.refresh
+import com.benny.library.kbinding.support.v7.bindings.adapter
+import com.benny.library.kbinding.support.v7.bindings.itemClick
+import com.benny.library.kbinding.support.v7.bindings.paging
+import com.benny.library.kbinding.support.v7.converter.ListToRecyclerPagingAdapterConverter
 import com.benny.library.kbinding.view.ViewBinderComponent
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
 import org.jetbrains.anko.*
+import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.*
 
 /**
@@ -63,11 +71,13 @@ class MovieListFragment : BaseFragment() {
                 backgroundColor = Color.WHITE
                 swipeRefreshLayout {
                     bind { refresh("reloadMovies") }
-                    listView {
-                        dividerHeight = 1
+                    recyclerView {
+                        id = generateViewId()
+                        layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                         bind { paging("loadMoreMovies") }
-                        bind { adapter("movies", converter = ListToPagingAdapterConverter((owner as MovieListFragment).pagingViewCreator(LoadingItemView(), MovieItemView(), ::MovieViewModel))) }
+                        bind { adapter("movies", converter = ListToRecyclerPagingAdapterConverter((owner as MovieListFragment).pagingViewCreator(LoadingItemView(), MovieItemView(), ::MovieViewModel))) }
                         bind { itemClick("movieDetail") }
+                        wait { until("movies") { addItemDecoration(HorizontalDividerItemDecoration.Builder(ctx).color(Color.parseColor("#f2f2f2")).margin(dip(14), 0).size(1).build()) } }
                     }.lparams(matchParent, matchParent)
                 }
                 frameLayout {

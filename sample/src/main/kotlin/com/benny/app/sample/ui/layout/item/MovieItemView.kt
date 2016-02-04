@@ -11,6 +11,7 @@ import com.benny.library.kbinding.common.bindings.textWeight
 import com.benny.library.kbinding.converter.StringConverter
 import com.benny.library.kbinding.dsl.OneWay
 import com.benny.library.kbinding.dsl.bind
+import com.benny.library.kbinding.dsl.resolveAttribute
 import com.benny.library.kbinding.view.ItemViewBinderComponent
 import org.jetbrains.anko.*
 
@@ -21,6 +22,7 @@ import org.jetbrains.anko.*
 class MovieItemView : ItemViewBinderComponent {
     override fun builder(): AnkoContext<*>.() -> Unit = {
         relativeLayout {
+            backgroundResource = resolveAttribute(android.R.attr.selectableItemBackground)
             linearLayout {
                 padding = dip(14)
                 simpleDraweeView {
