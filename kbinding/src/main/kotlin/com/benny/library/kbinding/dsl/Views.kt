@@ -45,6 +45,6 @@ fun <T> AnkoContext<T>.inflate(viewComponent: ViewComponent, parent: ViewGroup, 
 
 fun AnkoContext<*>.resolveAttribute(attrId: Int): Int {
     val outValue: TypedValue = TypedValue();
-    ctx.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
+    ctx.theme.resolveAttribute(attrId, outValue, true)
     return outValue.resourceId
 }
