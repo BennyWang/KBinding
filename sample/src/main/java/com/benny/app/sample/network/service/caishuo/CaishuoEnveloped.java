@@ -6,10 +6,10 @@ import com.google.gson.JsonElement;
 /**
  * Created by benny on 9/5/15.
  */
-public class CaishuoEnveloped {
+public class CaishuoEnveloped<T> {
     public int status;
-    public JsonElement data;
     public Error error;
+    public T data;
 
     @Override
     public String toString() {

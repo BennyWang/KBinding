@@ -1,15 +1,19 @@
 package com.benny.app.sample.network.service.caishuo;
 
-import com.benny.app.sample.Constants;
-import com.benny.app.sample.network.service.ErrorHandler;
-import com.benny.app.sample.network.service.caishuo.model.Stock;
-import com.benny.app.sample.network.service.caishuo.model.User;
-import com.google.gson.GsonBuilder;
+import java.util.ArrayList;
 import java.util.List;
-import retrofit.RestAdapter;
+
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+
+import com.benny.app.sample.network.service.caishuo.model.Stock;
+import com.benny.app.sample.network.service.caishuo.model.User;
 
 /**
  * Created by benny on 9/5/15.
@@ -43,24 +47,43 @@ public class CaishuoService {
     }
 
     private CaishuoService() {
-        RestAdapter retrofit = new RestAdapter.Builder()
-                .setEndpoint(API_BASE)
-                .setRequestInterceptor(new InsertHeadersRequestInterceptor(API_KEY))
-                .setConverter(new CaishuoGsonCoverter(new GsonBuilder().setDateFormat(Constants.DATE_FORMAT).create()))
-                .setErrorHandler(new ErrorHandler())
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+        clientBuilder.addInterceptor(new InsertHeadersInterceptor(API_KEY_DEV));
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_TESTING)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .client(clientBuilder.build())
                 .build();
+
         service = retrofit.create(ICaishuoService.class);
     }
 
     public Observable<User> login(final String identifier, final String password) {
-        return service.login(identifier, password).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        return service.login(identifier, password).map(new Func1<CaishuoEnveloped<User>, User>() {
+            @Override
+            public User call(CaishuoEnveloped<User> userCaishuoEnveloped) {
+                return userCaishuoEnveloped.data;
+            }
+        }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<List<Stock>> followedStocks(final String id) {
-        return service.followedStocks(id, 50).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        return service.followedStocks(id, 50).map(new Func1<CaishuoEnveloped<List<Stock>>, List<Stock>>() {
+            @Override
+            public List<Stock> call(CaishuoEnveloped<List<Stock>> caishuoEnveloped) {
+                return caishuoEnveloped.data;
+            }
+        }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<Stock> stock(final String id) {
-        return service.stock(id).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        return service.stock(id).map(new Func1<CaishuoEnveloped<Stock>, Stock>() {
+            @Override
+            public Stock call(CaishuoEnveloped<Stock> stockCaishuoEnveloped) {
+                return stockCaishuoEnveloped.data;
+            }
+        }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     }
 }

@@ -53,7 +53,10 @@ dependencies {
     compile 'com.android.support:gridlayout-v7:23.1.1'
 
     compile 'com.google.code.gson:gson:2.4'
-    compile 'com.squareup.retrofit:retrofit:1.6.0'
+
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
 
     compile 'com.facebook.fresco:fresco:0.9.0'
 

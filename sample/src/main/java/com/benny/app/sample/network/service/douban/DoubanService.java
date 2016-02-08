@@ -1,20 +1,20 @@
 package com.benny.app.sample.network.service.douban;
 
-import com.benny.app.sample.Constants;
-import com.benny.app.sample.network.service.ErrorHandler;
-import com.benny.app.sample.network.service.douban.model.Category;
-import com.benny.app.sample.network.service.douban.model.Movie;
-import com.google.gson.GsonBuilder;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
-import retrofit.http.Path;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Path;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import com.benny.app.sample.network.service.douban.model.Category;
+import com.benny.app.sample.network.service.douban.model.Movie;
+
 /**
  * Created by benny on 1/28/16.
  */
+
 public class DoubanService {
     public static final String API_KEY = "00aefce4d06e0bb7020cf6ae714a2325";
     public static final String API_BASE_URL = "https://api.douban.com";
@@ -29,27 +29,28 @@ public class DoubanService {
     }
 
     private DoubanService() {
-        RestAdapter retrofit = new RestAdapter.Builder()
-                .setEndpoint(API_BASE_URL)
-                .setConverter(new GsonConverter(new GsonBuilder().setDateFormat(Constants.DATE_FORMAT).create()))
-                .setErrorHandler(new ErrorHandler())
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
+
         service = retrofit.create(IDoubanService.class);
     }
 
     public Observable<Category> moviesInTheaters() {
-        return service.movies(API_KEY, "in_theaters").subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        return service.movies("in_theaters", API_KEY).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<Category> moviesComingSoon() {
-        return service.movies(API_KEY, "coming_soon").subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        return service.movies("coming_soon", API_KEY).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<Category> moviesTop250() {
-        return service.movies(API_KEY, "top250").subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        return service.movies("top250", API_KEY).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<Movie> movie(@Path("id") String id) {
-        return service.movie(API_KEY, id).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+    public Observable<Movie> movie(String id) {
+        return service.movie(id, API_KEY).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
     }
 }

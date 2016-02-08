@@ -1,30 +1,30 @@
 package com.benny.app.sample.network.service.caishuo;
 
-//import com.squareup.okhttp.Interceptor;
-//import com.squareup.okhttp.Request;
-//import com.squareup.okhttp.Response;
+import java.io.IOException;
+import android.content.Context;
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import com.benny.app.sample.ApplicationContext;
 
 /**
  * Created by benny on 9/6/15.
  */
-public class InsertHeadersInterceptor /*implements Interceptor*/ {
-    /*private Context context;
+
+public class InsertHeadersInterceptor implements Interceptor {
     private String apiKey;
 
-    public InsertHeadersInterceptor(Context context, String apiKey) {
-        this.context = context;
+    public InsertHeadersInterceptor(String apiKey) {
         this.apiKey = apiKey;
     }
 
-    @Override public Response intercept(Chain chain) throws IOException {
+    @Override public Response intercept(Interceptor.Chain chain) throws IOException {
         Request.Builder requestBuilder = chain.request().newBuilder();
         requestBuilder.addHeader("X-Client-Key", apiKey);
-        requestBuilder.addHeader("X-SN-Code", SystemUtils.getDeviceId(context));
-        requestBuilder.addHeader("X-Client-Version", SystemUtils.getApplicationVersion(context));
-        if(ApplicationContext.getInstance().hasLogin()) {
-            requestBuilder.addHeader("Authorization", ApplicationContext.getInstance().getAccessToken()).build();
-        }
+        requestBuilder.addHeader("X-SN-Code", ApplicationContext.INSTANCE.getDeviceId());
+        requestBuilder.addHeader("X-Client-Version", ApplicationContext.INSTANCE.getVersion());
         Response response = chain.proceed(requestBuilder.build());
         return response;
-    }*/
+    }
 }
