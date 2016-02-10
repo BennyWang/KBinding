@@ -54,7 +54,7 @@ class MovieListFragment : BaseFragment() {
     }
 
     fun fetchMovies() {
-        DoubanService.getInstance().moviesInTheaters().map { it -> it.subjects.toList()}.onErrorReturn { listOf() }.subscribe { movies = it }
+        DoubanService.instance.moviesInTheaters().map { it -> it.subjects.toList()}.onErrorReturn { listOf() }.subscribe { movies = it }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

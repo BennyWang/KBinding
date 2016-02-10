@@ -13,7 +13,7 @@
     <string name="score">评分</string>
     <string name="score_label">评分: </string>
     <string name="cast_label">演员: </string>
-    <string name="vote">人评分</string>
+    <string name="votes">人评分</string>
     <string name="synopsis">剧情简介</string>
     <string name="name_hint">请输入手机号或者电子邮箱地址</string>
     <string name="password_hint">请输入密码</string>

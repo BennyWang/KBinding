@@ -34,7 +34,7 @@ class StockFragment : BaseFragment() {
     }
 
     fun fetchStocks() {
-        CaishuoService.getInstance().followedStocks("1301").onErrorReturn { listOf<Stock>() }.subscribe { stocks = it }
+        CaishuoService.instance.followedStocks("1301").onErrorReturn { listOf<Stock>() }.subscribe { stocks = it }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

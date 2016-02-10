@@ -37,7 +37,7 @@ class StockDetailsActivity : BaseActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.title = ""
 
-        CaishuoService.getInstance().stock(intent.getStringExtra("id"))
+        CaishuoService.instance.stock(intent.getStringExtra("id"))
             .subscribe({
                 stockViewModel.updateData(it)
             }, {

@@ -1,4 +1,4 @@
-package com.benny.app.sample.network.service.caishuo;
+package com.benny.app.sample.network.service.caishuo.model;
 
 import com.benny.app.sample.model.Error;
 import com.google.gson.JsonElement;
