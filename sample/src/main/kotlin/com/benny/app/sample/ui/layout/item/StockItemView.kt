@@ -52,7 +52,7 @@ class StockItemView : ItemViewBinderComponent {
 
             if(listedState == Stock.LISTED_STATE_NORMAL) return StockPriceChangePercentageConverter().convert(changePercent)
 
-            return Stock.getListedStateDescription(listedState)
+            return Stock.listedStateDescription(listedState)
         }
     }
 

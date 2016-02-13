@@ -42,7 +42,6 @@ class StockDetailsActivity : BaseActivity() {
                 stockViewModel.updateData(it)
             }, {
                 Log.e("StockDetailsActivity", "error : $it")
-                stockViewModel.updateData(Stock())
             })
     }
 
