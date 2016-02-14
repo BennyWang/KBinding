@@ -30,7 +30,7 @@ import org.jetbrains.anko.support.v4.viewPager
 class MainActivity : BaseActivity() {
     lateinit var toolBar: Toolbar
 
-    val fragments: List<Fragment> by bindProperty("fragments") { listOf(LoginFragment(), MovieListFragment(), StockFragment(), SampleFragment()) }
+    val fragments: List<Fragment>? by bindProperty("fragments") { listOf(LoginFragment(), MovieListFragment(), StockFragment(), SampleFragment()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

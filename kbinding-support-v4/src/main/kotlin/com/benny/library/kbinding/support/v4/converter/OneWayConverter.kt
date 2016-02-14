@@ -16,13 +16,13 @@ import com.benny.library.kbinding.view.IViewCreator
  */
 
 class ListToPagerAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> PagerAdapterItemAccessor<T> = { list -> SimplePagerAdapterItemAccessor(list) } ) : OneWayConverter<PagerAdapter> {
-    override fun convert(source: Any): PagerAdapter {
+    override fun convert(source: Any?): PagerAdapter {
         return BasePagerAdapter(viewCreator, itemAccessorFactory(source as List<T>))
     }
 }
 
 class ListToFragmentPagerAdapterConverter(val FragmentManager: FragmentManager, val itemAccessorFactory: (List<Fragment>) -> PagerAdapterItemAccessor<Fragment> = { list -> SimplePagerAdapterItemAccessor(list) } ) : OneWayConverter<FragmentPagerAdapter> {
-    override fun convert(source: Any): FragmentPagerAdapter {
+    override fun convert(source: Any?): FragmentPagerAdapter {
         return BaseFragmentPagerAdapter(FragmentManager, itemAccessorFactory(source as List<Fragment>))
     }
 }

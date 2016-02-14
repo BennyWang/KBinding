@@ -81,8 +81,8 @@ open class ViewModel() : IViewModel {
 
     private fun <T> addDependsOn(key: String, dependsOn: Array<out String>, getter: () -> T) {
         this.dependsOn.put(key, oneWayPropertyBinding(dependsOn, Action1<T> { t -> property<T>(key).value = t }, false, object : MultipleConverter<T> {
-            override fun convert(params: Array<Any>): T = getter()
-            override fun convert(source: Any): T = getter()
+            override fun convert(params: Array<Any?>): T = getter()
+            override fun convert(source: Any?): T = getter()
         }))
     }
 
@@ -95,32 +95,14 @@ open class ViewModel() : IViewModel {
         }
     }
 
-    fun <T> bindProperty(vararg keys: String, getter: () -> T): ReadWriteProperty<Any, T> {
+    fun <T> bindProperty(vararg keys: String, getter: () -> T?): ReadWriteProperty<Any, T?> {
         if(keys.size == 0) throw InvalidParameterException("at least one key")
 
-        val key = keys[0]
-
-        if(keys.size == 1) {
-            val initialValue = getter();
-            addProperty(key, Property(initialValue))
-
-            //support for nested view model
-            if(initialValue != null && initialValue is IViewModel) {
-                for((k, v) in initialValue.properties) addProperty("$key.$k", v)
-                for((k, v) in initialValue.commands) addCommand("$key.$k", v)
-            }
+        return if(keys.size == 1) {
+            bindPropertyInner(keys[0], getter)
         }
         else {
-            addProperty(key, Property<T>())
-            addDependsOn(key, keys.sliceArray(1..(keys.size - 1)), getter = getter)
-        }
-
-        return object : ReadWriteProperty<Any, T> {
-            override fun getValue(thisRef: Any, property: KProperty<*>): T = property<T>(property.name).value ?: getter()
-            override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
-                if(keys.size > 1) throw InvalidParameterException("depends property can not be set")
-                property<T>(property.name).value = value
-            }
+            bindPropertyInner(keys[0], keys.sliceArray(1..(keys.size - 1)), getter = getter)
         }
     }
 
@@ -128,6 +110,34 @@ open class ViewModel() : IViewModel {
         addCommand(key, Command<T> { t, action -> cmdAction(t, { action.call(it) }) })
         return object : ReadOnlyProperty<Any, Command<T>> {
             override fun getValue(thisRef: Any, property: KProperty<*>): Command<T> = command(property.name)
+        }
+    }
+
+    private fun <T> bindPropertyInner(key: String, getter: () -> T?) : ReadWriteProperty<Any, T?> {
+        val initialValue = getter();
+        addProperty(key, Property(initialValue))
+
+        //support for nested view model
+        if(initialValue != null && initialValue is IViewModel) {
+            for((k, v) in initialValue.properties) addProperty("$key.$k", v)
+            for((k, v) in initialValue.commands) addCommand("$key.$k", v)
+        }
+
+        return object : ReadWriteProperty<Any, T?> {
+            override fun getValue(thisRef: Any, property: KProperty<*>): T? = property<T>(property.name).value
+            override fun setValue(thisRef: Any, property: KProperty<*>, value: T?) {
+                property<T>(property.name).value = value
+            }
+        }
+    }
+
+    private fun <T> bindPropertyInner(key: String, dependsOn: Array<out String>, getter: () -> T?) : ReadWriteProperty<Any, T?> {
+        addProperty(key, Property<T>())
+        addDependsOn(key, dependsOn, getter = getter)
+
+        return object : ReadWriteProperty<Any, T?> {
+            override fun getValue(thisRef: Any, property: KProperty<*>): T? = property<T>(property.name).value
+            override fun setValue(thisRef: Any, property: KProperty<*>, value: T?) = throw InvalidParameterException("depends property can not be set")
         }
     }
 }

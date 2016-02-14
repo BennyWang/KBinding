@@ -12,7 +12,7 @@ interface BindingDelegate {
 
     fun <T> bindProperty(key: String): ReadWriteProperty<Any, T?> = viewModel.bindProperty(key)
 
-    fun <T> bindProperty(vararg keys: String, getter: () -> T): ReadWriteProperty<Any, T> = viewModel.bindProperty(*keys, getter = getter)
+    fun <T> bindProperty(vararg keys: String, getter: () -> T?): ReadWriteProperty<Any, T?> = viewModel.bindProperty(*keys, getter = getter)
 
     fun <T> bindCommand(key: String, cmdAction: (T, (Boolean) -> Unit) -> Unit): ReadOnlyProperty<Any, Command<T>> = viewModel.bindCommand(key, cmdAction)
 }

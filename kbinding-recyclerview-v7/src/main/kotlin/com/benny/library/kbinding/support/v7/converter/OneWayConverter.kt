@@ -13,13 +13,13 @@ import com.benny.library.kbinding.view.IViewCreator
  */
 
 class ListToRecyclerAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> AdapterItemAccessor<T> = { list -> SimpleAdapterItemAccessor(list) } ) : OneWayConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>> {
-    override fun convert(source: Any): BaseRecyclerAdapter<T> {
+    override fun convert(source: Any?): BaseRecyclerAdapter<T> {
         return BaseRecyclerAdapter(viewCreator, itemAccessorFactory(source as List<T>))
     }
 }
 
 class ListToRecyclerPagingAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> AdapterItemAccessor<T> = { list -> SimpleAdapterItemAccessor(list) } ) : OneWayConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>> {
-    override fun convert(source: Any): BaseRecyclerPagingAdapter<T> {
+    override fun convert(source: Any?): BaseRecyclerPagingAdapter<T> {
         return BaseRecyclerPagingAdapter(viewCreator, itemAccessorFactory(source as List<T>))
     }
 }

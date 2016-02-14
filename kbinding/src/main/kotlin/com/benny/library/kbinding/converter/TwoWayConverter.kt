@@ -7,16 +7,16 @@ package com.benny.library.kbinding.converter
  */
 
 interface TwoWayConverter<T, R> {
-    fun convert(source: Any): R
-    fun convertBack(source: Any): T
+    fun convert(source: Any?): R
+    fun convertBack(source: Any?): T
 }
 
 class EmptyTwoWayConverter<T, R> : TwoWayConverter<T, R> {
-    override fun convert(source: Any): R {
+    override fun convert(source: Any?): R {
         return source as R
     }
 
-    override fun convertBack(source: Any): T {
+    override fun convertBack(source: Any?): T {
         return source as T
     }
 }

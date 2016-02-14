@@ -31,7 +31,7 @@ import org.jetbrains.anko.*
 
 class StockItemView : ItemViewBinderComponent {
     class ChangePercentBackgroundConverter(val context: Context) : MultipleConverter<Drawable> {
-        override fun convert(params: Array<Any>): Drawable {
+        override fun convert(params: Array<Any?>): Drawable {
             if(params.size < 2) return roundRect { radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_9) }
             val listedState = params[0] as? Int ?: Stock.LISTED_STATE_ABNORMAL
             val changePercent = params[1] as? Float ?: 0f
@@ -45,7 +45,7 @@ class StockItemView : ItemViewBinderComponent {
     }
 
     class ChangePercentConverter : MultipleConverter<CharSequence> {
-        override fun convert(params: Array<Any>): CharSequence {
+        override fun convert(params: Array<Any?>): CharSequence {
             if(params.size < 2) return "+0.00%"
             val listedState = params[0] as? Int ?: Stock.LISTED_STATE_ABNORMAL
             val changePercent = params[1] as? Float ?: 0f

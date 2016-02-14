@@ -7,17 +7,17 @@ package com.benny.library.kbinding.converter
  */
 
 interface OneWayConverter<T> {
-    fun convert(source: Any): T
+    fun convert(source: Any?): T
 }
 
 class EmptyOneWayConverter<T> : OneWayConverter<T> {
-    override fun convert(source: Any): T {
+    override fun convert(source: Any?): T {
         return source as T
     }
 }
 
 class StringConverter : OneWayConverter<String> {
-    override fun convert(source: Any): String {
+    override fun convert(source: Any?): String {
         return source.toString()
     }
 }

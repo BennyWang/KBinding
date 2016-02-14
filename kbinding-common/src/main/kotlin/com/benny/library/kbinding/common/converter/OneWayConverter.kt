@@ -13,13 +13,13 @@ import com.benny.library.kbinding.view.IViewCreator
  */
 
 class ListToAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> AdapterItemAccessor<T> = { list -> SimpleAdapterItemAccessor(list) } ) : OneWayConverter<ListAdapter> {
-    override fun convert(source: Any): ListAdapter {
+    override fun convert(source: Any?): ListAdapter {
         return BaseListAdapter(viewCreator, itemAccessorFactory(source as List<T>))
     }
 }
 
 class ListToPagingAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> AdapterItemAccessor<T> = { list -> SimpleAdapterItemAccessor(list) } ) : OneWayConverter<ListAdapter> {
-    override fun convert(source: Any): ListAdapter {
+    override fun convert(source: Any?): ListAdapter {
         return BaseListPagingAdapter(viewCreator, itemAccessorFactory(source as List<T>))
     }
 }

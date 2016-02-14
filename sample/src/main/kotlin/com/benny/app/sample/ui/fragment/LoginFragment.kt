@@ -44,8 +44,8 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
         toast("Login success with user " + user)
     }
 
-    var name: String by bindProperty("name") { "xxxxxxx@xxxxx.com" }
-    var password: String by bindProperty("password") { "xxxxxxxxx" }
+    var name: String? by bindProperty("name") { "xxxxxxx@xxxxx.com" }
+    var password: String? by bindProperty("password") { "xxxxxxxxx" }
 
     val login: Command<Unit> by bindCommand("login") { params, canExecute ->
         if (name.equals("wangbin")) onLoginSuccess("wangbin")

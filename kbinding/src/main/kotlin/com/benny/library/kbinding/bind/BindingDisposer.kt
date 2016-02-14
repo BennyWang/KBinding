@@ -1,6 +1,5 @@
 package com.benny.library.kbinding.bind
 
-import android.util.Log
 import java.util.*
 
 /**
@@ -11,7 +10,6 @@ class BindingDisposer {
     private val unbinds: MutableList<() -> Unit> = ArrayList()
 
     fun unbind() {
-        Log.d("BindingRecord", "unsubscribe size is " + unbinds.size)
         unbinds.forEach { it() }
         unbinds.clear()
     }

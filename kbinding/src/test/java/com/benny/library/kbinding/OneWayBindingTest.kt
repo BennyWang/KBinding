@@ -22,8 +22,8 @@ import rx.functions.Action1
 @Config(constants = BuildConfig::class,sdk = intArrayOf(Build.VERSION_CODES.KITKAT))
 class OneWayBindingTest  {
     class TestViewModel : ViewModel() {
-        var integer: Int by bindProperty("integer") { 3 }
-        var string: String by bindProperty("string") { "hello" }
+        var integer: Int? by bindProperty("integer") { 3 }
+        var string: String? by bindProperty("string") { "hello" }
     }
 
     val bindingDisposer = BindingDisposer()

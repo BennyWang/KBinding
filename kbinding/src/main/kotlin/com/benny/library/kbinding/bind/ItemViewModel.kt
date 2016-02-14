@@ -5,7 +5,7 @@ package com.benny.library.kbinding.bind;
  */
 abstract class ItemViewModel<T> : ViewModel() {
 
-    var position: Int by bindProperty("position") { 0 }
+    var position: Int? by bindProperty("position") { 0 }
 
     fun notifyPropertyChange(t: T?, position: Int) {
         this.position = position
