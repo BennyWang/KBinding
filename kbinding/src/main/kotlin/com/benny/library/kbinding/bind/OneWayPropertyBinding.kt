@@ -37,13 +37,13 @@ class OneWayPropertyBinding<T, R> private constructor(key: String, val oneTime: 
 
     fun bindTo(property: Property<R>): Subscription {
         if (observable != null) {
-            return observable!!.map { (converter!!).convert(it as Any) }
+            return observable!!.map { converter!!.convert(it) }
                     .doOnSubscribe { LogBind(key, "OneWay") }
                     .doOnUnsubscribe { LogUnbind(key, "OneWay") }
                     .subscribe(property.observer)
         }
 
-        val ob = property.observable.map { backConverter!!.convert(it as Any) }
+        val ob = property.observable.map { backConverter!!.convert(it) }
                 .doOnSubscribe { LogBind(key, "OneWay") }
                 .doOnUnsubscribe { LogUnbind(key, "OneWay") }
                 .doOnNext { LogOnNext(key, it) }
