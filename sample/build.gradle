@@ -5,6 +5,7 @@ buildscript {
     dependencies {
     }
 }
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
@@ -24,19 +25,35 @@ android {
         versionCode 3
         versionName "0.1.2"
     }
+
+    signingConfigs {
+        release {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+            storeFile file("android4benny.keystore")
+            storePassword properties["keystore.storePassword"]
+            keyAlias properties["keystore.keyAlias"]
+            keyPassword properties["keystore.keyPassword"]
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_6
         targetCompatibility JavaVersion.VERSION_1_6
     }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
     lintOptions {
         abortOnError false
     }

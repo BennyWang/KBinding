@@ -3,6 +3,7 @@
 package com.benny.library.kbinding.common.bindings
 
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
@@ -18,9 +19,21 @@ import rx.functions.Action1
  */
 
 
-fun Drawable.level(): Action1<Int> = Action1 { t -> setLevel(t) }
-fun View.background(): Action1<Drawable> = Action1 { t -> background = t }
-fun View.backgroundColor(): Action1<Int> = Action1 { t -> setBackgroundColor(t) }
+fun Drawable.level(): Action1<Int> = Action1 { level = it }
+
+var View.bg: Drawable
+    get() = background
+    set(value) {
+        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN ) {
+            background = value
+        } else {
+            setBackgroundDrawable(value)
+        }
+    }
+
+fun View.background(): Action1<Drawable> = Action1 { bg = it }
+
+fun View.backgroundColor(): Action1<Int> = Action1 { setBackgroundColor(it) }
 
 fun View.fadeOut() {
     val fadeOut: Animation = AlphaAnimation(1f, 0f);

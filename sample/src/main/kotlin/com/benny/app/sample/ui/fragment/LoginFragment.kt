@@ -89,6 +89,7 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
                     verticalPadding = dip(8)
                     horizontalPadding = 0
                     background = null
+                    setBackgroundDrawable(null)
                 }
                 verticalLayout {
                     backgroundColor = Color.WHITE
@@ -110,6 +111,7 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
                     textSizeDimen = R.dimen.font_38
                     textColor = Color.WHITE
                     background = bgButton
+                    backgroundDrawable = bgButton
                     verticalPadding = dip(10.4f)
                     isClickable = true
                     gravity = Gravity.CENTER
