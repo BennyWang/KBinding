@@ -95,7 +95,7 @@ open class ViewModel() : IViewModel {
         }
     }
 
-    fun <T> bindProperty(vararg keys: String, getter: () -> T?): ReadWriteProperty<Any, T?> {
+    fun <T> bindProperty(vararg keys: String, getter: () -> T): ReadWriteProperty<Any, T> {
         if(keys.size == 0) throw InvalidParameterException("at least one key")
 
         return if(keys.size == 1) {
@@ -113,7 +113,7 @@ open class ViewModel() : IViewModel {
         }
     }
 
-    private fun <T> bindPropertyInner(key: String, getter: () -> T?) : ReadWriteProperty<Any, T?> {
+    private fun <T> bindPropertyInner(key: String, getter: () -> T) : ReadWriteProperty<Any, T> {
         val initialValue = getter();
         addProperty(key, Property(initialValue))
 
@@ -123,21 +123,21 @@ open class ViewModel() : IViewModel {
             for((k, v) in initialValue.commands) addCommand("$key.$k", v)
         }
 
-        return object : ReadWriteProperty<Any, T?> {
-            override fun getValue(thisRef: Any, property: KProperty<*>): T? = property<T>(property.name).value
-            override fun setValue(thisRef: Any, property: KProperty<*>, value: T?) {
+        return object : ReadWriteProperty<Any, T> {
+            override fun getValue(thisRef: Any, property: KProperty<*>): T = property<T>(property.name).value ?: getter()
+            override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
                 property<T>(property.name).value = value
             }
         }
     }
 
-    private fun <T> bindPropertyInner(key: String, dependsOn: Array<out String>, getter: () -> T?) : ReadWriteProperty<Any, T?> {
+    private fun <T> bindPropertyInner(key: String, dependsOn: Array<out String>, getter: () -> T) : ReadWriteProperty<Any, T> {
         addProperty(key, Property<T>())
         addDependsOn(key, dependsOn, getter = getter)
 
-        return object : ReadWriteProperty<Any, T?> {
-            override fun getValue(thisRef: Any, property: KProperty<*>): T? = property<T>(property.name).value
-            override fun setValue(thisRef: Any, property: KProperty<*>, value: T?) = throw InvalidParameterException("depends property can not be set")
+        return object : ReadWriteProperty<Any, T> {
+            override fun getValue(thisRef: Any, property: KProperty<*>): T = property<T>(property.name).value ?: getter()
+            override fun setValue(thisRef: Any, property: KProperty<*>, value: T) = throw InvalidParameterException("depends property can not be set")
         }
     }
 }

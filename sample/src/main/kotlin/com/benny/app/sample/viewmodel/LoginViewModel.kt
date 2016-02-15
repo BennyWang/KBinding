@@ -9,8 +9,8 @@ import com.benny.library.kbinding.bind.ViewModel
 
 class LoginViewModel(val loginDelegate: LoginViewModel.LoginDelegate) : ViewModel() {
 
-    var name: String? by bindProperty("name") { "xxxxxxx@xxxxx.com" }
-    var password: String? by bindProperty("password") { "xxxxxxxxx" }
+    var name: String by bindProperty("name") { "xxxxxxx@xxxxx.com" }
+    var password: String by bindProperty("password") { "xxxxxxxxx" }
 
     val login: Command<Unit> by bindCommand("login") { params, canExecute ->
         if (name.equals("wangbin")) loginDelegate.onLoginSuccess("wangbin")
