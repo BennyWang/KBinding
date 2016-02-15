@@ -17,8 +17,8 @@ open class ViewCreatorCollection<T> : IViewCreator<T> {
     private val viewTypeFilters = ArrayList<ViewTypeFilter<T>>()
 
     private fun filter(data: T?, position: Int, itemCount: Int): ViewTypeFilter<T> {
-        for (viewTypeFilter in viewTypeFilters) {
-            if (viewTypeFilter.canProcess(data, position, itemCount)) return viewTypeFilter
+        viewTypeFilters.forEach {
+            if (it.canProcess(data, position, itemCount)) return it
         }
         throw RuntimeException("can not process view type for:" + data.toString())
     }
