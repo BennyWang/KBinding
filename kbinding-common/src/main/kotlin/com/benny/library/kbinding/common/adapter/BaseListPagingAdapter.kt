@@ -38,7 +38,7 @@ class BaseListPagingAdapter<T>(viewCreator: IViewCreator<T>, itemAccessor: Adapt
     }
 
     override fun getItemViewType(position: Int): Int {
-        return viewCreator.viewTypeFor(itemAccessor.get(position), position)
+        return viewCreator.viewTypeFor(itemAccessor.get(position), position, count)
     }
 
     fun loadComplete(hasNextPage: Boolean) {

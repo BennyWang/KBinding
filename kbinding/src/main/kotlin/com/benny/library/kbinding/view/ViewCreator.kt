@@ -19,7 +19,7 @@ open class ViewCreator(val bindingDisposer: BindingDisposer, val itemViewBinderC
         return viewBinder.view
     }
 
-    override fun viewTypeFor(data: Any?, position: Int): Int {
+    override fun viewTypeFor(data: Any?, position: Int, itemCount: Int): Int {
         return  0
     }
 

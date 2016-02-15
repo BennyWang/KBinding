@@ -49,7 +49,6 @@ class MovieListFragment : BaseFragment() {
     }
 
     val loadMoreMovies: Command<Pair<Int, Any?> > by bindCommand("loadMoreMovies") { params, canExecute ->
-        longToast("load more movie position: " + params.first + "   data: " + params.second)
         contentView?.postDelayed( { canExecute(true) } , 2000)
     }
 

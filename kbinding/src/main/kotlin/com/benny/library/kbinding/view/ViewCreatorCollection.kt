@@ -2,7 +2,7 @@ package com.benny.library.kbinding.view
 
 import android.view.View
 import android.view.ViewGroup
-import rx.functions.Func2
+import rx.functions.Func3
 import java.util.*
 
 /**
@@ -16,9 +16,9 @@ open class ViewCreatorCollection<T> : IViewCreator<T> {
 
     private val viewTypeFilters = ArrayList<ViewTypeFilter<T>>()
 
-    private fun filter(data: T?, position: Int): ViewTypeFilter<T> {
+    private fun filter(data: T?, position: Int, itemCount: Int): ViewTypeFilter<T> {
         for (viewTypeFilter in viewTypeFilters) {
-            if (viewTypeFilter.canProcess(data, position)) return viewTypeFilter
+            if (viewTypeFilter.canProcess(data, position, itemCount)) return viewTypeFilter
         }
         throw RuntimeException("can not process view type for:" + data.toString())
     }
@@ -28,8 +28,8 @@ open class ViewCreatorCollection<T> : IViewCreator<T> {
         return viewTypeFilters[index].view(container)
     }
 
-    override fun viewTypeFor(data: T?, position: Int): Int {
-        lastViewType = filter(data, position).viewType
+    override fun viewTypeFor(data: T?, position: Int, itemCount: Int): Int {
+        lastViewType = filter(data, position, itemCount).viewType
         return lastViewType
     }
 
@@ -37,14 +37,14 @@ open class ViewCreatorCollection<T> : IViewCreator<T> {
         return viewTypeFilters.size
     }
 
-    fun add(filter: Func2<T, Int, Boolean>, viewCreator: ViewCreator): ViewCreatorCollection<T> {
+    fun add(filter: Func3<T, Int, Int, Boolean>, viewCreator: ViewCreator): ViewCreatorCollection<T> {
         viewTypeFilters.add(ViewTypeFilter(filter, viewCreator, viewTypeBegin++))
         return this
     }
 
-    private class ViewTypeFilter<T>(val filter: Func2<T, Int, Boolean>, val creator: ViewCreator, val viewType: Int) {
-        fun canProcess(data: T?, position: Int): Boolean {
-            return filter.call(data, position)
+    private class ViewTypeFilter<T>(val filter: Func3<T, Int, Int, Boolean>, val creator: ViewCreator, val viewType: Int) {
+        fun canProcess(data: T?, position: Int, itemCount: Int): Boolean {
+            return filter.call(data, position, itemCount)
         }
 
         fun view(container: ViewGroup): View {

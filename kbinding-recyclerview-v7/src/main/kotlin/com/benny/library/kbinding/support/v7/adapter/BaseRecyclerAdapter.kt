@@ -44,15 +44,10 @@ open class BaseRecyclerAdapter<T> (val viewCreator: IViewCreator<T>, val itemAcc
     }
 
     override fun getItemViewType(position: Int): Int {
-        return viewCreator.viewTypeFor(itemAccessor.get(position), position)
+        return viewCreator.viewTypeFor(itemAccessor.get(position), position, itemCount)
     }
 
     override fun getItemCount(): Int {
         return itemAccessor.size()
-    }
-
-    fun swap(t: BaseRecyclerAdapter<T>) {
-        itemAccessor.swap(t.itemAccessor)
-        notifyDataSetChanged()
     }
 }
