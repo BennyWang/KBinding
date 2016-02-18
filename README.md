@@ -108,10 +108,12 @@ Property
 
 ```gradle
 dependencies {
-    compile 'com.benny.library:kbinding:0.1.1'
+    compile 'com.benny.library:kbinding:0.1.3'
     
     //add this for common bindings, for example View/enabled, TextView/text
-    compile 'com.benny.library:kbinding-common:0.1.1'
+    compile 'com.benny.library:kbinding-common:0.1.3'
+    compile 'com.benny.library:kbinding-support-v4:0.1.3'
+    compile 'com.benny.library:kbinding-recyclerview-v7:0.1.3'
 }
 ```
 
