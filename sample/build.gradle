@@ -79,7 +79,7 @@ dependencies {
 
     compile 'de.greenrobot:eventbus:2.4.0'
 
-    compile 'com.yqritc:recyclerview-flexibledivider:1.2.8'
+    compile 'com.yqritc:recyclerview-flexibledivider:1.2.9'
 
     compile "org.jetbrains.anko:anko-sdk15:$anko_version" // sdk19, sdk21, sdk23 are also available
     compile "org.jetbrains.anko:anko-support-v4:$anko_version" // In case you need support-v4 bindings

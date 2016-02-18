@@ -73,10 +73,10 @@ class MovieListFragment : BaseFragment() {
                     recyclerView {
                         id = generateViewId()
                         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                        addItemDecoration(HorizontalDividerItemDecoration.Builder(ctx).color(Color.parseColor("#f2f2f2")).margin(dip(14), 0).size(1).build())
                         bind { paging("loadMoreMovies") }
                         bind { adapter("movies", converter = ListToRecyclerPagingAdapterConverter((owner as MovieListFragment).pagingViewCreator(LoadingItemView(), MovieItemView(), ::MovieViewModel))) }
                         bind { itemClick("movieDetail") }
-                        wait { until("movies") { addItemDecoration(HorizontalDividerItemDecoration.Builder(ctx).color(Color.parseColor("#f2f2f2")).margin(dip(14), 0).size(1).build()) } }
                     }.lparams(matchParent, matchParent)
                 }
                 frameLayout {
