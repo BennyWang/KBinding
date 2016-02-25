@@ -1,4 +1,4 @@
-package com.benny.library.kbinding.bind;
+package com.benny.library.kbinding.bind
 
 import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty

@@ -17,18 +17,18 @@ val AnkoContext<*>.OneWay: OneWay get() = BindingMode.OneWay
 val AnkoContext<*>.TwoWay: TwoWay get() = BindingMode.TwoWay
 val AnkoContext<*>.OneWayToSource: OneWayToSource get() = BindingMode.OneWayToSource
 
-fun <T> AnkoContext<T>.bindableLayout(init: BindableLayout<T>.() -> Unit): BindableLayout<T> {
+inline fun <T> AnkoContext<T>.bindableLayout(init: BindableLayout<T>.() -> Unit): BindableLayout<T> {
     val bindableLayout = BindableLayout(this.ctx, this.owner)
     bindableLayout.init()
     AnkoInternals.addView(this, bindableLayout.view)
     return bindableLayout
 }
 
-fun AnkoContext<*>.bind(propertyBindingFactory: () -> PropertyBinding): Unit {
+inline fun AnkoContext<*>.bind(propertyBindingFactory: () -> PropertyBinding): Unit {
     if(this is BindableLayout<*>) bindingAssembler.addBinding(propertyBindingFactory())
 }
 
-fun AnkoContext<*>.wait(propertyBindingFactory: () -> PropertyBinding): Unit {
+inline fun AnkoContext<*>.wait(propertyBindingFactory: () -> PropertyBinding): Unit {
     bind(propertyBindingFactory)
 }
 
