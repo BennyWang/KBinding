@@ -7,7 +7,6 @@ import android.widget.AdapterView
 import com.benny.library.kbinding.bind.*
 import com.benny.library.kbinding.common.adapter.AdapterPagingListener
 import com.benny.library.kbinding.common.bindings.utils.RecyclerViewPagingOnSubscribe
-import com.benny.library.kbinding.converter.EmptyOneWayConverter
 import com.benny.library.kbinding.converter.OneWayConverter
 import com.benny.library.kbinding.support.v7.adapter.BaseRecyclerAdapter
 import com.benny.library.kbinding.support.v7.adapter.BaseRecyclerPagingAdapter
@@ -61,6 +60,6 @@ fun RecyclerView.paging(path: String) : PropertyBinding = commandBinding(path, p
 fun RecyclerView.itemClick(path: String) : PropertyBinding = commandBinding(path, itemClicks(), Action1 {})
 //Property
 
-fun RecyclerView.adapter(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, swapAdapter(), false, converter)
-fun RecyclerView.adapter(vararg paths: String, mode: OneTime, converter: OneWayConverter<RecyclerView.Adapter<RecyclerView.ViewHolder>> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, swapAdapter(), true, converter)
+fun RecyclerView.adapter(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<*, RecyclerView.Adapter<RecyclerView.ViewHolder>>) : PropertyBinding = oneWayPropertyBinding(paths, swapAdapter(), false, converter)
+fun RecyclerView.adapter(vararg paths: String, mode: OneTime, converter: OneWayConverter<*, RecyclerView.Adapter<RecyclerView.ViewHolder>>) : PropertyBinding = oneWayPropertyBinding(paths, swapAdapter(), true, converter)
 

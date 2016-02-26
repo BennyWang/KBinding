@@ -17,7 +17,7 @@ import com.benny.library.kbinding.common.bindings.text
 import com.benny.library.kbinding.common.bindings.textColorResource
 import com.benny.library.kbinding.common.bindings.textWeight
 import com.benny.library.kbinding.common.roundRect
-import com.benny.library.kbinding.converter.MultipleConverter
+import com.benny.library.kbinding.converter.OneWayConverter
 import com.benny.library.kbinding.dsl.OneWay
 import com.benny.library.kbinding.dsl.bind
 import com.benny.library.kbinding.dsl.resolveAttribute
@@ -30,7 +30,7 @@ import org.jetbrains.anko.*
 
 
 class StockItemView : ItemViewBinderComponent {
-    class ChangePercentBackgroundConverter(val context: Context) : MultipleConverter<Drawable> {
+    class ChangePercentBackgroundConverter(val context: Context) : OneWayConverter<Array<Any?>, Drawable> {
         override fun convert(params: Array<Any?>): Drawable {
             if(params.size < 2) return roundRect { radius = context.dip(2).toFloat(); color = context.resources.getColor(R.color.color_9) }
             val listedState = params[0] as? Int ?: Stock.LISTED_STATE_ABNORMAL
@@ -44,7 +44,7 @@ class StockItemView : ItemViewBinderComponent {
         }
     }
 
-    class ChangePercentConverter : MultipleConverter<CharSequence> {
+    class ChangePercentConverter : OneWayConverter<Array<Any?>, CharSequence> {
         override fun convert(params: Array<Any?>): CharSequence {
             if(params.size < 2) return "+0.00%"
             val listedState = params[0] as? Int ?: Stock.LISTED_STATE_ABNORMAL

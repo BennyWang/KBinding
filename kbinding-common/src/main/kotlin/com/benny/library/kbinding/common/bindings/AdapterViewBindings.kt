@@ -9,7 +9,6 @@ import com.benny.library.kbinding.common.adapter.AdapterPagingListener
 import com.benny.library.kbinding.common.adapter.BaseListAdapter
 import com.benny.library.kbinding.common.adapter.BaseListPagingAdapter
 import com.benny.library.kbinding.common.bindings.utils.AdapterViewPagingOnSubscribe
-import com.benny.library.kbinding.converter.EmptyOneWayConverter
 import com.benny.library.kbinding.converter.OneWayConverter
 import com.jakewharton.rxbinding.widget.RxAdapterView
 import rx.Observable
@@ -51,5 +50,5 @@ fun ListView.itemClick(path: String) : PropertyBinding = commandBinding(path, Rx
 
 //Property
 
-fun ListView.adapter(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<ListAdapter> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, swapAdapter(), false, converter)
-fun ListView.adapter(vararg paths: String, mode: OneTime, converter: OneWayConverter<ListAdapter> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, swapAdapter(), true, converter)
+fun ListView.adapter(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<*, ListAdapter>) : PropertyBinding = oneWayPropertyBinding(paths, swapAdapter(), false, converter)
+fun ListView.adapter(vararg paths: String, mode: OneTime, converter: OneWayConverter<*, ListAdapter>) : PropertyBinding = oneWayPropertyBinding(paths, swapAdapter(), true, converter)

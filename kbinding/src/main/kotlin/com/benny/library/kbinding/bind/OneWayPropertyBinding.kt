@@ -1,6 +1,6 @@
 package com.benny.library.kbinding.bind
 
-import com.benny.library.kbinding.converter.EmptyOneWayConverter
+import com.benny.library.kbinding.converter.EmptyOneWayConverter2
 import com.benny.library.kbinding.converter.OneWayConverter
 import rx.Observable
 import rx.Subscription
@@ -14,18 +14,18 @@ class OneWayPropertyBinding<T, R> private constructor(key: String, val oneTime: 
     var key:String = key
         private set
 
-    var converter: OneWayConverter<R>? = null
-    var backConverter: OneWayConverter<T>? = null
+    var converter: OneWayConverter<T, R>? = null
+    var backConverter: OneWayConverter<R, T>? = null
 
     var observable: Observable<T>? = null
     var observer: Action1<in T>? = null
 
-    constructor(key: String, observable: Observable<T>, converter: OneWayConverter<R> = EmptyOneWayConverter<R>()) : this(key, false) {
+    constructor(key: String, observable: Observable<T>, converter: OneWayConverter<T, R> = EmptyOneWayConverter2<T, R>()) : this(key, false) {
         this.observable = observable
         this.converter = converter
     }
 
-    constructor(key: String, observer: Action1<in T>, oneTime: Boolean = false, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : this(key, oneTime) {
+    constructor(key: String, observer: Action1<in T>, oneTime: Boolean = false, backConverter: OneWayConverter<R, T> = EmptyOneWayConverter2<R, T>()) : this(key, oneTime) {
         this.observer = observer
         this.backConverter = backConverter
     }

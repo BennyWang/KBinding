@@ -15,14 +15,14 @@ import com.benny.library.kbinding.view.IViewCreator
  * Created by benny on 2/1/16.
  */
 
-class ListToPagerAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> PagerAdapterItemAccessor<T> = { list -> SimplePagerAdapterItemAccessor(list) } ) : OneWayConverter<PagerAdapter> {
-    override fun convert(source: Any?): PagerAdapter {
-        return BasePagerAdapter(viewCreator, itemAccessorFactory(source as List<T>))
+class ListToPagerAdapterConverter<T>(val viewCreator: IViewCreator<T>, val itemAccessorFactory: (List<T>) -> PagerAdapterItemAccessor<T> = { list -> SimplePagerAdapterItemAccessor(list) } ) : OneWayConverter<List<T>, PagerAdapter> {
+    override fun convert(source: List<T>): PagerAdapter {
+        return BasePagerAdapter(viewCreator, itemAccessorFactory(source))
     }
 }
 
-class ListToFragmentPagerAdapterConverter(val FragmentManager: FragmentManager, val itemAccessorFactory: (List<Fragment>) -> PagerAdapterItemAccessor<Fragment> = { list -> SimplePagerAdapterItemAccessor(list) } ) : OneWayConverter<FragmentPagerAdapter> {
-    override fun convert(source: Any?): FragmentPagerAdapter {
-        return BaseFragmentPagerAdapter(FragmentManager, itemAccessorFactory(source as List<Fragment>))
+class ListToFragmentPagerAdapterConverter(val FragmentManager: FragmentManager, val itemAccessorFactory: (List<Fragment>) -> PagerAdapterItemAccessor<Fragment> = { list -> SimplePagerAdapterItemAccessor(list) } ) : OneWayConverter<List<Fragment>, FragmentPagerAdapter> {
+    override fun convert(source: List<Fragment>): FragmentPagerAdapter {
+        return BaseFragmentPagerAdapter(FragmentManager, itemAccessorFactory(source))
     }
 }

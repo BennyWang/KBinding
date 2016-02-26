@@ -10,12 +10,13 @@ import java.util.*
  * Created by benny on 11/18/15.
  */
 
-fun <T, R> oneWayPropertyBinding(key: String, observable: Observable<T>, converter: OneWayConverter<R> = EmptyOneWayConverter<R>()) : OneWayPropertyBinding<T, R> {
+fun <T, R> oneWayPropertyBinding(key: String, observable: Observable<T>, converter: OneWayConverter<T, R> = EmptyOneWayConverter2<T, R>()) : OneWayPropertyBinding<T, R> {
     return OneWayPropertyBinding(key, observable, converter)
 }
 
-fun <T> oneWayPropertyBinding(keys: Array<out String>, observer: Action1<in T>, oneTime: Boolean, backConverter: OneWayConverter<T> = EmptyOneWayConverter<T>()) : PropertyBinding {
-    return if(keys.size == 1) OneWayPropertyBinding<T, Any>(keys[0], observer, oneTime, backConverter) else MultiplePropertyBinding(keys.toList(), observer, oneTime, backConverter as MultipleConverter<T>)
+@Suppress("UNCHECKED_CAST")
+fun <T> oneWayPropertyBinding(keys: Array<out String>, observer: Action1<in T>, oneTime: Boolean, backConverter: OneWayConverter<*, T> = EmptyOneWayConverter1<T>()) : PropertyBinding {
+    return if(keys.size == 1) OneWayPropertyBinding(keys[0], observer, oneTime, backConverter as OneWayConverter<Any?, T>) else MultiplePropertyBinding(keys.toList(), observer, oneTime, backConverter as OneWayConverter<Array<Any?>, T>)
 }
 
 fun <T, R> twoWayPropertyBinding(key: String, observable: Observable<T>, observer: Action1<in T>, converter: TwoWayConverter<T, R> = EmptyTwoWayConverter<T, R>()) : TwoWayPropertyBinding<T, R> {

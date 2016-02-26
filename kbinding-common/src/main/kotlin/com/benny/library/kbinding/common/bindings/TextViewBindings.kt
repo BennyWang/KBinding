@@ -4,10 +4,7 @@ package com.benny.library.kbinding.common.bindings
 
 import android.widget.TextView
 import com.benny.library.kbinding.bind.*
-import com.benny.library.kbinding.converter.EmptyOneWayConverter
-import com.benny.library.kbinding.converter.EmptyTwoWayConverter
-import com.benny.library.kbinding.converter.OneWayConverter
-import com.benny.library.kbinding.converter.TwoWayConverter
+import com.benny.library.kbinding.converter.*
 import com.jakewharton.rxbinding.widget.RxTextView
 import org.jetbrains.anko.AnkoException
 import rx.Observable
@@ -26,12 +23,12 @@ var TextView.textColorResource: Int
 fun TextView.textChanges(): Observable<String> = RxTextView.textChanges(this).map { it.toString() }.skip(1)
 
 //For TextView
-fun TextView.textColor(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Int> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, RxTextView.color(this), false, converter)
-fun TextView.textColor(vararg paths: String, mode: OneTime = BindingMode.OneTime, converter: OneWayConverter<Int> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, RxTextView.color(this), true, converter)
+fun TextView.textColor(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<*, Int> = EmptyOneWayConverter1()) : PropertyBinding = oneWayPropertyBinding(paths, RxTextView.color(this), false, converter)
+fun TextView.textColor(vararg paths: String, mode: OneTime = BindingMode.OneTime, converter: OneWayConverter<*, Int> = EmptyOneWayConverter1()) : PropertyBinding = oneWayPropertyBinding(paths, RxTextView.color(this), true, converter)
 
-fun TextView.text(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<out CharSequence> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, RxTextView.text(this), false, converter)
-fun TextView.text(vararg paths: String, mode: OneTime, converter: OneWayConverter<out CharSequence> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, RxTextView.text(this), true, converter)
-fun TextView.text(path: String, mode: OneWayToSource, converter: OneWayConverter<*> = EmptyOneWayConverter<String>()) : PropertyBinding = oneWayPropertyBinding(path, textChanges(), converter)
-fun TextView.text(path: String, mode: TwoWay, converter: TwoWayConverter<String, *> = EmptyTwoWayConverter<String, String>()) : PropertyBinding = twoWayPropertyBinding(path, textChanges(), RxTextView.text(this), converter)
+fun TextView.text(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<*, out CharSequence> = EmptyOneWayConverter1()) : PropertyBinding = oneWayPropertyBinding(paths, RxTextView.text(this), false, converter)
+fun TextView.text(vararg paths: String, mode: OneTime, converter: OneWayConverter<*, out CharSequence> = EmptyOneWayConverter1()) : PropertyBinding = oneWayPropertyBinding(paths, RxTextView.text(this), true, converter)
+fun TextView.text(path: String, mode: OneWayToSource, converter: OneWayConverter<String, *> = EmptyOneWayConverter2<String, Any?>()) : PropertyBinding = oneWayPropertyBinding(path, textChanges(), converter)
+fun TextView.text(path: String, mode: TwoWay, converter: TwoWayConverter<String, Any?> = EmptyTwoWayConverter()) : PropertyBinding = twoWayPropertyBinding(path, textChanges(), RxTextView.text(this), converter)
 
 

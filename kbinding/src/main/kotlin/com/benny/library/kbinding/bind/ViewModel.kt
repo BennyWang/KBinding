@@ -1,6 +1,6 @@
 package com.benny.library.kbinding.bind;
 
-import com.benny.library.kbinding.converter.MultipleConverter
+import com.benny.library.kbinding.converter.OneWayConverter
 import rx.Subscription
 import rx.functions.Action1
 import rx.subscriptions.CompositeSubscription
@@ -80,10 +80,7 @@ open class ViewModel() : IViewModel {
     }
 
     private fun <T> addDependsOn(key: String, dependsOn: Array<out String>, getter: () -> T) {
-        this.dependsOn.put(key, oneWayPropertyBinding(dependsOn, Action1<T> { t -> property<T>(key).value = t }, false, object : MultipleConverter<T> {
-            override fun convert(params: Array<Any?>): T = getter()
-            override fun convert(source: Any?): T = getter()
-        }))
+        this.dependsOn.put(key, oneWayPropertyBinding(dependsOn, Action1<T> { t -> property<T>(key).value = t }, false, OneWayConverter<Any?, T> { getter() }))
     }
 
     fun <T> bindProperty(key: String): ReadWriteProperty<Any, T?> {

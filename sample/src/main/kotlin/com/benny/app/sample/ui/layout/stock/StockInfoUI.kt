@@ -16,7 +16,7 @@ import com.benny.library.kbinding.common.bindings.textColor
 import com.benny.library.kbinding.common.bindings.until
 import com.benny.library.kbinding.common.style
 import com.benny.library.kbinding.common.viewStyle
-import com.benny.library.kbinding.converter.EmptyOneWayConverter
+import com.benny.library.kbinding.converter.EmptyOneWayConverter1
 import com.benny.library.kbinding.converter.OneWayConverter
 import com.benny.library.kbinding.dsl.OneWay
 import com.benny.library.kbinding.dsl.bind
@@ -32,7 +32,7 @@ import org.jetbrains.anko.gridlayout.v7.space
  */
 
 abstract class StockSubInfoUI : ViewBinderComponent<View> {
-    fun ViewGroup.cell(ankoContext: AnkoContext<*>, title: String, key: String, converter: OneWayConverter<CharSequence> = EmptyOneWayConverter()): View = with(ankoContext) {
+    fun ViewGroup.cell(ankoContext: AnkoContext<*>, title: String, key: String, converter: OneWayConverter<*, CharSequence> = EmptyOneWayConverter1()): View = with(ankoContext) {
         this@cell.linearLayout {
             textView {
                 textSize = 12f
@@ -92,19 +92,9 @@ class StockSubInfoHKUI : StockSubInfoUI() {
 
 
 class StockInfoUI : ViewBinderComponent<ViewGroup> {
-    val visibility4HS = object : OneWayConverter<Boolean> {
-        override fun convert(source: Any?): Boolean {
-            return true
-        }
-    }
+    val visibility4HS = OneWayConverter<Any?, Boolean> { true }
 
-    val viewOfMarket = object : OneWayConverter<ViewBinderComponent<*>> {
-        override fun convert(source: Any?): ViewBinderComponent<*> {
-            if(source !is MarketType) return StockSubInfoHSUI()
-
-            return if(source == MarketType.SH_SZ) StockSubInfoHSUI() else StockSubInfoHKUI()
-        }
-    }
+    val viewOfMarket = OneWayConverter<MarketType, ViewBinderComponent<*>> { source -> if(source == MarketType.SH_SZ) StockSubInfoHSUI() else StockSubInfoHKUI() }
 
     override fun builder(): AnkoContext<*>.() -> Unit = {
         fun ViewGroup.cell(title: String, key: String): View = with(this) {
