@@ -3,15 +3,25 @@ package com.benny.app.sample.viewmodel
 import android.util.Log
 import com.benny.app.sample.network.service.caishuo.model.MarketType
 import com.benny.app.sample.network.service.caishuo.model.Stock
+import com.benny.library.kbinding.annotation.DependsOn
+import com.benny.library.kbinding.annotation.Extract
+import com.benny.library.kbinding.annotation.Property
 import com.benny.library.kbinding.bind.ItemViewModel
 
 /**
  * Created by benny on 11/19/15.
  */
 class StockViewModel() : ItemViewModel<Stock>() {
+
+    @delegate:Property
+    @delegate:Extract
     var stock: Stock? by bindProperty("stock")
 
+
+    @delegate:Property
+    @delegate:DependsOn
     val name: String? by bindProperty("name", "stock") { stock!!.cnName }
+
     val symbol: String? by bindProperty("symbol", "stock") { stock!!.symbol }
     val price: Float by bindProperty("price", "stock") { stock!!.realtimePrice }
     val changePrice: Float by bindProperty("changePrice", "stock") { stock!!.changePrice }

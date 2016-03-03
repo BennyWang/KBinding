@@ -1,0 +1,23 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+    }
+}
+
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext.projectName         = "KBinding-Annotations"
+ext.projectDescription  = "KBinding Annotations"
+ext.projectGroupId      = "com.benny.library"
+ext.projectArtifactId   = "KBinding-Annotations"
+
