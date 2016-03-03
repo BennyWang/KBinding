@@ -15,6 +15,8 @@ dependencies {
     compile 'com.google.auto.service:auto-service:1.0-rc2'
     compile 'com.google.auto:auto-common:0.4'
     compile 'com.squareup:javapoet:1.4.0'
+
+    compile 'org.apache.commons:commons-lang3:3.4+'
 }
 
 repositories {

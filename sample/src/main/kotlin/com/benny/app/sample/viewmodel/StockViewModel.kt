@@ -13,15 +13,9 @@ import com.benny.library.kbinding.bind.ItemViewModel
  */
 class StockViewModel() : ItemViewModel<Stock>() {
 
-    @delegate:Property
-    @delegate:Extract
     var stock: Stock? by bindProperty("stock")
 
-
-    @delegate:Property
-    @delegate:DependsOn
     val name: String? by bindProperty("name", "stock") { stock!!.cnName }
-
     val symbol: String? by bindProperty("symbol", "stock") { stock!!.symbol }
     val price: Float by bindProperty("price", "stock") { stock!!.realtimePrice }
     val changePrice: Float by bindProperty("changePrice", "stock") { stock!!.changePrice }
