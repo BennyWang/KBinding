@@ -12,5 +12,5 @@ import com.benny.library.kbinding.bind.IViewModel
 interface ViewBinder {
     val view: View
     fun bindTo(bindingDisposer: BindingDisposer, viewModel: IViewModel): View
-    fun bindTo(bindingDisposer: BindingDisposer, bindingDelegate: BindingDelegate): View = bindTo(bindingDisposer, bindingDelegate.viewModel)
+    fun bindTo(bindingDisposer: BindingDisposer, bindingDelegate: BindingDelegate): View
 }

@@ -3,11 +3,9 @@ package com.benny.library.kbinding.view
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import com.benny.library.kbinding.bind.BindingAssembler
-import com.benny.library.kbinding.bind.BindingDisposer
-import com.benny.library.kbinding.bind.IViewModel
-import com.benny.library.kbinding.bind.PropertyBinding
+import com.benny.library.kbinding.bind.*
 import com.benny.library.kbinding.dsl.bindableLayout
+import com.benny.library.kbinding.internal.BindingInitializer
 import org.jetbrains.anko.AnkoContext
 
 /**
@@ -27,9 +25,28 @@ class BindableLayout<T>(override val ctx: Context, override val owner: T) : Anko
     override fun bindTo(bindingDisposer: BindingDisposer, viewModel: IViewModel): View {
         if(this.viewModel != null) throw UnsupportedOperationException("can only bind to one view model")
 
+        if(!viewModel.hasInitialized) {
+            BindingInitializer.init(viewModel)
+            viewModel.hasInitialized = true
+        }
+
         this.bindingDisposer = bindingDisposer
         this.viewModel = viewModel
         bindingAssembler.bindTo(bindingDisposer, viewModel)
+        return view
+    }
+
+    override fun bindTo(bindingDisposer: BindingDisposer, bindingDelegate: BindingDelegate): View {
+        if(this.viewModel != null) throw UnsupportedOperationException("can only bind to one view model")
+
+        if(!bindingDelegate.viewModel.hasInitialized) {
+            BindingInitializer.init(bindingDelegate)
+            bindingDelegate.viewModel.hasInitialized = true
+        }
+
+        this.bindingDisposer = bindingDisposer
+        this.viewModel = bindingDelegate.viewModel
+        bindingAssembler.bindTo(bindingDisposer, bindingDelegate.viewModel)
         return view
     }
 

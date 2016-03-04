@@ -24,39 +24,14 @@ class MockSubscription : Subscription {
 
 @Suppress("UNCHECKED_CAST")
 open class ViewModel() : IViewModel {
+    override var hasInitialized: Boolean = false
     override val properties : MutableMap<String, Property<*>> = HashMap()
     override val commands : MutableMap<String, Command<*>> = HashMap()
 
     val dependsOn: MutableMap<String, PropertyBinding> = HashMap()
 
-    init {
-        BindingInitializer.init(this)
-    }
-
     private fun <T> addDependsOn(key: String, dependsOn: Array<out String>, getter: () -> T) = this.dependsOn.put(key,
             oneWayPropertyBinding(dependsOn, Action1<T> { t -> property<T>(key).value = t }, false, OneWayConverter<Any?, T> { getter() }))
-
-    override fun <T, R> bind(oneWayPropertyBinding: OneWayPropertyBinding<T, R>) : Subscription {
-        return CompositeSubscription().apply {
-            add(bindDependsOn(oneWayPropertyBinding.key))
-            add(oneWayPropertyBinding.bindTo(property(oneWayPropertyBinding.key)))
-        }
-    }
-
-    override fun <T> bind(multiplePropertyBinding: MultiplePropertyBinding<T>) : Subscription {
-        return CompositeSubscription().apply {
-            multiplePropertyBinding.keys.forEach { add(bindDependsOn(it)) }
-            add(multiplePropertyBinding.bindTo(properties(multiplePropertyBinding.keys)))
-        }
-    }
-
-    override fun <T, R> bind(twoWayPropertyBinding: TwoWayPropertyBinding<T, R>) : Subscription {
-        return twoWayPropertyBinding.bindTo(property(twoWayPropertyBinding.key))
-    }
-
-    override fun <T> bind(commandBinding: CommandBinding<T>) : Subscription {
-        return commandBinding.bindTo(command(commandBinding.key))
-    }
 
     private fun bindDependsOn(key: String) : Subscription {
         val dependsOn = dependsOn.remove(key) ?: return MockSubscription()
@@ -68,6 +43,7 @@ open class ViewModel() : IViewModel {
         }
     }
 
+    @Deprecated("Use Annotation @Property/@DependencyProperty/@ExtractProperty and Delegates.property instead")
     fun <T> bindProperty(key: String): ReadWriteProperty<Any, T?> {
         addProperty(key, Property<T>())
 
@@ -77,6 +53,7 @@ open class ViewModel() : IViewModel {
         }
     }
 
+    @Deprecated("Use Annotation @Property/@DependencyProperty/@ExtractProperty and Delegates.property instead")
     fun <T> bindProperty(vararg keys: String, getter: () -> T): ReadWriteProperty<Any, T> {
         if(keys.size == 0) throw InvalidParameterException("at least one key")
 
@@ -88,6 +65,7 @@ open class ViewModel() : IViewModel {
         }
     }
 
+    @Deprecated("Use Annotation @Command instead")
     fun <T> bindCommand(key: String, cmdAction: (T, (Boolean) -> Unit) -> Unit): ReadOnlyProperty<Any, Command<T>> {
         addCommand(key, Command<T> { t, action -> cmdAction(t, { action.call(it) }) })
         return object : ReadOnlyProperty<Any, Command<T>> {
@@ -123,26 +101,74 @@ open class ViewModel() : IViewModel {
         }
     }
 
-    fun <T> bindPropertyV2(key: String, initialValue: T?) {
-        addProperty(key, Property(initialValue))
-    }
-
-    fun <T> bindDependsOnV2(key: String, dependsOn: Array<String>, getter: () -> T) {
-        addDependsOn(key, dependsOn, getter = getter)
-    }
+    fun <T> Delegates.property(): ReadWriteProperty<Any, T?> = Delegates.property<T?>(null)
 
     fun <T> Delegates.property(initialValue: T): ReadWriteProperty<Any, T> {
         return object : ReadWriteProperty<Any, T> {
-            var isSet = false
-            override fun getValue(thisRef: Any, property: KProperty<*>): T = if(isSet) propertyOrNull<T>(property.name)?.value as T else initialValue
-            override fun setValue(thisRef: Any, property: KProperty<*>, value: T) { isSet = true; property<T>(property.name).value = value }
+            var _backField: T = initialValue
+
+            override fun getValue(thisRef: Any, property: KProperty<*>): T {
+                propertyOrNull<T>(property.name)?.let {
+                    return it.value as T
+                }
+                return _backField
+            }
+            override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
+                propertyOrNull<T>(property.name)?.let {
+                    it.value = value
+                }
+                _backField = value
+            }
         }
     }
 
-    fun <T> Delegates.property(getter: () -> T): ReadWriteProperty<Any, T> {
-        return object : ReadWriteProperty<Any, T> {
+    fun <T> Delegates.property(getter: () -> T): ReadOnlyProperty<Any, T> {
+        return object : ReadOnlyProperty<Any, T> {
             override fun getValue(thisRef: Any, property: KProperty<*>): T = getter()
-            override fun setValue(thisRef: Any, property: KProperty<*>, value: T) { property<T>(property.name).value = value }
         }
     }
+
+    // only used by KBinding Compiler
+
+    fun <T> bindPropertyV2(key: String, initialValue: T? = null) {
+        //support for nested view model
+        if(initialValue != null && initialValue is IViewModel) {
+            for((k, v) in initialValue.properties) addProperty("$key.$k", v)
+            for((k, v) in initialValue.commands) addCommand("$key.$k", v)
+        }
+        addProperty(key, Property(initialValue))
+    }
+
+    fun <T> bindPropertyV2(key: String, dependsOn: Array<String>, getter: () -> T) {
+        addProperty(key, Property<T>())
+        addDependsOn(key, dependsOn, getter = getter)
+    }
+
+    fun <T> bindCommandV2(key: String, command: Command<T>) = addCommand(key, command)
+
+    // implement interface
+
+    override fun <T, R> bind(oneWayPropertyBinding: OneWayPropertyBinding<T, R>) : Subscription {
+        return CompositeSubscription().apply {
+            add(bindDependsOn(oneWayPropertyBinding.key))
+            add(oneWayPropertyBinding.bindTo(property(oneWayPropertyBinding.key)))
+        }
+    }
+
+    override fun <T> bind(multiplePropertyBinding: MultiplePropertyBinding<T>) : Subscription {
+        return CompositeSubscription().apply {
+            multiplePropertyBinding.keys.forEach { add(bindDependsOn(it)) }
+            add(multiplePropertyBinding.bindTo(properties(multiplePropertyBinding.keys)))
+        }
+    }
+
+    override fun <T, R> bind(twoWayPropertyBinding: TwoWayPropertyBinding<T, R>) : Subscription {
+        return twoWayPropertyBinding.bindTo(property(twoWayPropertyBinding.key))
+    }
+
+    override fun <T> bind(commandBinding: CommandBinding<T>) : Subscription {
+        return commandBinding.bindTo(command(commandBinding.key))
+    }
+
+    //-----------------------
 }

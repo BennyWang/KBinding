@@ -42,7 +42,6 @@ public class ViewModelClass {
                 .addModifiers(PUBLIC);
 
         result.addSuperinterface(ParameterizedTypeName.get(BINDING_BUILDER, TypeVariableName.get(targetClass)));
-
         result.addMethod(createBuildMethod());
 
         return JavaFile.builder(classPackage, result.build())
@@ -55,8 +54,9 @@ public class ViewModelClass {
                 .addAnnotation(Override.class)
                 .addModifiers(PUBLIC)
                 .addParameter(TypeVariableName.get(targetClass), "target", FINAL);
+
         for (ViewModelBinder binder : binders) {
-            result.addStatement(binder.generateCode());
+            binder.generateCode(result);
         }
         return result.build();
     }

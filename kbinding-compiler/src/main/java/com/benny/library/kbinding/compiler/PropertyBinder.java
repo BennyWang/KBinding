@@ -1,5 +1,6 @@
 package com.benny.library.kbinding.compiler;
 
+import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import org.apache.commons.lang3.StringUtils;
 
@@ -8,16 +9,23 @@ import org.apache.commons.lang3.StringUtils;
  */
 
 public class PropertyBinder implements ViewModelBinder {
-    private String property;
-    private String type;
+    protected String property;
 
-    public PropertyBinder(String property, String type) {
-        this.property = property.substring(0, property.indexOf('$'));
-        this.type = type.substring(type.indexOf(',') + 1, type.indexOf('>'));
+    public static String stripDelegate(String value) {
+        return value.substring(0, value.indexOf('$'));
+    }
+
+    public static String stripReadWriteProperty(TypeName typeName) {
+        String type = typeName.toString();
+        return type.substring(type.indexOf(',') + 1, type.indexOf('>'));
+    }
+
+    public PropertyBinder(String property) {
+        this.property = stripDelegate(property);
     }
 
     @Override
-    public String generateCode() {
-        return "target." + ViewModelClass.BIND_PROPERTY_CALL + "(\"" + property + "\", target.get" + StringUtils.capitalize(property) + "())";
+    public void generateCode(MethodSpec.Builder builder) {
+        builder.addStatement("target.$L($S, target.get$L())", ViewModelClass.BIND_PROPERTY_CALL, property, StringUtils.capitalize(property));
     }
 }

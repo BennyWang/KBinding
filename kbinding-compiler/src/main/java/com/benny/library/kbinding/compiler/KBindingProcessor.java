@@ -1,24 +1,20 @@
 package com.benny.library.kbinding.compiler;
 
 import com.benny.library.kbinding.annotation.Command;
-import com.benny.library.kbinding.annotation.DependsOn;
-import com.benny.library.kbinding.annotation.Extract;
+import com.benny.library.kbinding.annotation.DependencyProperty;
+import com.benny.library.kbinding.annotation.ExtractProperty;
 import com.benny.library.kbinding.annotation.Property;
 import com.google.auto.common.SuperficialValidation;
 import com.squareup.javapoet.TypeName;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.*;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by benny on 3/2/16.
@@ -44,28 +40,27 @@ public class KBindingProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> elements, RoundEnvironment env) {
         Map<TypeElement, ViewModelClass> targetClassMap = new LinkedHashMap<>();
 
-        for (Element element : env.getElementsAnnotatedWith(Command.class)) {
-            if (!SuperficialValidation.validateElement(element)) continue;
-
-            messager.printMessage(Diagnostic.Kind.NOTE, "Annotated Command Element is " + element + " : Parent is " + element.getEnclosingElement());
-        }
-
         for (Element element : env.getElementsAnnotatedWith(Property.class)) {
             if (!SuperficialValidation.validateElement(element)) continue;
 
             parsePropertyBinder(element, targetClassMap);
         }
 
-        for (Element element : env.getElementsAnnotatedWith(DependsOn.class)) {
+        for (Element element : env.getElementsAnnotatedWith(ExtractProperty.class)) {
             if (!SuperficialValidation.validateElement(element)) continue;
-
-            messager.printMessage(Diagnostic.Kind.NOTE, "Annotated DependsOn is " + element + " : Parent is " + element.getEnclosingElement());
+            parseExtractPropertyBinder(element, targetClassMap);
         }
 
-        for (Element element : env.getElementsAnnotatedWith(Extract.class)) {
+        for (Element element : env.getElementsAnnotatedWith(DependencyProperty.class)) {
             if (!SuperficialValidation.validateElement(element)) continue;
 
-            messager.printMessage(Diagnostic.Kind.NOTE, "Annotated Extract is " + element + " : Parent is " + element.getEnclosingElement());
+            parseDependencyPropertyBinder(element, targetClassMap);
+        }
+
+        for (Element element : env.getElementsAnnotatedWith(Command.class)) {
+            if (!SuperficialValidation.validateElement(element)) continue;
+
+            parseCommandBinder(element, targetClassMap);
         }
 
         for (Map.Entry<TypeElement, ViewModelClass> entry : targetClassMap.entrySet()) {
@@ -85,7 +80,32 @@ public class KBindingProcessor extends AbstractProcessor {
 
     private void parsePropertyBinder(Element element, Map<TypeElement, ViewModelClass> targetClassMap) {
         ViewModelClass viewModelClass = getOrCreateViewModelClass(targetClassMap, (TypeElement)element.getEnclosingElement());
-        viewModelClass.addBinder(new PropertyBinder(element.getSimpleName().toString(), TypeName.get(element.asType()).toString()));
+        viewModelClass.addBinder(new PropertyBinder(element.getSimpleName().toString()));
+    }
+
+    private void parseDependencyPropertyBinder(Element element, Map<TypeElement, ViewModelClass> targetClassMap) {
+        ViewModelClass viewModelClass = getOrCreateViewModelClass(targetClassMap, (TypeElement)element.getEnclosingElement());
+        DependencyProperty dependencyProperty = element.getAnnotation(DependencyProperty.class);
+        viewModelClass.addBinder(new DependencyPropertyBinder(element.getSimpleName().toString(), dependencyProperty.value()));
+    }
+
+    private void parseExtractPropertyBinder(Element element, Map<TypeElement, ViewModelClass> targetClassMap) {
+        ViewModelClass viewModelClass = getOrCreateViewModelClass(targetClassMap, (TypeElement)element.getEnclosingElement());
+        ExtractProperty dependencyProperty = element.getAnnotation(ExtractProperty.class);
+        viewModelClass.addBinder(new ExtractPropertyBinder(element.getSimpleName().toString(), dependencyProperty.value()));
+    }
+
+    private void parseCommandBinder(Element element, Map<TypeElement, ViewModelClass> targetClassMap) {
+        if (!(element instanceof ExecutableElement) || element.getKind() != ElementKind.METHOD) {
+            throw new IllegalStateException("@Command annotation must be on a method.");
+        }
+        ExecutableElement executableElement = (ExecutableElement) element;
+        ViewModelClass viewModelClass = getOrCreateViewModelClass(targetClassMap, (TypeElement)element.getEnclosingElement());
+        List<TypeName> parameterTypes = new ArrayList<>();
+        for (VariableElement ve : executableElement.getParameters()) {
+            parameterTypes.add(TypeName.get(ve.asType()));
+        }
+        viewModelClass.addBinder(new CommandBinder(executableElement.getSimpleName().toString(), parameterTypes));
     }
 
     private ViewModelClass getOrCreateViewModelClass(Map<TypeElement, ViewModelClass> targetClassMap, TypeElement enclosingElement) {
@@ -105,8 +125,8 @@ public class KBindingProcessor extends AbstractProcessor {
     public Set<String> getSupportedAnnotationTypes() {
         return new HashSet<String>() {{
             add(Property.class.getCanonicalName());
-            add(DependsOn.class.getCanonicalName());
-            add(Extract.class.getCanonicalName());
+            add(DependencyProperty.class.getCanonicalName());
+            add(ExtractProperty.class.getCanonicalName());
             add(Command.class.getCanonicalName());
         }};
     }

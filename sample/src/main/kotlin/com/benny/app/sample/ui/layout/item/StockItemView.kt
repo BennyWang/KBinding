@@ -67,12 +67,12 @@ class StockItemView : ItemViewBinderComponent {
                     singleLine = true
                     maxEms = 8
                     ellipsize = TextUtils.TruncateAt.END
-                    bind { text("name", mode = OneWay) }
+                    bind { text("stock.name", mode = OneWay) }
                 }.lparams(width = wrapContent)
                 textView {
                     textSize = 9f
                     textColorResource = R.color.color_9
-                    bind { text("symbol", mode = OneWay) }
+                    bind { text("stock.symbol", mode = OneWay) }
                 }.lparams(width = wrapContent)
             }.lparams { leftMargin = dip(14) }
             val v = textView {
@@ -81,8 +81,8 @@ class StockItemView : ItemViewBinderComponent {
                 textColor = Color.WHITE
                 textWeight = Typeface.BOLD
                 this@textView.gravity = Gravity.CENTER
-                bind { background("listedState", "changePercent", converter = ChangePercentBackgroundConverter(ctx)) }
-                bind { text("listedState", "changePercent", converter = ChangePercentConverter()) }
+                bind { background("stock.listedState", "stock.changePercent", converter = ChangePercentBackgroundConverter(ctx)) }
+                bind { text("stock.listedState", "stock.changePercent", converter = ChangePercentConverter()) }
             }.lparams(width = dip(82), height = dip(33)) {
                 alignParentRight()
                 centerVertically()
@@ -92,7 +92,7 @@ class StockItemView : ItemViewBinderComponent {
                 textSize = 16f
                 textColorResource = R.color.color_3
                 this@textView.gravity = Gravity.CENTER_VERTICAL or Gravity.RIGHT
-                bind { text("price", mode = OneWay, converter = StockPriceConverter()) }
+                bind { text("stock.realtimePrice", mode = OneWay, converter = StockPriceConverter()) }
             }.lparams {
                 leftOf(v)
                 centerVertically()

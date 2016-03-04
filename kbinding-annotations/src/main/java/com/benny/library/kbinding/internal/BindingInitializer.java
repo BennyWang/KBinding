@@ -12,17 +12,21 @@ public class BindingInitializer {
 
     @SuppressWarnings("unchecked")
     public static void init(Object obj) {
-        BindingBuilder builder = initializers.get(obj.getClass());
+        getOrCreateBuilder(obj.getClass()).build(obj);
+    }
+
+    private static BindingBuilder getOrCreateBuilder(Class<?> clazzz) {
+        BindingBuilder builder = initializers.get(clazzz);
         if(builder == null) {
             try {
-                builder = (BindingBuilder) Class.forName(obj.getClass().getCanonicalName() + "$$KB").newInstance();
+                builder = (BindingBuilder) Class.forName(clazzz.getCanonicalName() + "$$KB").newInstance();
             }
             catch (Exception e) {
                 builder = new MockBindingBuilder();
             }
-            initializers.put(obj.getClass(), builder);
+            initializers.put(clazzz, builder);
         }
-        builder.build(obj);
+        return builder;
     }
 
     public static class MockBindingBuilder implements BindingBuilder<Object> {

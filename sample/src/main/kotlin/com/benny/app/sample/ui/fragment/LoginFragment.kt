@@ -30,26 +30,19 @@ import org.jetbrains.anko.support.v4.toast
 
 class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
     var contentView: View? = null
+    var loginViewModel: LoginViewModel = LoginViewModel(this)
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d("LoginFragment", "onCreateView this:" + this)
 
         if(contentView == null) {
-            contentView = LoginFragmentUI().createViewBinder(act, this).bindTo(this)
+            contentView = LoginFragmentUI().createViewBinder(act, this).bindTo(loginViewModel)
         }
         return contentView
     }
 
     override fun onLoginSuccess(user: String) {
         toast("Login success with user " + user)
-    }
-
-    var name: String? by bindProperty("name") { "xxxxxxx@xxxxx.com" }
-    var password: String? by bindProperty("password") { "xxxxxxxxx" }
-
-    val login: Command<Unit> by bindCommand("login") { params, canExecute ->
-        if (name.equals("wangbin")) onLoginSuccess("wangbin")
-        else onLoginFailed(RuntimeException("incorrect name or password"))
     }
 
     override fun onLoginFailed(e: Throwable) {
