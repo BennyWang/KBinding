@@ -53,4 +53,4 @@ ext.projectDescription  = "Android MVVM framework write by kotlin"
 ext.projectGroupId      = "com.benny.library"
 ext.projectArtifactId   = "KBinding"
 
-apply from: rootProject.file('gradle/bintrayUpload.gradle')
+apply from: rootProject.file('gradle/androidBintrayUpload.gradle')

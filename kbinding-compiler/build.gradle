@@ -32,3 +32,4 @@ ext.projectDescription  = "KBinding Annotation Processor"
 ext.projectGroupId      = "com.benny.library"
 ext.projectArtifactId   = "KBinding-Compiler"
 
+apply from: rootProject.file('gradle/bintrayUpload.gradle')

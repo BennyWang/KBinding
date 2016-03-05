@@ -8,8 +8,13 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 def bintrayUser = properties.getProperty("bintray.user")
 def bintrayApikey = properties.getProperty("bintray.apikey")
 
-def projectVersionName  = project.VERSION_NAME
-def projectPackaging    = "jar"
+// read properties
+//def projectName         = "KBinding"
+//def projectDescription  = "Android MVVM framework write by kotlin"
+//def projectGroupId      = "com.benny.library"
+//def projectArtifactId   = "KBinding"
+def projectVersionName  = android.defaultConfig.versionName
+def projectPackaging    = "aar"
 def projectSiteUrl      = "https://github.com/BennyWang/KBinding"
 def projectIssueTrackerUrl = "https://github.com/BennyWang/KBinding/issues"
 def projectGitUrl       = "https://github.com/BennyWang/KBinding.git"
@@ -57,7 +62,7 @@ install {
 }
 
 task sourcesJar(type: Jar) {
-    from sourceSets.main.java.srcDirs
+    from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
 

@@ -44,7 +44,7 @@ abstract class StockSubInfoUI : ViewBinderComponent<View> {
                 textSize = 12f
                 textColor = Color.WHITE
                 gravity = Gravity.RIGHT
-                bind{ text(key, mode = OneWay, converter = converter) }
+                //bind{ text(key, mode = OneWay, converter = converter) }
             }.lparams(matchParent)
         }
     }
@@ -122,8 +122,8 @@ class StockInfoUI : ViewBinderComponent<ViewGroup> {
                         textSize = 42f
                         textColor = Color.WHITE
                         gravity = Gravity.CENTER
-                        bind { text("stock.realtimePrice", mode=OneWay, converter = StockPriceConverter()) }
-                        bind { textColor("stock.changePrice", mode=OneWay, converter = StockColorConverter()) }
+                        bind { text("realtimePrice", mode=OneWay, converter = StockPriceConverter()) }
+                        bind { textColor("changePrice", mode=OneWay, converter = StockColorConverter()) }
                         text = "--"
                     }
                     linearLayout {
@@ -134,14 +134,14 @@ class StockInfoUI : ViewBinderComponent<ViewGroup> {
                         }
                         textView {
                             style = tvStyle
-                            bind { text("stock.changePrice", mode=OneWay, converter = StockPriceChangeConverter()) }
-                            bind { textColor("stock.changePrice", mode=OneWay, converter = StockColorConverter()) }
+                            bind { text("changePrice", mode=OneWay, converter = StockPriceChangeConverter()) }
+                            bind { textColor("changePrice", mode=OneWay, converter = StockColorConverter()) }
                             text = "--"
                         }.lparams(0, wrapContent, 1f)
                         textView {
                             style = tvStyle
-                            bind { text("stock.changePercent", mode=OneWay, converter = StockPriceChangePercentageConverter()) }
-                            bind { textColor("stock.changePrice", mode=OneWay, converter = StockColorConverter()) }
+                            bind { text("changePercent", mode=OneWay, converter = StockPriceChangePercentageConverter()) }
+                            bind { textColor("changePrice", mode=OneWay, converter = StockColorConverter()) }
                             text = "--"
                         }.lparams(0, wrapContent, 1f)
                     }
@@ -162,7 +162,7 @@ class StockInfoUI : ViewBinderComponent<ViewGroup> {
             }.lparams(matchParent, wrapContent)
 
             relativeLayout {
-                wait { until("stock.market", converter = viewOfMarket) { inflate(it, this@verticalLayout) }  }
+                wait { until("market", converter = viewOfMarket) { inflate(it, this@verticalLayout) }  }
             }.lparams { topMargin = dip(12) }
         }
     }

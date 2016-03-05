@@ -24,8 +24,12 @@ verticalLayout {
     }
 }
 class SimpleViewModel() : ViewModel() {
-    var name: String by bindProperty("name") { "Jason" }
-    val hello: Command by bindCommand("hello") { params, canExecute ->
+    @delegate:Property
+    var name: String by Delegates.property("Jason")
+    
+    // all the parameter for Command is optional, first parameter pass by event Observable, second parameter is lambda (Boolean) -> Unit
+    @Command
+    val hello(canExecute: (Boolean) -> Unit) {
         toast("Hello, ${name}!")
     }
 }
@@ -56,22 +60,33 @@ verticalLayout {
     }
 }
 class LoginViewModel() : ViewModel() {
-    var name: String by bindProperty("name") { "xxx@xxxx.com" }
-    var password: String by bindProperty("password") { "xxxxxx" }
-    val login: Command by bindCommand("login") { params, canExecute ->
+    @delegate:Property
+    var name: String by Delegates.property("xxx@xxxx.co")
+    
+    @delegate:Property
+    var password: String by Delegates.property("xxxxxx")
+    
+    @Command
+    val login() {
         //login processing
     }
 }
 ```
 
-### View Model property depends on other properties
-
+### DependencyProperty and ExtractProperty
 ```kotlin
-//name and price property will be updated when new stock is set
+// @DependencyProperty will generate binding for nameAndSymbol depends on stock, stock changes then nameAndSymbol changes
+// @ExtractProperty will generate binding for stock properties, for example code below, Property name and price will generated. If hasPrefix = true, then Property stock.name stock.price will generated.
 class StockViewModel() : ViewModel() {
-    var stock: Stock? by bindProperty("stock")
-    val name: String? by bindProperty("name", "stock") { stock!!.name }
-    val price: Float by bindProperty("price", "stock") { stock!!.price }
+    @ExtractProperty(
+        "name", "price",
+        // hasPrefix 
+        hasPrefix = false
+    )
+    var stock: Stock? by Delegates.property()
+    
+    @DependencyProperty("stock")
+    var nameAndSymbol: String by Delegates.property { stock?.name + stock?.symbol }
 }
 ```
 
@@ -105,8 +120,8 @@ Property
 ```
 
 ## Using with Gradle
-
 ```gradle
+// library with Annotation process dose not upload to bintray yet, coming soon!
 dependencies {
     compile 'com.benny.library:kbinding:0.1.4'
     

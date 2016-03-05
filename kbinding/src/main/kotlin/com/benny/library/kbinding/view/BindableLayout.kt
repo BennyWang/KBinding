@@ -63,7 +63,7 @@ class BindableLayout<T>(override val ctx: Context, override val owner: T) : Anko
 
     fun merge(prefix: String, layout: BindableLayout<*>) {
         bindingAssembler.merge(prefix, layout.bindingAssembler)
-        if(viewModel != null) bindingAssembler.bindTo(bindingDisposer!!, viewModel!!)
+        if(viewModel != null) layout.bindTo(bindingDisposer!!, viewModel!!)
     }
 
     override fun addView(view: View?, params: ViewGroup.LayoutParams?) {

@@ -12,5 +12,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.FIELD)
 public @interface ExtractProperty {
+    boolean hasPrefix() default true;
     String[] value();
 }

@@ -15,16 +15,17 @@ import javax.lang.model.element.Modifier;
 public class ExtractPropertyBinder implements ViewModelBinder {
     private String[] properties;
     private String property;
+    private boolean hasprefix;
 
-    public ExtractPropertyBinder(String property, String[] properties) {
+    public ExtractPropertyBinder(String property, String[] properties, boolean hasPrefix) {
         this.property = PropertyBinder.stripDelegate(property);
         this.properties = properties;
+        this.hasprefix = hasPrefix;
     }
 
     @Override
     public void generateCode(MethodSpec.Builder builder) {
         builder.addStatement("target.$L($S, target.get$L())", ViewModelClass.BIND_PROPERTY_CALL, property, StringUtils.capitalize(property));
-
         for(String childProperty : properties) {
             TypeSpec getter = TypeSpec.anonymousClassBuilder("")
                     .addSuperinterface(ParameterizedTypeName.get(Function0.class, Object.class))
@@ -38,7 +39,7 @@ public class ExtractPropertyBinder implements ViewModelBinder {
                     .build();
 
             builder.addStatement("target.$L($S, new String[] {$S}, $L)",
-                    ViewModelClass.BIND_PROPERTY_CALL, property + "." + childProperty, property, getter);
+                    ViewModelClass.BIND_PROPERTY_CALL, hasprefix ? (property + "." + childProperty) : childProperty, property, getter);
         }
     }
 }

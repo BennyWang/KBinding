@@ -92,7 +92,7 @@ public class KBindingProcessor extends AbstractProcessor {
     private void parseExtractPropertyBinder(Element element, Map<TypeElement, ViewModelClass> targetClassMap) {
         ViewModelClass viewModelClass = getOrCreateViewModelClass(targetClassMap, (TypeElement)element.getEnclosingElement());
         ExtractProperty dependencyProperty = element.getAnnotation(ExtractProperty.class);
-        viewModelClass.addBinder(new ExtractPropertyBinder(element.getSimpleName().toString(), dependencyProperty.value()));
+        viewModelClass.addBinder(new ExtractPropertyBinder(element.getSimpleName().toString(), dependencyProperty.value(), dependencyProperty.hasPrefix()));
     }
 
     private void parseCommandBinder(Element element, Map<TypeElement, ViewModelClass> targetClassMap) {

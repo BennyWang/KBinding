@@ -48,4 +48,4 @@ ext.projectDescription  = "RecyclerView Bindings for KBinding"
 ext.projectGroupId      = "com.benny.library"
 ext.projectArtifactId   = "KBinding-RecyclerView-v7"
 
-apply from: rootProject.file('gradle/bintrayUpload.gradle')
+apply from: rootProject.file('gradle/androidBintrayUpload.gradle')
