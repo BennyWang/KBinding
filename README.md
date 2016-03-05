@@ -78,14 +78,13 @@ class LoginViewModel() : ViewModel() {
 // @DependencyProperty will generate binding for nameAndSymbol depends on stock, stock changes then nameAndSymbol changes
 // @ExtractProperty will generate binding for stock properties, for example code below, Property name and price will generated. If hasPrefix = true, then Property stock.name stock.price will generated.
 class StockViewModel() : ViewModel() {
-    @ExtractProperty(
+    @delegate:ExtractProperty(
         "name", "price",
-        // hasPrefix 
         hasPrefix = false
     )
     var stock: Stock? by Delegates.property()
     
-    @DependencyProperty("stock")
+    @delegate:DependencyProperty("stock")
     var nameAndSymbol: String by Delegates.property { stock?.name + stock?.symbol }
 }
 ```
