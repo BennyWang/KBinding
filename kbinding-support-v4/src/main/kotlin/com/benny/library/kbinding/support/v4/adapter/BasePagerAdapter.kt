@@ -16,6 +16,7 @@ class BasePagerAdapter<T>(val viewCreator: IViewCreator<T>, val itemAccessor: Pa
         return p0 == p1;
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun instantiateItem(container: ViewGroup, position: Int): Any? {
         val itemView = viewCreator.view(container);
         container.addView(itemView)
