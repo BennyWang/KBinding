@@ -122,12 +122,15 @@ Property
 ```gradle
 // library with Annotation process dose not upload to bintray yet, coming soon!
 dependencies {
-    compile 'com.benny.library:kbinding:0.1.4'
+    compile 'com.benny.library:kbinding:0.2.0'
+    kapt 'com.benny.library:kbinding-compiler:0.2.0'
     
-    //add this for common bindings, for example View/enabled, TextView/text
-    compile 'com.benny.library:kbinding-common:0.1.4'
-    compile 'com.benny.library:kbinding-support-v4:0.1.4'
-    compile 'com.benny.library:kbinding-recyclerview-v7:0.1.4'
+    // for common bindings, View, TextView, and ...
+    compile 'com.benny.library:kbinding-common:0.2.0'
+    // for recyclerview bindings
+    compile 'com.benny.library:kbinding-recyclerview-v7:0.2.0'
+    // for support v4 bindings
+    compile 'com.benny.library:kbinding-support-v4:0.2.0'
 }
 ```
 
