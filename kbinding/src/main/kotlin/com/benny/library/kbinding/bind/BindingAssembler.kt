@@ -44,13 +44,13 @@ open class BindingAssembler {
     }
 
     fun bindTo(bindingDisposer: BindingDisposer, viewModel: IViewModel): Unit {
-        val cs: CompositeSubscription = CompositeSubscription()
-        oneWayPropertyBindings.forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
-        twoWayPropertyBindings.forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
-        multiplePropertyBindings.forEach { propertyBinding -> cs.add(viewModel.bind(propertyBinding)) }
-        commandBindings.forEach { commandBinding: CommandBinding<*> -> cs.add(viewModel.bind(commandBinding)) }
-        bindingDisposer.add { cs.unsubscribe() }
-        clear()
+        CompositeSubscription().apply {
+            oneWayPropertyBindings.forEach { propertyBinding -> add(viewModel.bind(propertyBinding)) }
+            twoWayPropertyBindings.forEach { propertyBinding -> add(viewModel.bind(propertyBinding)) }
+            multiplePropertyBindings.forEach { propertyBinding -> add(viewModel.bind(propertyBinding)) }
+            commandBindings.forEach { commandBinding: CommandBinding<*> -> add(viewModel.bind(commandBinding)) }
+            bindingDisposer.add { unsubscribe() }
+        }
     }
 
     fun merge(prefix: String, assembler: BindingAssembler) {
@@ -60,10 +60,10 @@ open class BindingAssembler {
         assembler.commandBindings.forEach { it -> commandBindings.add(it.prefix(prefix)) }
     }
 
-    private fun clear() {
+    /*private fun clear() {
         oneWayPropertyBindings.clear()
         twoWayPropertyBindings.clear()
         multiplePropertyBindings.clear()
         commandBindings.clear()
-    }
+    }*/
 }

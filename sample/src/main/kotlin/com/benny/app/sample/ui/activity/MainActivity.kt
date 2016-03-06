@@ -15,6 +15,7 @@ import com.benny.app.sample.ui.fragment.StockFragment
 import com.benny.app.sample.ui.layout.TitleToolBarView
 import com.benny.app.sample.ui.widget.ViewPagerIndicator
 import com.benny.app.sample.utils.generateViewId
+import com.benny.library.kbinding.annotation.Property
 import com.benny.library.kbinding.dsl.bind
 import com.benny.library.kbinding.dsl.inflate
 import com.benny.library.kbinding.support.v4.adapter.SimplePagerAdapterItemAccessor
@@ -25,12 +26,14 @@ import com.benny.library.kbinding.view.setContentView
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.support.v4.viewPager
+import kotlin.properties.Delegates
 
 
 class MainActivity : BaseActivity() {
     lateinit var toolBar: Toolbar
 
-    val fragments: List<Fragment>? by bindProperty("fragments") { listOf(LoginFragment(), MovieListFragment(), StockFragment(), SampleFragment()) }
+    @delegate:Property
+    val fragments: List<Fragment> by Delegates.property(listOf(LoginFragment(), MovieListFragment(), StockFragment(), SampleFragment()))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

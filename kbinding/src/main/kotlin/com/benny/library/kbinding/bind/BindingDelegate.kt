@@ -1,7 +1,9 @@
 package com.benny.library.kbinding.bind
 
+import kotlin.properties.Delegates
 import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 /**
  * Created by benny on 11/17/15.
@@ -10,10 +12,20 @@ import kotlin.properties.ReadWriteProperty
 interface BindingDelegate {
     val viewModel: ViewModel
 
-    fun <T> bindProperty(key: String): ReadWriteProperty<Any, T?> = viewModel.bindProperty(key)
+    fun <T> bindPropertyV2(key: String, initialValue: T? = null) = viewModel.bindPropertyV2(key, initialValue)
+    fun <T> bindPropertyV2(key: String, dependsOn: Array<String>, getter: () -> T) = viewModel.bindPropertyV2(key, dependsOn, getter)
+    fun <T> bindCommandV2(key: String, command: Command<T>) = viewModel.bindCommandV2(key, command)
 
-    fun <T> bindProperty(vararg keys: String, getter: () -> T?): ReadWriteProperty<Any, T?> = viewModel.bindProperty(*keys, getter = getter)
+    fun <T> Delegates.property(): ReadWriteProperty<Any, T?> = with(viewModel) {
+        return Delegates.property()
+    }
 
-    fun <T> bindCommand(key: String, cmdAction: (T, (Boolean) -> Unit) -> Unit): ReadOnlyProperty<Any, Command<T>> = viewModel.bindCommand(key, cmdAction)
+    fun <T> Delegates.property(initialValue: T): ReadWriteProperty<Any, T> = with(viewModel) {
+        return Delegates.property(initialValue)
+    }
+
+    fun <T> Delegates.property(getter: () -> T): ReadOnlyProperty<Any, T> = with(viewModel) {
+        return Delegates.property(getter)
+    }
 }
 

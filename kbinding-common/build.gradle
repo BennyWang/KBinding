@@ -48,4 +48,4 @@ ext.projectDescription  = "Common Bindings for KBinding"
 ext.projectGroupId      = "com.benny.library"
 ext.projectArtifactId   = "KBinding-Common"
 
-apply from: rootProject.file('gradle/bintrayUpload.gradle')
+apply from: rootProject.file('gradle/androidBintrayUpload.gradle')

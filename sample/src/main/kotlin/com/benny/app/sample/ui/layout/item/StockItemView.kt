@@ -92,7 +92,7 @@ class StockItemView : ItemViewBinderComponent {
                 textSize = 16f
                 textColorResource = R.color.color_3
                 this@textView.gravity = Gravity.CENTER_VERTICAL or Gravity.RIGHT
-                bind { text("price", mode = OneWay, converter = StockPriceConverter()) }
+                bind { text("realtimePrice", mode = OneWay, converter = StockPriceConverter()) }
             }.lparams {
                 leftOf(v)
                 centerVertically()

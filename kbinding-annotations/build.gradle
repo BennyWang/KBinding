@@ -1,0 +1,26 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext.projectName         = "KBinding-Annotations"
+ext.projectDescription  = "KBinding Annotations"
+ext.projectGroupId      = "com.benny.library"
+ext.projectArtifactId   = "KBinding-Annotations"
+
+apply from: rootProject.file('gradle/bintrayUpload.gradle')

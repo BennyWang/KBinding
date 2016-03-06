@@ -1,7 +1,11 @@
 package com.benny.app.sample.viewmodel
 
-import com.benny.library.kbinding.bind.Command
+import android.util.Log
+import com.benny.library.kbinding.annotation.Command
+import com.benny.library.kbinding.annotation.Property
 import com.benny.library.kbinding.bind.ViewModel
+import com.benny.library.kbinding.internal.BindingInitializer
+import kotlin.properties.Delegates
 
 /**
  * Created by benny on 11/19/15.
@@ -9,10 +13,14 @@ import com.benny.library.kbinding.bind.ViewModel
 
 class LoginViewModel(val loginDelegate: LoginViewModel.LoginDelegate) : ViewModel() {
 
-    var name: String by bindProperty("name") { "xxxxxxx@xxxxx.com" }
-    var password: String by bindProperty("password") { "xxxxxxxxx" }
+    @delegate:Property
+    var name: String by Delegates.property("xxxxxxx@xxxxx.com")
 
-    val login: Command<Unit> by bindCommand("login") { params, canExecute ->
+    @delegate:Property
+    var password: String by Delegates.property("xxxxxxxxx")
+
+    @Command
+    fun login() {
         if (name.equals("wangbin")) loginDelegate.onLoginSuccess("wangbin")
         else loginDelegate.onLoginFailed(RuntimeException("incorrect name or password"))
     }

@@ -44,7 +44,7 @@ abstract class StockSubInfoUI : ViewBinderComponent<View> {
                 textSize = 12f
                 textColor = Color.WHITE
                 gravity = Gravity.RIGHT
-                bind{ text(key, mode = OneWay, converter = converter) }
+                //bind{ text(key, mode = OneWay, converter = converter) }
             }.lparams(matchParent)
         }
     }
@@ -122,7 +122,7 @@ class StockInfoUI : ViewBinderComponent<ViewGroup> {
                         textSize = 42f
                         textColor = Color.WHITE
                         gravity = Gravity.CENTER
-                        bind { text("price", mode=OneWay, converter = StockPriceConverter()) }
+                        bind { text("realtimePrice", mode=OneWay, converter = StockPriceConverter()) }
                         bind { textColor("changePrice", mode=OneWay, converter = StockColorConverter()) }
                         text = "--"
                     }

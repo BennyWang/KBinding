@@ -15,7 +15,8 @@ import com.benny.app.sample.ui.layout.item.LoadingItemView
 import com.benny.app.sample.ui.layout.item.MovieItemView
 import com.benny.app.sample.utils.generateViewId
 import com.benny.app.sample.viewmodel.MovieViewModel
-import com.benny.library.kbinding.bind.Command
+import com.benny.library.kbinding.annotation.Command
+import com.benny.library.kbinding.annotation.Property
 import com.benny.library.kbinding.common.bindings.*
 import com.benny.library.kbinding.common.converter.ListToPagingAdapterConverter
 import com.benny.library.kbinding.dsl.bind
@@ -30,6 +31,8 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.*
+import rx.functions.Action1
+import kotlin.properties.Delegates
 
 /**
  * Created by benny on 1/28/16.
@@ -38,17 +41,22 @@ import org.jetbrains.anko.support.v4.*
 class MovieListFragment : BaseFragment() {
     var contentView: View? = null
 
-    var movies: List<Movie>? by bindProperty("movies")
-    val movieDetail: Command<Int> by bindCommand("movieDetail") { params, canExecute ->
+    @delegate:Property
+    var movies: List<Movie>? by Delegates.property()
+
+    @Command
+    fun movieDetail(params: Int) {
         startActivity<MovieDetailsActivity>("id" to movies!![params].id)
     }
 
-    val reloadMovies: Command<Unit> by bindCommand("reloadMovies") { params, canExecute ->
+    @Command
+    fun reloadMovies(canExecute: (Boolean) -> Unit) {
         toast("reload movie finished")
         canExecute(true)
     }
 
-    val loadMoreMovies: Command<Pair<Int, Any?> > by bindCommand("loadMoreMovies") { params, canExecute ->
+    @Command
+    fun loadMoreMovies(canExecute: (Boolean) -> Unit) {
         contentView?.postDelayed( { canExecute(true) } , 2000)
     }
 
