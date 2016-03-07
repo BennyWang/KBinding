@@ -1,7 +1,7 @@
 package com.benny.app.sample.viewmodel
 
 import com.benny.app.sample.network.service.douban.model.Movie
-import com.benny.library.kbinding.bind.ItemViewModel
+import com.benny.library.kbinding.viewmodel.ItemViewModel
 
 /**
  * Created by benny on 11/19/15.

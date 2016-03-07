@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import com.benny.library.kbinding.bind.ItemViewModel
+import com.benny.library.kbinding.viewmodel.ItemViewModel
 import com.benny.library.kbinding.common.adapter.AdapterItemAccessor
 import com.benny.library.kbinding.view.IViewCreator
 

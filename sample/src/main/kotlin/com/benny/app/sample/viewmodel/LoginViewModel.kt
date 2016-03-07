@@ -1,10 +1,8 @@
 package com.benny.app.sample.viewmodel
 
-import android.util.Log
 import com.benny.library.kbinding.annotation.Command
 import com.benny.library.kbinding.annotation.Property
-import com.benny.library.kbinding.bind.ViewModel
-import com.benny.library.kbinding.internal.BindingInitializer
+import com.benny.library.kbinding.viewmodel.ViewModel
 import kotlin.properties.Delegates
 
 /**

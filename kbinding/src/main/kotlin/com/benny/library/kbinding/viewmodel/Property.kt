@@ -1,4 +1,4 @@
-package com.benny.library.kbinding.bind
+package com.benny.library.kbinding.viewmodel
 
 import rx.Observable
 import rx.Observer

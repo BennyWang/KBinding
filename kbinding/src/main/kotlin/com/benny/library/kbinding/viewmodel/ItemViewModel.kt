@@ -1,5 +1,6 @@
-package com.benny.library.kbinding.bind;
+package com.benny.library.kbinding.viewmodel;
 
+import com.benny.library.kbinding.viewmodel.ViewModel
 import kotlin.properties.Delegates
 
 /**

@@ -2,7 +2,7 @@ package com.benny.app.sample.viewmodel
 
 import com.benny.app.sample.network.service.caishuo.model.Stock
 import com.benny.library.kbinding.annotation.ExtractProperty
-import com.benny.library.kbinding.bind.ItemViewModel
+import com.benny.library.kbinding.viewmodel.ItemViewModel
 import kotlin.properties.Delegates
 
 /**

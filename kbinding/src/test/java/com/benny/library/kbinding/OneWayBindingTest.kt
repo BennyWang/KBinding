@@ -3,7 +3,7 @@ package com.benny.library.kbinding
 import android.os.Build
 import com.benny.library.kbinding.bind.BindingAssembler
 import com.benny.library.kbinding.bind.BindingDisposer
-import com.benny.library.kbinding.bind.ViewModel
+import com.benny.library.kbinding.viewmodel.ViewModel
 import com.benny.library.kbinding.bind.oneWayPropertyBinding
 import org.junit.After
 import org.junit.Assert

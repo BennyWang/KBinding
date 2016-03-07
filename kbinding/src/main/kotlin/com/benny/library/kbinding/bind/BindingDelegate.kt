@@ -1,5 +1,7 @@
 package com.benny.library.kbinding.bind
 
+import com.benny.library.kbinding.viewmodel.Command
+import com.benny.library.kbinding.viewmodel.ViewModel
 import kotlin.properties.Delegates
 import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty

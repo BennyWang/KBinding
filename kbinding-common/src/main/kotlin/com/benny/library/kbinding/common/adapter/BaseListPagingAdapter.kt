@@ -2,7 +2,7 @@ package com.benny.library.kbinding.common.adapter
 
 import android.view.View
 import android.view.ViewGroup
-import com.benny.library.kbinding.bind.ItemViewModel
+import com.benny.library.kbinding.viewmodel.ItemViewModel
 import com.benny.library.kbinding.view.IViewCreator
 
 /**

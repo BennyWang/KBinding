@@ -1,5 +1,6 @@
-package com.benny.library.kbinding.bind
+package com.benny.library.kbinding.viewmodel
 
+import com.benny.library.kbinding.bind.*
 import com.benny.library.kbinding.converter.OneWayConverter
 import rx.Subscription
 import rx.functions.Action1

@@ -2,8 +2,8 @@ package com.benny.library.kbinding.view
 
 import com.benny.library.kbinding.bind.BindingDelegate
 import com.benny.library.kbinding.bind.BindingDisposer
-import com.benny.library.kbinding.bind.IViewModel
-import com.benny.library.kbinding.bind.ItemViewModel
+import com.benny.library.kbinding.viewmodel.IViewModel
+import com.benny.library.kbinding.viewmodel.ItemViewModel
 
 /**
  * Created by benny on 12/23/15.

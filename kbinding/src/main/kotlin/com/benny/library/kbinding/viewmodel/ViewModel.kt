@@ -1,8 +1,10 @@
-package com.benny.library.kbinding.bind;
+package com.benny.library.kbinding.viewmodel;
 
 import android.util.Log
+import com.benny.library.kbinding.bind.*
 import com.benny.library.kbinding.converter.OneWayConverter
-import com.benny.library.kbinding.internal.BindingInitializer
+import com.benny.library.kbinding.bind.BindingInitializer
+import com.benny.library.kbinding.viewmodel.IViewModel
 import rx.Subscription
 import rx.functions.Action1
 import rx.subscriptions.CompositeSubscription
@@ -101,7 +103,7 @@ open class ViewModel() : IViewModel {
         }
     }
 
-    fun <T> Delegates.property(): ReadWriteProperty<Any, T?> = Delegates.property<T?>(null)
+    fun <T> Delegates.property(): ReadWriteProperty<Any, T?> = property<T?>(null)
 
     fun <T> Delegates.property(initialValue: T): ReadWriteProperty<Any, T> {
         return object : ReadWriteProperty<Any, T> {

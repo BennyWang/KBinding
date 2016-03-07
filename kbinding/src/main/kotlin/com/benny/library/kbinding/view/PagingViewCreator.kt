@@ -1,7 +1,7 @@
 package com.benny.library.kbinding.view
 
 import com.benny.library.kbinding.bind.BindingDisposer
-import com.benny.library.kbinding.bind.ItemViewModel
+import com.benny.library.kbinding.viewmodel.ItemViewModel
 import rx.functions.Func2
 import rx.functions.Func3
 
