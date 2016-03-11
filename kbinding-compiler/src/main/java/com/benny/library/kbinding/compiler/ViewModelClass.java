@@ -44,7 +44,7 @@ public class ViewModelClass {
         result.addMethod(createBuildMethod());
 
         return JavaFile.builder(classPackage, result.build())
-                .addFileComment("Generated code from Butter Knife. Do not modify!")
+                .addFileComment("Generated code from KBinding. Do not modify!")
                 .build();
     }
 
