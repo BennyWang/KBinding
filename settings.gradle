@@ -1,1 +1,3 @@
-include ':kbinding-annotations', ':kbinding', ':kbinding-common', ':kbinding-recyclerview-v7', ':kbinding-support-v4', ':kbinding-compiler', ':sample'
+include ':kbinding-annotations', ':kbinding', ':kbinding-common', ':kbinding-adapterview', ':kbinding-support-v4', ':kbinding-compiler', ':sample'
+include ':autoadapter'
+project(':autoadapter').projectDir = new File(rootProject.projectDir, '../AutoAdapter/autoadapter')

@@ -15,12 +15,13 @@ import com.benny.app.sample.ui.fragment.StockFragment
 import com.benny.app.sample.ui.layout.TitleToolBarView
 import com.benny.app.sample.ui.widget.ViewPagerIndicator
 import com.benny.app.sample.utils.generateViewId
+import com.benny.library.autoadapter.IPagerAdapterItemAccessor
+import com.benny.library.autoadapter.SimpleAdapterItemAccessor
 import com.benny.library.kbinding.annotation.Property
 import com.benny.library.kbinding.dsl.bind
 import com.benny.library.kbinding.dsl.inflate
-import com.benny.library.kbinding.support.v4.adapter.SimplePagerAdapterItemAccessor
-import com.benny.library.kbinding.support.v4.bindings.fragmentAdapter
-import com.benny.library.kbinding.support.v4.converter.ListToFragmentPagerAdapterConverter
+import com.benny.library.kbinding.adapterview.bindings.fragmentAdapter
+import com.benny.library.kbinding.adapterview.converter.ListToFragmentPagerAdapterConverter
 import com.benny.library.kbinding.view.ViewBinderComponent
 import com.benny.library.kbinding.view.setContentView
 import org.jetbrains.anko.*
@@ -55,7 +56,7 @@ class MainActivity : BaseActivity() {
         return true
     }
 
-    inner class PagerAdapterAccessor(list: List<Fragment>) : SimplePagerAdapterItemAccessor<Fragment>(list) {
+    inner class PagerAdapterAccessor(list: List<Fragment>) : SimpleAdapterItemAccessor<Fragment>(list), IPagerAdapterItemAccessor<Fragment> {
         override fun getTitle(position: Int): String = when(position) {
             0 -> ctx.resources.getString(R.string.log_in)
             1 -> ctx.resources.getString(R.string.douban)

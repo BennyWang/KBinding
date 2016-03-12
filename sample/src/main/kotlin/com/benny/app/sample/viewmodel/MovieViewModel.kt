@@ -1,13 +1,14 @@
 package com.benny.app.sample.viewmodel
 
 import com.benny.app.sample.network.service.douban.model.Movie
-import com.benny.library.kbinding.viewmodel.ItemViewModel
+import com.benny.library.kbinding.adapterview.viewmodel.ItemViewModel
 
 /**
  * Created by benny on 11/19/15.
  */
 
 class MovieViewModel() : ItemViewModel<Movie>() {
+
     var movie: Movie? by bindProperty("movie")
 
     val title: String? by bindProperty("title", "movie") { movie!!.title }
@@ -19,7 +20,7 @@ class MovieViewModel() : ItemViewModel<Movie>() {
     val summary: String? by bindProperty("summary", "movie") { movie!!.summary }
     val ratingsCount: Int by bindProperty("ratingsCount", "movie") { movie!!.ratingsCount }
 
-    override fun updateData(t: Movie?) {
-        movie = t
+    override fun onDataChange(data: Movie?) {
+        movie = data
     }
 }

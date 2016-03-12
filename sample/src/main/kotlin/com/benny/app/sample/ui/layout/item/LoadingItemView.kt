@@ -3,7 +3,7 @@ package com.benny.app.sample.ui.layout.item
 import android.graphics.Color
 import android.view.Gravity
 import com.benny.app.sample.ui.extension.progressBar
-import com.benny.library.kbinding.view.ItemViewBinderComponent
+import com.benny.library.kbinding.adapterview.viewcreator.ItemViewBinderComponent
 import org.jetbrains.anko.*
 
 /**

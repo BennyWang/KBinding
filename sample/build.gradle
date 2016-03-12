@@ -65,7 +65,7 @@ dependencies {
     compile project(':kbinding')
     compile project(':kbinding-common')
     compile project(':kbinding-support-v4')
-    compile project(':kbinding-recyclerview-v7')
+    compile project(':kbinding-adapterview')
 
     kapt project(':kbinding-compiler')
 

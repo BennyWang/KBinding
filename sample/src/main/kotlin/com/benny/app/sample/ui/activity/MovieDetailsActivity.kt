@@ -41,7 +41,7 @@ class MovieDetailsActivity : BaseActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.title = ""
 
-        DoubanService.instance.movie(intent.getStringExtra("id")).subscribe { movieViewModel.updateData(it) }
+        DoubanService.instance.movie(intent.getStringExtra("id")).subscribe { movieViewModel.onDataChange(it) }
     }
 
 
