@@ -36,8 +36,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':kbinding')
-    compile project(':autoadapter')
 
+    compile 'com.benny.library:autoadapter:0.1.3'
     compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
 }
 repositories {

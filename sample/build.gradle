@@ -62,22 +62,21 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':kbinding')
-    compile project(':kbinding-common')
-    compile project(':kbinding-support-v4')
-    compile project(':kbinding-adapterview')
-
-    kapt project(':kbinding-compiler')
+    //compile project(':kbinding')
+    //compile project(':kbinding-common')
+    //compile project(':kbinding-support-v4')
+    //compile project(':kbinding-adapterview')
+    //kapt project(':kbinding-compiler')
 
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
     compile 'com.android.support:gridlayout-v7:23.2.0'
 
-    //compile 'com.benny.library:kbinding:0.2.0'
-    //compile 'com.benny.library:kbinding-common:0.2.0'
-    //compile 'com.benny.library:kbinding-recyclerview-v7:0.2.0'
-    //compile 'com.benny.library:kbinding-support-v4:0.2.0'
-    //kapt 'com.benny.library:kbinding-compiler:0.2.0'
+    compile 'com.benny.library:kbinding:0.2.1'
+    compile 'com.benny.library:kbinding-common:0.2.1'
+    compile 'com.benny.library:kbinding-adapterview:0.2.1'
+    compile 'com.benny.library:kbinding-support-v4:0.2.1'
+    kapt 'com.benny.library:kbinding-compiler:0.2.1'
 
 
     compile 'com.google.code.gson:gson:2.4'
