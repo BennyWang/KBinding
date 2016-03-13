@@ -2,6 +2,7 @@ package com.benny.library.kbinding.bind
 
 import com.benny.library.kbinding.converter.EmptyTwoWayConverter
 import com.benny.library.kbinding.converter.TwoWayConverter
+import com.benny.library.kbinding.viewmodel.Property
 import rx.Observable
 import rx.Subscription
 import rx.functions.Action1

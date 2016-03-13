@@ -1,5 +1,6 @@
 package com.benny.library.kbinding.bind
 
+import com.benny.library.kbinding.viewmodel.Command
 import rx.Observable
 import rx.Subscription
 import rx.functions.Action1

@@ -14,9 +14,9 @@ import org.jetbrains.anko.support.v4.startActivity
 import com.benny.library.kbinding.annotation.Property
 import com.benny.library.kbinding.annotation.Command
 import com.benny.library.kbinding.dsl.bind
-import com.benny.library.kbinding.support.v7.bindings.adapter
-import com.benny.library.kbinding.support.v7.bindings.itemClick
-import com.benny.library.kbinding.support.v7.converter.ListToRecyclerAdapterConverter
+import com.benny.library.kbinding.adapterview.bindings.adapter
+import com.benny.library.kbinding.adapterview.bindings.itemClick
+import com.benny.library.kbinding.adapterview.converter.ListToRecyclerAdapterConverter
 import com.benny.library.kbinding.view.ViewBinderComponent
 
 import com.benny.app.sample.network.service.caishuo.CaishuoService
@@ -25,6 +25,7 @@ import com.benny.app.sample.ui.activity.StockDetailsActivity
 import com.benny.app.sample.ui.layout.item.StockItemView
 import com.benny.app.sample.utils.generateViewId
 import com.benny.app.sample.viewmodel.StockViewModel
+import com.benny.library.kbinding.adapterview.viewcreator.viewCreator
 import kotlin.properties.Delegates
 
 class StockFragment : BaseFragment() {

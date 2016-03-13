@@ -36,7 +36,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':kbinding')
-
     compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
 }
 repositories {

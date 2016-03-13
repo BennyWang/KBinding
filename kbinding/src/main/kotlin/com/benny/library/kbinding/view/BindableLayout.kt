@@ -5,7 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.benny.library.kbinding.bind.*
 import com.benny.library.kbinding.dsl.bindableLayout
-import com.benny.library.kbinding.internal.BindingInitializer
+import com.benny.library.kbinding.bind.BindingInitializer
+import com.benny.library.kbinding.viewmodel.IViewModel
 import org.jetbrains.anko.AnkoContext
 
 /**

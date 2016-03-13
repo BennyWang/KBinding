@@ -1,8 +1,8 @@
 package com.benny.library.kbinding.compiler;
 
+import com.benny.library.kbinding.viewmodel.Command;
 import com.squareup.javapoet.*;
 
-import com.benny.library.kbinding.bind.Command;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import org.apache.commons.lang3.StringUtils;

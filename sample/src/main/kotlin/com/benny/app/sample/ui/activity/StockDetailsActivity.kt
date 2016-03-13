@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Gravity
 import com.benny.app.sample.network.service.caishuo.CaishuoService
-import com.benny.app.sample.network.service.caishuo.model.Stock
 import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.layout.stock.StockInfoUI
 import com.benny.app.sample.viewmodel.StockViewModel
@@ -39,7 +38,7 @@ class StockDetailsActivity : BaseActivity() {
 
         CaishuoService.instance.stock(intent.getStringExtra("id"))
             .subscribe({
-                stockViewModel.updateData(it)
+                stockViewModel.onDataChange(it)
             }, {
                 Log.e("StockDetailsActivity", "error : $it")
             })

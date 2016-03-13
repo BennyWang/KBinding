@@ -12,7 +12,6 @@ import android.widget.TextView
 import com.benny.app.sample.R
 import com.benny.app.sample.viewmodel.LoginViewModel
 import com.benny.library.kbinding.bind.BindingMode
-import com.benny.library.kbinding.bind.Command
 import com.benny.library.kbinding.common.bindings.click
 import com.benny.library.kbinding.common.bindings.enabled
 import com.benny.library.kbinding.common.bindings.text

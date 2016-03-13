@@ -12,7 +12,7 @@ import com.benny.library.kbinding.converter.StringConverter
 import com.benny.library.kbinding.dsl.OneWay
 import com.benny.library.kbinding.dsl.bind
 import com.benny.library.kbinding.dsl.resolveAttribute
-import com.benny.library.kbinding.view.ItemViewBinderComponent
+import com.benny.library.kbinding.adapterview.viewcreator.ItemViewBinderComponent
 import org.jetbrains.anko.*
 
 /**

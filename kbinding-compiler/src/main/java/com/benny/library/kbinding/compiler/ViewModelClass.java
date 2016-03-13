@@ -1,5 +1,6 @@
 package com.benny.library.kbinding.compiler;
 
+import com.benny.library.kbinding.bind.BindingBuilder;
 import com.squareup.javapoet.*;
 
 import java.util.ArrayList;
@@ -18,8 +19,6 @@ public class ViewModelClass {
     public static final String BIND_PROPERTY_CALL = "bindPropertyV2";
     public static final String BIND_COMMAND_CALL = "bindCommandV2";
     public static final String VIEW_MODEL_CLASS_SUFFIX = "$$KB";
-
-    private static final ClassName BINDING_BUILDER = ClassName.get("com.benny.library.kbinding.internal", "BindingBuilder");
 
     private final String classPackage;
     private final String className;
@@ -41,11 +40,11 @@ public class ViewModelClass {
         TypeSpec.Builder result = TypeSpec.classBuilder(className)
                 .addModifiers(PUBLIC);
 
-        result.addSuperinterface(ParameterizedTypeName.get(BINDING_BUILDER, TypeVariableName.get(targetClass)));
+        result.addSuperinterface(ParameterizedTypeName.get(ClassName.get(BindingBuilder.class), TypeVariableName.get(targetClass)));
         result.addMethod(createBuildMethod());
 
         return JavaFile.builder(classPackage, result.build())
-                .addFileComment("Generated code from Butter Knife. Do not modify!")
+                .addFileComment("Generated code from KBinding. Do not modify!")
                 .build();
     }
 

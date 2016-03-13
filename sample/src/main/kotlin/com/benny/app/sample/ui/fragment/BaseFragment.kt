@@ -3,8 +3,8 @@ package com.benny.app.sample.ui.fragment
 import android.support.v4.app.Fragment
 import com.benny.library.kbinding.bind.BindingDelegate
 import com.benny.library.kbinding.bind.BindingDisposer
-import com.benny.library.kbinding.bind.ViewModel
 import com.benny.library.kbinding.view.BindingDisposerGenerator
+import com.benny.library.kbinding.viewmodel.ViewModel
 
 
 /**

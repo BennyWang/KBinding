@@ -18,20 +18,19 @@ import com.benny.app.sample.viewmodel.MovieViewModel
 import com.benny.library.kbinding.annotation.Command
 import com.benny.library.kbinding.annotation.Property
 import com.benny.library.kbinding.common.bindings.*
-import com.benny.library.kbinding.common.converter.ListToPagingAdapterConverter
 import com.benny.library.kbinding.dsl.bind
 import com.benny.library.kbinding.dsl.wait
 import com.benny.library.kbinding.support.v4.bindings.refresh
-import com.benny.library.kbinding.support.v7.bindings.adapter
-import com.benny.library.kbinding.support.v7.bindings.itemClick
-import com.benny.library.kbinding.support.v7.bindings.paging
-import com.benny.library.kbinding.support.v7.converter.ListToRecyclerPagingAdapterConverter
+import com.benny.library.kbinding.adapterview.bindings.adapter
+import com.benny.library.kbinding.adapterview.bindings.itemClick
+import com.benny.library.kbinding.adapterview.bindings.paging
+import com.benny.library.kbinding.adapterview.converter.ListToRecyclerPagingAdapterConverter
+import com.benny.library.kbinding.adapterview.viewcreator.pagingViewCreator
 import com.benny.library.kbinding.view.ViewBinderComponent
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.*
-import rx.functions.Action1
 import kotlin.properties.Delegates
 
 /**
