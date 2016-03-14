@@ -11,7 +11,7 @@ import rx.Subscriber
  * Created by benny on 12/26/15.
  */
 
-class AdapterViewPagingOnSubscribe(val view: ListView) : Observable.OnSubscribe<Pair<Int, Any?>> {
+class ListViewPagingOnSubscribe(val view: ListView) : Observable.OnSubscribe<Pair<Int, Any?>> {
     override fun call(subscriber: Subscriber<in Pair<Int, Any?>>) {
         val pagingListener = AdapterPagingListener<Any?> { receiver, previous, position ->
             if (subscriber.isUnsubscribed) return@AdapterPagingListener

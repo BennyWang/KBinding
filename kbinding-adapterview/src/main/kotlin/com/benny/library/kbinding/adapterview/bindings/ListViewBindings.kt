@@ -9,7 +9,7 @@ import com.benny.library.autoadapter.AutoListPagingAdapter
 import com.benny.library.autoadapter.listener.AdapterPagingCompleteListener
 import com.benny.library.autoadapter.listener.AdapterPagingListener
 import com.benny.library.kbinding.bind.*
-import com.benny.library.kbinding.adapterview.bindings.utils.AdapterViewPagingOnSubscribe
+import com.benny.library.kbinding.adapterview.bindings.utils.ListViewPagingOnSubscribe
 import com.benny.library.kbinding.converter.OneWayConverter
 import com.jakewharton.rxbinding.widget.RxAdapterView
 import rx.Observable
@@ -41,7 +41,7 @@ fun ListView.swapAdapter(): Action1<ListAdapter> {
     }
 }
 
-fun ListView.paging(): Observable<Pair<Int, Any?>> = Observable.create(AdapterViewPagingOnSubscribe(this))
+fun ListView.paging(): Observable<Pair<Int, Any?>> = Observable.create(ListViewPagingOnSubscribe(this))
 
 //Event
 

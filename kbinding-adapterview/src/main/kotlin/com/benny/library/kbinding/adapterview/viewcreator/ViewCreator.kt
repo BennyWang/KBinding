@@ -2,10 +2,12 @@ package com.benny.library.kbinding.adapterview.viewcreator
 
 import android.view.View
 import android.view.ViewGroup
+import com.benny.library.autoadapter.utils.Func3
 import com.benny.library.autoadapter.viewcreator.IViewCreator
-import com.benny.library.kbinding.adapterview.viewcreator.ItemViewBinderComponent
+import com.benny.library.autoadapter.viewcreator.ViewCreatorCollection
 import com.benny.library.kbinding.bind.BindingDisposer
 import com.benny.library.kbinding.adapterview.viewmodel.ItemViewModel
+import com.benny.library.kbinding.adapterview.viewmodel.MockItemViewModel
 import com.benny.library.kbinding.view.BindingDisposerGenerator
 
 /**
@@ -31,4 +33,10 @@ open class ViewCreator(val bindingDisposer: BindingDisposer, val itemViewBinderC
     }
 }
 
-fun BindingDisposerGenerator.viewCreator(viewBinderComponent: ItemViewBinderComponent, viewModelFactory: () -> ItemViewModel<*>): ViewCreator = ViewCreator(bindingDisposer, viewBinderComponent, viewModelFactory)
+fun BindingDisposerGenerator.viewCreator(viewBinderComponent: ItemViewBinderComponent, viewModelFactory: () -> ItemViewModel<*>): IViewCreator<Any> = ViewCreator(bindingDisposer, viewBinderComponent, viewModelFactory)
+fun BindingDisposerGenerator.pagingViewCreator(loadingViewBinderComponent: ItemViewBinderComponent, itemViewBinderComponent: ItemViewBinderComponent, viewModelFactory: () -> ItemViewModel<*>): IViewCreator<Any> {
+    return ViewCreatorCollection.Builder<Any>()
+            .addFilter(Func3 { data, position, itemCount -> data != null }, ViewCreator(bindingDisposer, itemViewBinderComponent, viewModelFactory))
+            .addFilter(Func3 { data, position, itemCount -> data == null && position == itemCount - 1 }, ViewCreator(bindingDisposer, loadingViewBinderComponent, { MockItemViewModel<Any>() }))
+            .build()
+}
