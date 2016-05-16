@@ -14,7 +14,6 @@ import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.layout.item.LoadingItemView
 import com.benny.app.sample.ui.layout.item.MovieItemView
 import com.benny.app.sample.utils.generateViewId
-import com.benny.app.sample.viewmodel.MovieViewModel
 import com.benny.library.kbinding.annotation.Command
 import com.benny.library.kbinding.annotation.Property
 import com.benny.library.kbinding.common.bindings.*
@@ -26,6 +25,8 @@ import com.benny.library.kbinding.adapterview.bindings.itemClick
 import com.benny.library.kbinding.adapterview.bindings.paging
 import com.benny.library.kbinding.adapterview.converter.ListToRecyclerPagingAdapterConverter
 import com.benny.library.kbinding.adapterview.viewcreator.pagingViewCreator
+import com.benny.library.kbinding.adapterview.viewmodel.ItemViewModel
+import com.benny.library.kbinding.annotation.DependencyProperty
 import com.benny.library.kbinding.view.ViewBinderComponent
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
 import org.jetbrains.anko.*
@@ -92,6 +93,39 @@ class MovieListFragment : BaseFragment() {
                     wait { until("movies") { fadeOut() } }
                 }.lparams(matchParent, matchParent)
             }
+        }
+    }
+
+    class MovieViewModel() : ItemViewModel<Movie>() {
+        @delegate:Property
+        var movie: Movie? by Delegates.property()
+
+        @delegate:DependencyProperty("movie")
+        val title: String? by Delegates.property { movie!!.title }
+
+        @delegate:DependencyProperty("movie")
+        val smallCover: String? by Delegates.property{ movie!!.images.small }
+
+        @delegate:DependencyProperty("movie")
+        val bigCover: String? by Delegates.property{ movie!!.images.large }
+
+        @delegate:DependencyProperty("movie")
+        val score: Float by Delegates.property { movie!!.rating.average }
+
+        @delegate:DependencyProperty("movie")
+        val casts: String? by Delegates.property { movie!!.casts.map { it -> it.name }.joinToString("/") }
+
+        @delegate:DependencyProperty("movie")
+        val genres: String? by Delegates.property { movie!!.genres.joinToString("/") }
+
+        @delegate:DependencyProperty("movie")
+        val summary: String? by Delegates.property { movie!!.summary }
+
+        @delegate:DependencyProperty("movie")
+        val ratingsCount: Int by Delegates.property { movie!!.ratingsCount }
+
+        override fun onDataChange(data: Movie?) {
+            movie = data
         }
     }
 }

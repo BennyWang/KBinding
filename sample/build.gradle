@@ -38,11 +38,6 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
-        targetCompatibility JavaVersion.VERSION_1_6
-    }
-
     buildTypes {
         release {
             signingConfig signingConfigs.release

@@ -16,7 +16,7 @@ object BindingInitializer {
     private fun <T> getOrCreateBuilder(clazz: Class<T>): BindingBuilder<T> {
         return builders.getOrPut(clazz, {
             try {
-                return Class.forName(clazz.canonicalName + "\$\$KB").newInstance() as BindingBuilder<T>
+                return Class.forName(clazz.name + "\$\$KB").newInstance() as BindingBuilder<T>
             } catch (e: Exception) {
                 return MockBindingBuilder()
             }
