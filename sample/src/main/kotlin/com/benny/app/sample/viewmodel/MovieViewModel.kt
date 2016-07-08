@@ -1,6 +1,7 @@
 package com.benny.app.sample.viewmodel
 
 import com.benny.app.sample.network.service.douban.model.Movie
+import com.benny.library.autoadapter.viewholder.DataGetter
 import com.benny.library.kbinding.adapterview.viewmodel.ItemViewModel
 
 /**
@@ -20,7 +21,7 @@ class MovieViewModel() : ItemViewModel<Movie>() {
     val summary: String? by bindProperty("summary", "movie") { movie!!.summary }
     val ratingsCount: Int by bindProperty("ratingsCount", "movie") { movie!!.ratingsCount }
 
-    override fun onDataChange(data: Movie?) {
-        movie = data
+    override fun onDataChange(getter: DataGetter<Movie?>, position: Int) {
+        movie = getter.data
     }
 }

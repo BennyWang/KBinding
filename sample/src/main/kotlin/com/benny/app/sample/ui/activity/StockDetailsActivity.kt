@@ -9,6 +9,7 @@ import com.benny.app.sample.network.service.caishuo.CaishuoService
 import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.layout.stock.StockInfoUI
 import com.benny.app.sample.viewmodel.StockViewModel
+import com.benny.library.autoadapter.viewholder.DataGetter
 import com.benny.library.kbinding.common.bindings.fadeOut
 import com.benny.library.kbinding.common.bindings.until
 import com.benny.library.kbinding.dsl.inflate
@@ -38,7 +39,7 @@ class StockDetailsActivity : BaseActivity() {
 
         CaishuoService.instance.stock(intent.getStringExtra("id"))
             .subscribe({
-                stockViewModel.onDataChange(it)
+                stockViewModel.onDataChange(DataGetter(null, it, null), 0)
             }, {
                 Log.e("StockDetailsActivity", "error : $it")
             })

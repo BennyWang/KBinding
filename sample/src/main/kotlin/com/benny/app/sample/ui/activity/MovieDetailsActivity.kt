@@ -12,6 +12,7 @@ import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.extension.simpleDraweeView
 import com.benny.app.sample.ui.layout.TitleToolBarView
 import com.benny.app.sample.viewmodel.MovieViewModel
+import com.benny.library.autoadapter.viewholder.DataGetter
 import com.benny.library.kbinding.common.bindings.*
 import com.benny.library.kbinding.converter.StringConverter
 import com.benny.library.kbinding.dsl.OneWay
@@ -41,7 +42,7 @@ class MovieDetailsActivity : BaseActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.title = ""
 
-        DoubanService.instance.movie(intent.getStringExtra("id")).subscribe { movieViewModel.onDataChange(it) }
+        DoubanService.instance.movie(intent.getStringExtra("id")).subscribe { movieViewModel.onDataChange(DataGetter(null, it, null), 0) }
     }
 
 

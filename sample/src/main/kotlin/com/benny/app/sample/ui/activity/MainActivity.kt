@@ -3,9 +3,14 @@ package com.benny.app.sample.ui.activity
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
+import android.view.View
+import com.ToxicBakery.viewpager.transforms.ABaseTransformer
+import com.ToxicBakery.viewpager.transforms.ScaleInOutTransformer
+import com.ToxicBakery.viewpager.transforms.ZoomOutSlideTransformer
 import com.benny.app.sample.R
 import com.benny.app.sample.ui.extension.viewPagerIndicator
 import com.benny.app.sample.ui.fragment.LoginFragment
@@ -73,6 +78,10 @@ class MainActivity : BaseActivity() {
                 }
                 val pager = viewPager {
                     id = generateViewId()
+                    clipToPadding = false
+                    //setPadding(40, 0 , 40, 0)
+                    //pageMargin = 20
+                    setPageTransformer(false, ZoomOutSlideTransformer())
                     bind { fragmentAdapter("fragments", converter = ListToFragmentPagerAdapterConverter((owner as MainActivity).supportFragmentManager, { PagerAdapterAccessor(it) })) }
                 }.lparams(matchParent, 0, 1f)
 

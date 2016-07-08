@@ -4,9 +4,9 @@ import android.app.Activity
 import android.graphics.Color
 import android.view.Gravity
 import com.benny.app.sample.R
-import com.benny.app.sample.ui.extension.toolbar
 import com.benny.library.kbinding.view.ViewBinderComponent
 import org.jetbrains.anko.*
+import org.jetbrains.anko.appcompat.v7.toolbar
 
 /**
  * Created by benny on 1/15/16.

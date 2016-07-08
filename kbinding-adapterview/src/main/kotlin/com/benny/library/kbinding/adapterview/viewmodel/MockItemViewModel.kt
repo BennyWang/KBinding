@@ -1,14 +1,12 @@
 package com.benny.library.kbinding.adapterview.viewmodel;
 
-import com.benny.library.autoadapter.listener.DataChangeListener
-import com.benny.library.kbinding.viewmodel.ViewModel
-import kotlin.properties.Delegates
+import com.benny.library.autoadapter.viewholder.DataGetter
 
 /**
  * Created by benny on 11/17/15.
  */
 
 class MockItemViewModel<T> : ItemViewModel<T>() {
-    override fun onDataChange(data: T) {
+    override fun onDataChange(getter: DataGetter<T>?, position: Int) {
     }
 }

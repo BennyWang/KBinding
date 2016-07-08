@@ -14,6 +14,7 @@ import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.layout.item.LoadingItemView
 import com.benny.app.sample.ui.layout.item.MovieItemView
 import com.benny.app.sample.utils.generateViewId
+import com.benny.library.autoadapter.viewholder.DataGetter
 import com.benny.library.kbinding.annotation.Command
 import com.benny.library.kbinding.annotation.Property
 import com.benny.library.kbinding.common.bindings.*
@@ -124,8 +125,8 @@ class MovieListFragment : BaseFragment() {
         @delegate:DependencyProperty("movie")
         val ratingsCount: Int by Delegates.property { movie!!.ratingsCount }
 
-        override fun onDataChange(data: Movie?) {
-            movie = data
+        override fun onDataChange(getter: DataGetter<Movie?>, position: Int) {
+            movie = getter.data
         }
     }
 }
