@@ -2,6 +2,7 @@ KBinding
 ======================
 
 Android MVVM framework write in kotlin, base on anko, simple but powerful.
+It depends on my another project [AutoAdapter](https://github.com/BennyWang/AutoAdapter)(A library for simplifying adapter creation)
 
 ## Contents
 
@@ -98,7 +99,7 @@ relativeLayout {
 }
 ```
     
-## Extend Binding Property(Depend on RxBinding heavily)
+## Extend Binding Property
 
 Event
 
@@ -123,14 +124,14 @@ Property
 // library with Annotation process dose not upload to bintray yet, coming soon!
 dependencies {
     compile 'com.benny.library:kbinding:0.2.0'
-    kapt 'com.benny.library:kbinding-compiler:0.2.0'
+    kapt 'com.benny.library:kbinding-compiler:0.2.2'
     
     // for common bindings, View, TextView, and ...
-    compile 'com.benny.library:kbinding-common:0.2.0'
+    compile 'com.benny.library:kbinding-common:0.2.2'
     // for recyclerview bindings
-    compile 'com.benny.library:kbinding-recyclerview-v7:0.2.0'
+    compile 'com.benny.library:kbinding-recyclerview-v7:0.2.2'
     // for support v4 bindings
-    compile 'com.benny.library:kbinding-support-v4:0.2.0'
+    compile 'com.benny.library:kbinding-support-v4:0.2.2'
 }
 ```
 
