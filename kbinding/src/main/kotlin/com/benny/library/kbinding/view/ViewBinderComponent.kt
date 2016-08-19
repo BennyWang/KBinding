@@ -12,7 +12,7 @@ import org.jetbrains.anko.AnkoContextImpl
  * Created by benny on 12/9/15.
  */
 
-interface ViewBinderComponent<T> : AnkoComponent<T>, ViewComponent {
+interface ViewBinderComponent<T> : AnkoComponent<T>, ViewComponent<T> {
     fun createViewBinder(ankoContext: AnkoContext<T>): ViewBinder {
         val viewBuilder = builder()
         return ankoContext.bindableLayout { this@bindableLayout.viewBuilder() }

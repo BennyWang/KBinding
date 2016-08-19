@@ -47,7 +47,7 @@ class MovieDetailsActivity : BaseActivity() {
 
 
     class MovieDetailsActivityUI : ViewBinderComponent<MovieDetailsActivity> {
-        override fun builder(): AnkoContext<*>.() -> Unit = {
+        override fun builder(): AnkoContext<out MovieDetailsActivity>.() -> Unit = {
             verticalLayout {
                 appBarLayout {
                     (owner as MovieDetailsActivity).toolBar = inflate(TitleToolBarView(ctx.resources.getString(R.string.movie_details)), this@appBarLayout) as Toolbar

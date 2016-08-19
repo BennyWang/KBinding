@@ -55,7 +55,7 @@ class BindableLayout<T>(override val ctx: Context, override val owner: T) : Anko
         bindingAssembler.addBinding(propertyBinding)
     }
 
-    fun inflate(viewComponent: ViewComponent, parent: ViewGroup, prefix: String = "") : View {
+    fun inflate(viewComponent: ViewComponent<T>, parent: ViewGroup, prefix: String = "") : View {
         val layout = AnkoContext.create(ctx, owner).bindableLayout { viewComponent.builder()() }
         merge(prefix, layout)
         parent.addView(layout.view)
