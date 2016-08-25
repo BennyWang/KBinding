@@ -12,13 +12,12 @@ import javax.lang.model.element.Modifier;
  * Created by benny on 3/3/16.
  */
 
-public class ExtractPropertyBinder implements ViewModelBinder {
+public class ExtractPropertyBinder extends CommonBinder {
     private String[] properties;
-    private String property;
     private boolean hasprefix;
 
     public ExtractPropertyBinder(String property, String[] properties, boolean hasPrefix) {
-        this.property = PropertyBinder.stripDelegate(property);
+        super(PropertyBinder.stripDelegate(property));
         this.properties = properties;
         this.hasprefix = hasPrefix;
     }

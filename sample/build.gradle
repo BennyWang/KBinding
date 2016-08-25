@@ -13,6 +13,9 @@ repositories {
     jcenter()
     mavenCentral()
 }
+kapt {
+    generateStubs = true
+}
 
 android {
     compileSdkVersion 23

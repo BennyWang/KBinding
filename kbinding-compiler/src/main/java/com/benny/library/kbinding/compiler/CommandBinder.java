@@ -15,12 +15,11 @@ import java.util.List;
  * Created by benny on 3/3/16.
  */
 
-public class CommandBinder implements ViewModelBinder {
-    private String property;
+public class CommandBinder extends CommonBinder {
     private List<TypeName> parameterTypes;
 
     public CommandBinder(String property, List<TypeName> parameterTypes) {
-        this.property = property;
+        super(property);
         this.parameterTypes = parameterTypes;
     }
 
