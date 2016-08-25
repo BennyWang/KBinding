@@ -6,6 +6,7 @@ import android.graphics.drawable.*
 import android.graphics.drawable.shapes.ArcShape
 import android.graphics.drawable.shapes.RectShape
 import android.graphics.drawable.shapes.RoundRectShape
+import android.graphics.drawable.shapes.Shape
 import android.view.View
 import org.jetbrains.anko.internals.AnkoInternals
 import java.io.InputStream
@@ -15,25 +16,25 @@ import java.util.*
  * Created by benny on 12/10/15.
  */
 
-interface DrawableProvider<T: Drawable> {
+interface DrawableProvider<out T: Drawable> {
     val drawable: T
     var drawableState: IntArray
     var drawableLevel: Int
 }
 
 @Suppress("UNCHECKED_CAST")
-interface RawDrawableProvider<T: Drawable> : DrawableProvider<T> {
+interface RawDrawableProvider<out T: Drawable> : DrawableProvider<T> {
     override val drawable: T
         get() = this as T
     override var drawableState: IntArray
         set(value) {
-            (this as T).setState(value)
+            (this as T).state = value
         }
         get() = (this as T).state
 
     override var drawableLevel: Int
         set(value) {
-            (this as T).setLevel(value)
+            (this as T).level = value
         }
         get() = (this as T).level
 }
@@ -231,15 +232,15 @@ class _OvalManager() : _ShapeManager() {
             }
         }
 
-    open class OvalShape : RectShape() {
+    open class OvalShape : Shape() {
         override fun draw(canvas: Canvas, paint: Paint) {
-            canvas.drawOval(rect(), paint)
+            canvas.drawOval(RectF(0f, 0f, width, height), paint)
         }
-        override fun getOutline(outline: Outline) {
+        /*override fun getOutline(outline: Outline) {
             val rect = rect()
             outline.setOval(Math.ceil(rect.left.toDouble()).toInt(), Math.ceil(rect.top.toDouble()).toInt(),
                     Math.floor(rect.right.toDouble()).toInt(), Math.floor(rect.bottom.toDouble()).toInt())
-        }
+        }*/
     }
 }
 

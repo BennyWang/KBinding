@@ -71,7 +71,7 @@ class MainActivity : BaseActivity() {
     }
 
     inner class MainActivityUI : ViewBinderComponent<MainActivity> {
-        override fun builder(): AnkoContext<*>.() -> Unit = {
+        override fun builder(): AnkoContext<out MainActivity>.() -> Unit = {
             verticalLayout {
                 appBarLayout {
                     toolBar = inflate(TitleToolBarView(ctx.resources.getString(R.string.home)), this@appBarLayout) as Toolbar
@@ -79,10 +79,10 @@ class MainActivity : BaseActivity() {
                 val pager = viewPager {
                     id = generateViewId()
                     clipToPadding = false
-                    //setPadding(40, 0 , 40, 0)
-                    //pageMargin = 20
+                    setPadding(40, 0 , 40, 0)
+                    pageMargin = 20
                     setPageTransformer(false, ZoomOutSlideTransformer())
-                    bind { fragmentAdapter("fragments", converter = ListToFragmentPagerAdapterConverter((owner as MainActivity).supportFragmentManager, { PagerAdapterAccessor(it) })) }
+                    bind { fragmentAdapter("fragments", converter = ListToFragmentPagerAdapterConverter((owner).supportFragmentManager, { PagerAdapterAccessor(it) })) }
                 }.lparams(matchParent, 0, 1f)
 
                 viewPagerIndicator {

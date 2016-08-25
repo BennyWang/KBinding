@@ -31,7 +31,7 @@ import org.jetbrains.anko.gridlayout.v7.space
  * Created by benny on 12/31/15.
  */
 
-abstract class StockSubInfoUI : ViewBinderComponent<View> {
+abstract class StockSubInfoUI : ViewBinderComponent<Any> {
     fun ViewGroup.cell(ankoContext: AnkoContext<*>, title: String, key: String, converter: OneWayConverter<*, CharSequence> = EmptyOneWayConverter1()): View = with(ankoContext) {
         this@cell.linearLayout {
             textView {
@@ -91,12 +91,12 @@ class StockSubInfoHKUI : StockSubInfoUI() {
 }
 
 
-class StockInfoUI : ViewBinderComponent<ViewGroup> {
+class StockInfoUI : ViewBinderComponent<Any> {
     val visibility4HS = OneWayConverter<Any?, Boolean> { true }
 
-    val viewOfMarket = OneWayConverter<MarketType, ViewBinderComponent<*>> { source -> if(source == MarketType.SH_SZ) StockSubInfoHSUI() else StockSubInfoHKUI() }
+    val viewOfMarket = OneWayConverter<MarketType, ViewBinderComponent<Any>> { source -> if(source == MarketType.SH_SZ) StockSubInfoHSUI() else StockSubInfoHKUI() }
 
-    override fun builder(): AnkoContext<*>.() -> Unit = {
+    override fun builder(): AnkoContext<out Any>.() -> Unit = {
         fun ViewGroup.cell(title: String, key: String): View = with(this) {
             verticalLayout {
                 textView {

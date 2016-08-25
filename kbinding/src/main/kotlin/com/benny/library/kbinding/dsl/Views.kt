@@ -32,8 +32,8 @@ inline fun AnkoContext<*>.wait(propertyBindingFactory: () -> PropertyBinding): U
     bind(propertyBindingFactory)
 }
 
-fun <T> AnkoContext<T>.inflate(viewComponent: ViewComponent, parent: ViewGroup, prefix: String = "") : View = when(this) {
-    is BindableLayout<*> -> {
+fun <T> AnkoContext<T>.inflate(viewComponent: ViewComponent<T>, parent: ViewGroup, prefix: String = "") : View = when(this) {
+    is BindableLayout<T> -> {
         inflate(viewComponent, parent, prefix)
     }
     else -> {
