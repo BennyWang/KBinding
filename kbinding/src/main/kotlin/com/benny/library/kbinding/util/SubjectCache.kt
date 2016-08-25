@@ -29,7 +29,4 @@ object SubjectCache {
 }
 
 fun <T> View.getSubject(): PublishSubject<T> = SubjectCache.getOrCreatePublishSubject<T>(this)
-/**
- *
- */
 fun View.getUnitSubject(): PublishSubject<Unit> = getSubject()

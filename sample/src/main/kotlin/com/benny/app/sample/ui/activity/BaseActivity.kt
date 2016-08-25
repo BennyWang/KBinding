@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.benny.library.kbinding.bind.BindingDelegate
 import com.benny.library.kbinding.bind.BindingDisposer
+import com.benny.library.kbinding.util.SubjectCache
 import com.benny.library.kbinding.view.BindingDisposerGenerator
 import com.benny.library.kbinding.viewmodel.ViewModel
 
@@ -18,6 +19,7 @@ open class BaseActivity : AppCompatActivity(), BindingDisposerGenerator, Binding
     override fun onDestroy() {
         super.onDestroy()
         bindingDisposer.unbind()
+        SubjectCache.removeContext(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {
