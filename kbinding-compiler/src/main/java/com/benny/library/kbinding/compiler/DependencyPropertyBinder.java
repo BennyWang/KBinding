@@ -11,12 +11,11 @@ import java.util.Arrays;
  * Created by benny on 3/3/16.
  */
 
-public class DependencyPropertyBinder implements ViewModelBinder {
+public class DependencyPropertyBinder extends CommonBinder {
     private String[] dependsOn;
-    private String property;
 
     public DependencyPropertyBinder(String property, String[] dependsOn) {
-        this.property = PropertyBinder.stripDelegate(property);
+        super(PropertyBinder.stripDelegate(property));
         this.dependsOn = dependsOn;
     }
 

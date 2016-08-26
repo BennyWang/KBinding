@@ -42,6 +42,7 @@ public class ViewModelClass {
 
         result.addSuperinterface(ParameterizedTypeName.get(ClassName.get(BindingBuilder.class), TypeVariableName.get(targetClass)));
         result.addMethod(createBuildMethod());
+        createBuildField(result);
 
         return JavaFile.builder(classPackage, result.build())
                 .addFileComment("Generated code from KBinding. Do not modify!")
@@ -58,5 +59,11 @@ public class ViewModelClass {
             binder.generateCode(result);
         }
         return result.build();
+    }
+
+    private void createBuildField(TypeSpec.Builder builder){
+        for (ViewModelBinder binder : binders) {
+            builder.addField(binder.generateConstantField().build());
+        }
     }
 }

@@ -8,8 +8,7 @@ import org.apache.commons.lang3.StringUtils;
  * Created by benny on 3/3/16.
  */
 
-public class PropertyBinder implements ViewModelBinder {
-    protected String property;
+public class PropertyBinder extends CommonBinder {
 
     public static String stripDelegate(String value) {
         return value.substring(0, value.indexOf('$'));
@@ -21,7 +20,7 @@ public class PropertyBinder implements ViewModelBinder {
     }
 
     public PropertyBinder(String property) {
-        this.property = stripDelegate(property);
+        super(stripDelegate(property));
     }
 
     @Override
