@@ -18,7 +18,7 @@ public abstract class CommonBinder implements ViewModelBinder {
 
     @Override
     public FieldSpec.Builder generateConstantField() {
-        return FieldSpec.builder(TypeVariableName.get("String"),property, Modifier.PUBLIC,Modifier.STATIC,Modifier.FINAL)
+        return FieldSpec.builder(TypeVariableName.get("String"),"k_"+property, Modifier.PUBLIC,Modifier.STATIC,Modifier.FINAL)
                 .initializer("$S",property);
     }
 }

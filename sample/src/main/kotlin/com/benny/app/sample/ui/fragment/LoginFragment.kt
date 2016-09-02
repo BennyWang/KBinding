@@ -1,6 +1,5 @@
 package com.benny.app.sample.ui.fragment
 
-import android.animation.StateListAnimator
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -14,9 +13,12 @@ import android.view.animation.BounceInterpolator
 import android.view.animation.TranslateAnimation
 import android.widget.TextView
 import com.benny.app.sample.R
+import com.benny.app.sample.ui.activity.AnimationActivity
+import com.benny.app.sample.ui.activity.MovieDetailsActivity
 import com.benny.app.sample.viewmodel.LoginViewModel
 import com.benny.app.sample.viewmodel.`LoginViewModel$$KB`.*
 import com.benny.library.kbinding.bind.BindingMode
+import com.benny.library.kbinding.bind.commandBinding
 import com.benny.library.kbinding.common.bindings.*
 import com.benny.library.kbinding.common.borderRoundRect
 import com.benny.library.kbinding.common.stateList
@@ -28,6 +30,7 @@ import com.benny.library.kbinding.dsl.bind
 import com.benny.library.kbinding.view.ViewBinderComponent
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.act
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 
 class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
@@ -45,6 +48,7 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
 
     override fun onLoginSuccess(user: String) {
         toast("Login success with user " + user)
+        startActivity<AnimationActivity>()
     }
 
     override fun onLoginFailed(e: Throwable) {
@@ -59,27 +63,6 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
     override fun onDestroyView() {
         super.onDestroyView()
         Log.d("LoginFragment", "onDestroyView")
-
-    }
-
-    fun jump(view: View, finish: () -> Unit) {
-        val down = TranslateAnimation(0f, 0f, -300f, 0f)
-        down.fillAfter = true
-        down.interpolator = BounceInterpolator()
-        down.duration = 2000
-        down.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) {
-            }
-
-            override fun onAnimationRepeat(animation: Animation?) {
-            }
-
-            override fun onAnimationEnd(animation: Animation?) {
-                finish()
-            }
-
-        })
-        view.startAnimation(down)
 
     }
 
@@ -113,13 +96,13 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
                     editText {
                         hintResource = R.string.name_hint
                         style = tvStyle
-                        bind { text(path = name, mode = TwoWay) }
+                        bind { text(path = k_name, mode = TwoWay) }
                     }.lparams(width = matchParent)
                     view { backgroundResource = R.color.color_f2 }.lparams(width = matchParent, height = 1)
                     editText {
                         hintResource = R.string.password_hint
                         style = tvStyle
-                        bind { text(path = password, mode = BindingMode.TwoWay) }
+                        bind { text(path = k_password, mode = BindingMode.TwoWay) }
                     }.lparams(width = matchParent)
                 }.lparams(width = matchParent)
                 textView {
@@ -132,11 +115,9 @@ class LoginFragment : BaseFragment(), LoginViewModel.LoginDelegate {
                     isClickable = true
                     gravity = Gravity.CENTER
 
-                    onClick {
-                        (owner as LoginFragment).jump(this) { postDefaultEvent() }
-                    }
-                    bind { defaultCommand(login) }
-                    bind { enabled(name, password, converter = ArrayToBooleanConverter()) }
+                    bind { enabled(k_name, k_password, converter = ArrayToBooleanConverter()) }
+                    bind { click(k_login) }
+
                 }.lparams(width = matchParent) { margin = dip(14) }
             }
         }
