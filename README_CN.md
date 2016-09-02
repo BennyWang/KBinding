@@ -1,6 +1,6 @@
 KBinding
 ======================
-使用kotlin实现的Android MVVM框架，基于anko，简单好用。
+使用kotlin实现的Android MVVM框架，基于anko，比databinding更简单易用。
 它依赖我的另一个项目[AutoAdapter](https://github.com/BennyWang/AutoAdapter)（简化adapter创建的库）
 
 ## 内容
