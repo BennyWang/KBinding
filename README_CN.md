@@ -40,7 +40,7 @@ class SimpleViewModel() : ViewModel() {
 viewModel中的多个属性与view中的一个属性绑定
 
 ```kotlin
-//login button enabled only when name and password not empty
+//login button enabled 当name和password属性不为空时
 class ArrayToBooleanConverter : MultipleConverter<Boolean> {
     override fun convert(params: Array<Any>): Boolean {
         params.forEach {
@@ -96,7 +96,7 @@ class StockViewModel() : ViewModel() {
 ### Wait/Until
 
 ```kotlin
-//wait/until just like OneTime binding, but it need apply action, for example below, it wait for market from model, then decide how to display
+//wait/until 就像是 OneTime binding, 但它只需要写好action, 就像下面, 它会等待model中的market属性变化, 然后根据action产生变化
 relativeLayout {
     wait { until("market", converter = viewOfMarket) { inflate(it, this@verticalLayout) }  }
 }
@@ -115,7 +115,7 @@ Property
 ```kotlin
     fun View.enabled(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<Boolean> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, enabled(), false, converter)
 
-    //this implements four binding mode for TextView, if just need OneWay mode, remove last three lines, some for other mode
+    //TextView的四种绑定模式
     fun TextView.text(vararg paths: String, mode: OneWay = BindingMode.OneWay, converter: OneWayConverter<out CharSequence> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, text(), false, converter)
     fun TextView.text(vararg paths: String, mode: OneTime, converter: OneWayConverter<out CharSequence> = EmptyOneWayConverter()) : PropertyBinding = oneWayPropertyBinding(paths, text(), true, converter)
     fun TextView.text(path: String, mode: OneWayToSource, converter: OneWayConverter<*> = EmptyOneWayConverter<String>()) : PropertyBinding = oneWayPropertyBinding(path, textChanges2(), converter)
