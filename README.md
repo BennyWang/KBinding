@@ -1,5 +1,6 @@
 KBinding
 ======================
+[中文版](https://github.com/EndSmile/KBinding/blob/develop/README_CN.md)
 
 Android MVVM framework write in kotlin, base on anko, simple but powerful.
 It depends on my another project [AutoAdapter](https://github.com/BennyWang/AutoAdapter)(A library for simplifying adapter creation)
