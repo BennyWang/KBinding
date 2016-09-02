@@ -19,7 +19,6 @@ open class BaseActivity : AppCompatActivity(), BindingDisposerGenerator, Binding
     override fun onDestroy() {
         super.onDestroy()
         bindingDisposer.unbind()
-        SubjectCache.removeContext(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {

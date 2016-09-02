@@ -12,14 +12,14 @@ import kotlin.properties.Delegates
 class LoginViewModel(val loginDelegate: LoginViewModel.LoginDelegate) : ViewModel() {
 
     @delegate:Property
-    var name: String by Delegates.property("xxxxxxx@xxxxx.com")
+    var name: String by Delegates.property("wangbin@xxx.com")
 
     @delegate:Property
     var password: String by Delegates.property("xxxxxxxxx")
 
     @Command
     fun login() {
-        if (name.equals("wangbin")) loginDelegate.onLoginSuccess("wangbin")
+        if (name.equals("wangbin@xxx.com")) loginDelegate.onLoginSuccess("wangbin@xxx.com")
         else loginDelegate.onLoginFailed(RuntimeException("incorrect name or password"))
     }
 
