@@ -77,19 +77,17 @@ class LoginViewModel() : ViewModel() {
 ```
 
 ### DependencyProperty and ExtractProperty
-DependencyProperty：依赖属性的绑定，当被依赖属性变化时，依赖的属性会发出变化事件
-
-ExtractProperty：可以绑定一个属性所属的类中的指定属性
 ```kotlin
-// @DependencyProperty will generate binding for nameAndSymbol depends on stock, stock changes then nameAndSymbol changes
-// @ExtractProperty will generate binding for stock properties, for example code below, Property name and price will generated. If hasPrefix = true, then Property stock.name stock.price will generated.
 class StockViewModel() : ViewModel() {
+    //将生成绑定为stock属性，会为其类中所属的name和price属性生成绑定，如果hasPrefix = true，绑定的字符串会变为stock.name和stock.price
     @delegate:ExtractProperty(
         "name", "price",
         hasPrefix = false
     )
     var stock: Stock? by Delegates.property()
 
+
+    //将生成绑定为nameAndSymbol属性，其依赖stock属性，stock变化时nameAndSymbol也会随之产生变化
     @delegate:DependencyProperty("stock")
     var nameAndSymbol: String by Delegates.property { stock?.name + stock?.symbol }
 }
