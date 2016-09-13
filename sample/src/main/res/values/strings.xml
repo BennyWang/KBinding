@@ -17,4 +17,5 @@
     <string name="synopsis">剧情简介</string>
     <string name="name_hint">请输入手机号或者电子邮箱地址</string>
     <string name="password_hint">请输入密码</string>
+    <string name="animation">动画</string>
 </resources>
