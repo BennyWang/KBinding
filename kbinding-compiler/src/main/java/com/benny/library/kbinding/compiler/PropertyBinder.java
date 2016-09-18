@@ -25,6 +25,10 @@ public class PropertyBinder extends CommonBinder {
 
     @Override
     public void generateCode(MethodSpec.Builder builder) {
-        builder.addStatement("target.$L($S, target.get$L())", ViewModelClass.BIND_PROPERTY_CALL, property, StringUtils.capitalize(property));
+        if (property.startsWith("is")) {
+            builder.addStatement("target.$L($S, target.$L())", ViewModelClass.BIND_PROPERTY_CALL, property, property);
+        }else {
+            builder.addStatement("target.$L($S, target.get$L())", ViewModelClass.BIND_PROPERTY_CALL, property, StringUtils.capitalize(property));
+        }
     }
 }
