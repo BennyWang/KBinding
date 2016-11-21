@@ -122,17 +122,17 @@ Property
 
 ## Using with Gradle
 ```gradle
-// library with Annotation process dose not upload to bintray yet, coming soon!
+
 dependencies {
-    compile 'com.benny.library:kbinding:0.2.0'
-    kapt 'com.benny.library:kbinding-compiler:0.2.2'
+    compile 'com.benny.library:kbinding:0.2.3'
+    kapt 'com.benny.library:kbinding-compiler:0.2.3'
     
     // for common bindings, View, TextView, and ...
-    compile 'com.benny.library:kbinding-common:0.2.2'
+    compile 'com.benny.library:kbinding-common:0.2.3'
     // for recyclerview bindings
-    compile 'com.benny.library:kbinding-recyclerview-v7:0.2.2'
+    compile 'com.benny.library:kbinding-adapterview:0.2.3'
     // for support v4 bindings
-    compile 'com.benny.library:kbinding-support-v4:0.2.2'
+    compile 'com.benny.library:kbinding-support-v4:0.2.3'
 }
 ```
 
