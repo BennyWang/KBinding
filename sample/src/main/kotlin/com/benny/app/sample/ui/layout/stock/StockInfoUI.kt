@@ -25,7 +25,7 @@ import com.benny.library.kbinding.dsl.wait
 import com.benny.library.kbinding.view.ViewBinderComponent
 import org.jetbrains.anko.*
 import org.jetbrains.anko.gridlayout.v7.gridLayout
-import org.jetbrains.anko.gridlayout.v7.space
+import org.jetbrains.anko.support.v4.space
 
 /**
  * Created by benny on 12/31/15.

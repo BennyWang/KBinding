@@ -18,13 +18,13 @@ kapt {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         applicationId "com.benny.app.sample"
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode project.VERSION_CODE.toInteger()
         versionName project.VERSION_NAME
         vectorDrawables.useSupportLibrary = true
@@ -66,9 +66,9 @@ dependencies {
     compile project(':kbinding-adapterview')
     kapt project(':kbinding-compiler')
 
-    compile 'com.android.support:appcompat-v7:23.2.0'
-    compile 'com.android.support:design:23.2.0'
-    compile 'com.android.support:gridlayout-v7:23.2.0'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.android.support:gridlayout-v7:25.0.1'
 
     //compile 'com.benny.library:kbinding:0.2.1'
     //compile 'com.benny.library:kbinding-common:0.2.1'

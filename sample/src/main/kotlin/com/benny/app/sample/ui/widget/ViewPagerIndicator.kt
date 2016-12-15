@@ -18,7 +18,9 @@ import java.lang.reflect.Proxy
  * Created by Benny on 2015/7/13.
  */
 
-class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.OnPageChangeListener {
+class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.OnPageChangeListener, ViewPager.OnAdapterChangeListener {
+
+
     private val DEFAULT_INDICATOR = object : IndicatorFactory {
         override fun create(title: CharSequence, `object`: Any?, container: ViewGroup): View = container.context.UI {
             textView {
@@ -38,11 +40,9 @@ class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.O
         set(value) {
             if(value == null) return
             field = value
-            try {
-                value.addOnPageChangeListener(this)
-                setOnAdapterChangeListenerMethod.invoke(value, Proxy.newProxyInstance(onAdapterChangeListenerInterface.classLoader, arrayOf(onAdapterChangeListenerInterface), ProxyListener()))
-            } catch (ignored: Exception) {
-            }
+
+            value.addOnAdapterChangeListener(this)
+            value.addOnPageChangeListener(this)
 
             if (value.adapter != null) setupView()
         }
@@ -123,7 +123,7 @@ class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.O
         }
     }
 
-    internal fun onAdapterChanged(old: PagerAdapter?, adapter: PagerAdapter) {
+    override fun onAdapterChanged(viewPager: ViewPager, oldAdapter: PagerAdapter?, newAdapter: PagerAdapter?) {
         setupView()
     }
 
@@ -156,37 +156,9 @@ class ViewPagerIndicator(context: Context) : _LinearLayout(context), ViewPager.O
         fun getIndicatorData(position: Int): Any?
     }
 
-    private inner class ProxyListener : java.lang.reflect.InvocationHandler {
-        @Throws(Throwable::class)
-        override fun invoke(proxy: Any, m: Method, args: Array<Any>): Any? {
-            try {
-                if (m.name == "onAdapterChanged") {
-                    onAdapterChanged(args[0] as? PagerAdapter, args[1] as PagerAdapter)
-                }
-            } catch (e: Exception) {
-                throw RuntimeException("unexpected invocation exception: " + e.message)
-            }
-
-            return null
-        }
-    }
-
     companion object {
         val TOP = 0
         val BOTTOM = 1
-
-        private lateinit var setOnAdapterChangeListenerMethod: Method
-        private lateinit var onAdapterChangeListenerInterface: Class<*>
-
-        init {
-            try {
-                onAdapterChangeListenerInterface = Class.forName("android.support.v4.view.ViewPager\$OnAdapterChangeListener")
-                setOnAdapterChangeListenerMethod = ViewPager::class.java.getDeclaredMethod("setOnAdapterChangeListener", onAdapterChangeListenerInterface)
-                setOnAdapterChangeListenerMethod.isAccessible = true
-            } catch (ignored: Exception) {
-            }
-
-        }
 
         private fun wrapIndicatorAdapter(adapter: PagerAdapter): IndicatorAdapter {
             if (adapter is IndicatorAdapter) return adapter
