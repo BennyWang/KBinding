@@ -19,7 +19,7 @@ kapt {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.benny.app.sample"
@@ -66,9 +66,9 @@ dependencies {
     compile project(':kbinding-adapterview')
     kapt project(':kbinding-compiler')
 
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.android.support:design:25.0.1'
-    compile 'com.android.support:gridlayout-v7:25.0.1'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:gridlayout-v7:25.1.0'
 
     //compile 'com.benny.library:kbinding:0.2.1'
     //compile 'com.benny.library:kbinding-common:0.2.1'
