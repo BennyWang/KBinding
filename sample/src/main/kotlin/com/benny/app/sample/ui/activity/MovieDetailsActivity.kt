@@ -8,7 +8,6 @@ import android.text.TextUtils
 import android.view.Gravity
 import com.benny.app.sample.R
 import com.benny.app.sample.network.service.douban.DoubanService
-import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.extension.simpleDraweeView
 import com.benny.app.sample.ui.layout.TitleToolBarView
 import com.benny.app.sample.viewmodel.MovieViewModel
@@ -107,7 +106,7 @@ class MovieDetailsActivity : BaseActivity() {
                     }
                     frameLayout {
                         backgroundColor = Color.WHITE
-                        progressBar(android.R.attr.progressBarStyleSmall).lparams { gravity = Gravity.CENTER }
+                        themedProgressBar(android.R.attr.progressBarStyleSmall).lparams { gravity = Gravity.CENTER }
                         wait { until("movie") { fadeOut() } }
                     }
                 }.lparams(matchParent, matchParent)

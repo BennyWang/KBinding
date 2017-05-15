@@ -92,12 +92,12 @@ class AnimationActivity : BaseActivity() {
                         // Library will automatically create a and will only create a default subject for every view.
                         // this call will use the default subject.
                         // But this requires invoke SubjectCache#removeContext(activity) when the activity destroyed
-                        onClick { owner.jump(box2!!) { postDefaultEvent() } }
+                        setOnClickListener { owner.jump(box2!!) { postDefaultEvent() } }
                         bind { defaultCommand(k_box2Finish) }
                     }.lparams(gravity = Gravity.BOTTOM)
                     box2 = button("box2") {
                         //You can also create a subject, so that a more flexible
-                        onClick { owner.jump(box1!!) { box2Subject.onNext(Unit) } }
+                        setOnClickListener { owner.jump(box1!!) { box2Subject.onNext(Unit) } }
                         bind { commandBinding(k_box1Finish,box2Subject) }
                     }.lparams(gravity = Gravity.END.xor(Gravity.BOTTOM))
                 }

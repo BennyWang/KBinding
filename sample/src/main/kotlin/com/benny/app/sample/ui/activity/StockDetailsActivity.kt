@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Gravity
 import com.benny.app.sample.network.service.caishuo.CaishuoService
-import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.layout.stock.StockInfoUI
 import com.benny.app.sample.viewmodel.StockViewModel
 import com.benny.library.autoadapter.viewholder.DataGetter
@@ -58,7 +57,7 @@ class StockDetailsActivity : BaseActivity() {
                     }
                     frameLayout {
                         backgroundColor = Color.WHITE
-                        progressBar(android.R.attr.progressBarStyleSmall).lparams { gravity = Gravity.CENTER }
+                        themedProgressBar(android.R.attr.progressBarStyleSmall).lparams { gravity = Gravity.CENTER }
                         wait { until("stock") { fadeOut() } }
                     }
                 }.lparams(matchParent, matchParent)

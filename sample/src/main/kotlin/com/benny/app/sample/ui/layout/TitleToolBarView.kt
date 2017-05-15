@@ -6,7 +6,7 @@ import android.view.Gravity
 import com.benny.app.sample.R
 import com.benny.library.kbinding.view.ViewBinderComponent
 import org.jetbrains.anko.*
-import org.jetbrains.anko.appcompat.v7.toolbar
+import org.jetbrains.anko.appcompat.v7.themedToolbar
 
 /**
  * Created by benny on 1/15/16.
@@ -14,7 +14,7 @@ import org.jetbrains.anko.appcompat.v7.toolbar
 
 class TitleToolBarView(val title: String) : ViewBinderComponent<Activity> {
     override fun builder(): AnkoContext<*>.() -> Unit = {
-        toolbar(R.style.ToolbarTheme) {
+        themedToolbar(R.style.ToolbarTheme) {
             backgroundColor = Color.parseColor("#393a4c")
             textView {
                 text = this@TitleToolBarView.title

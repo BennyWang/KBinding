@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import com.benny.app.sample.network.service.douban.DoubanService
 import com.benny.app.sample.network.service.douban.model.Movie
 import com.benny.app.sample.ui.activity.MovieDetailsActivity
-import com.benny.app.sample.ui.extension.progressBar
 import com.benny.app.sample.ui.layout.item.LoadingItemView
 import com.benny.app.sample.ui.layout.item.MovieItemView
 import com.benny.app.sample.utils.generateViewId
@@ -86,11 +85,11 @@ class MovieListFragment : BaseFragment() {
                         bind { paging("loadMoreMovies") }
                         bind { adapter("movies", converter = ListToRecyclerPagingAdapterConverter((owner as MovieListFragment).pagingViewCreator(LoadingItemView(), MovieItemView(), ::MovieViewModel))) }
                         bind { itemClick("movieDetail") }
-                    }.lparams(matchParent, matchParent)
+                    }
                 }
                 frameLayout {
                     backgroundColor = Color.WHITE
-                    progressBar(android.R.attr.progressBarStyleSmall).lparams { gravity = Gravity.CENTER }
+                    themedProgressBar(android.R.attr.progressBarStyleSmall).lparams { gravity = Gravity.CENTER }
                     wait { until("movies") { fadeOut() } }
                 }.lparams(matchParent, matchParent)
             }

@@ -1,5 +1,6 @@
 package com.benny.library.kbinding.dsl
 
+import android.content.Context
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,10 @@ fun <T> AnkoContext<T>.inflate(viewComponent: ViewComponent<T>, parent: ViewGrou
         inflate(viewComponent, parent, prefix)
     }
     else -> {
-        val view = ctx.UI { viewComponent.builder()() }.view
+        val view = ctx.UI {
+            val builder: AnkoContext<Context>.() -> Unit = viewComponent.builder() as AnkoContext<Context>.() -> Unit
+            this.builder()
+        }.view
         parent.addView(view)
         view
     }
